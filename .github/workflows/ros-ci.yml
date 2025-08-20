@@ -73,7 +73,7 @@ jobs:
           target-ros2-distro: ${{ matrix.ros_distribution }}
           vcs-repo-file-url: ""
           package-name: |
-            rh_p12_rn_a
-            rh_p12_rn_a_bringup
-            rh_p12_rn_a_description
-            rh_p12_rn_a_moveit_config
+            robotis_hand
+            robotis_hand_bringup
+            robotis_hand_description
+            robotis_hand_moveit_config

@@ -4,17 +4,17 @@
 ## ROBOTIS e-Manual for RH-P12-RN(A)
 - [ROBOTIS e-Manual for RH-P12-RN(A)](http://emanual.robotis.com/docs/en/platform/rh_p12_rna/)
 
-## Wiki for rh_p12_rn_a Packages
-- http://wiki.ros.org/rh_p12_rn_a (metapackage)
-- http://wiki.ros.org/rh_p12_rn_a_base_module
-- http://wiki.ros.org/rh_p12_rn_a_base_module_msgs
-- http://wiki.ros.org/rh_p12_rn_a_description
-- http://wiki.ros.org/rh_p12_rn_a_gazebo
-- http://wiki.ros.org/rh_p12_rn_a_gui
-- http://wiki.ros.org/rh_p12_rn_a_manager
+## Wiki for robotis_hand Packages
+- http://wiki.ros.org/robotis_hand (metapackage)
+- http://wiki.ros.org/robotis_hand_base_module
+- http://wiki.ros.org/robotis_hand_base_module_msgs
+- http://wiki.ros.org/robotis_hand_description
+- http://wiki.ros.org/robotis_hand_gazebo
+- http://wiki.ros.org/robotis_hand_gui
+- http://wiki.ros.org/robotis_hand_manager
 
 ## Open Source related to RH-P12-RN
-- [rh_p12_rn_a](https://github.com/ROBOTIS-GIT/RH-P12-RN-A)
+- [robotis_hand](https://github.com/ROBOTIS-GIT/robotis_hand)
 - [manipulator_h](https://github.com/ROBOTIS-GIT/ROBOTIS-MANIPULATOR-H)
 - [thormang3_msgs](https://github.com/ROBOTIS-GIT/ROBOTIS-THORMANG-msgs)
 - [thormang3_common](https://github.com/ROBOTIS-GIT/ROBOTIS-THORMANG-Common)

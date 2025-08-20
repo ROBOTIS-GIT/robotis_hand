@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="hands">
+   <xacro:macro name="hands" params="prefix">
+      <xacro:property name="meshes_file_direction" value="package://robotis_hand_description/meshes/hands/" />
+      <link name="${prefix}robotis_hand_base">
+         <visual>
+            <origin xyz="0 0 0" rpy="0 0 0" />
+            <geometry>
+               <mesh filename="${meshes_file_direction}/base_unit.stl" scale="0.001 0.001 0.001" />
+            </geometry>
+            <material name="grey">
+               <color rgba="0.2 0.2 0.2 1" />
+            </material>
+         </visual>
+         <collision>
+            <origin xyz="0 0 0" rpy="0 0 0" />
+            <geometry>
+               <mesh filename="${meshes_file_direction}/base_unit.stl" scale="0.001 0.001 0.001" />
+            </geometry>
+            <material name="grey">
+               <color rgba="0.2 0.2 0.2 1" />
+            </material>
+         </collision>
+         <inertial>
+            <origin xyz="-1.033899300e-03 2.272987300e-03 6.124897700e-02" />
+            <mass value="2.823506000e-01" />
+            <inertia ixx="4.620917800e-04" ixy="-2.064753200e-06" ixz="5.785037100e-06"
+            iyy="2.969158600e-04" iyz="-2.128225400e-05"
+            izz="2.153594900e-04" />
+         </inertial>
+      </link>
+      <joint name="${prefix}finger_joint_1" type="revolute">
+         <parent link="${prefix}robotis_hand_base" />
+         <child link="${prefix}finger_link_1" />
+         <origin xyz="-0.002 -0.04492 0.07875" rpy="0 0 0" />
+         <axis xyz="1 0 0" />
+         <limit velocity="4.8" effort="1000" lower="${-pi*2.0}" upper="${pi*2.0}" />
+         <dynamics damping="0.05" />
+      </joint>
+      <link name="${prefix}finger_link_1">
+         <visual>
+            <origin xyz="0 0 0" rpy="0 0 0" />
+            <geometry>
+               <mesh filename="${meshes_file_direction}/02_06_10_14_finger_mcp_tilt.stl" scale="0.001 0.001 0.001" />
+            </geometry>
+            <material name="grey">
+               <color rgba="0.2 0.2 0.2 1" />
+            </material>
+         </visual>
+         <collision>
+            <origin xyz="0 0 0" rpy="0 0 0" />
+            <geometry>
+               <mesh filename="${meshes_file_direction}/02_06_10_14_finger_mcp_tilt.stl" scale="0.001 0.001 0.001" />
+            </geometry>
+            <material name="grey">
+               <color rgba="0.2 0.2 0.2 1" />
+            </material>
+         </collision>
+         <inertial>
+            <origin xyz="5.193401000e-03 -1.816308100e-05 2.111550700e-02" />
+            <mass value="3.880441100e-02" />
+            <inertia ixx="3.524993200e-06" ixy="1.364133900e-08" ixz="-3.766210300e-07"
+            iyy="5.792157500e-06" iyz="1.153419900e-09"
+            izz="4.712679800e-06" />
+         </inertial>
+      </link>
+      <joint name="${prefix}finger_joint_2" type="revolute">
+         <parent link="${prefix}finger_link_1" />
+         <child link="${prefix}finger_link_2" />
+         <origin xyz="0.0165 0.0 0.0235" rpy="0 0 0" />
+         <axis xyz="0 1 0" />
+         <limit velocity="4.8" effort="1000" lower="${-pi*2.0}" upper="${pi*2.0}" />
+         <dynamics damping="0.05" />
+      </joint>
+      <link name="${prefix}finger_link_2">
+         <visual>
+            <origin xyz="0 0 0" rpy="0 0 0" />
+            <geometry>
+               <mesh filename="${meshes_file_direction}/03_07_11_15_finger_pip.stl" scale="0.001 0.001 0.001" />
+            </geometry>
+            <material name="grey">
+               <color rgba="0.2 0.2 0.2 1" />
+            </material>
+         </visual>
+         <collision>
+            <origin xyz="0 0 0" rpy="0 0 0" />
+            <geometry>
+               <mesh filename="${meshes_file_direction}/03_07_11_15_finger_pip.stl" scale="0.001 0.001 0.001" />
+            </geometry>
+            <material name="grey">
+               <color rgba="0.2 0.2 0.2 1" />
+            </material>
+         </collision>
+         <inertial>
+            <origin xyz="4.080555000e-06 1.014620300e-04 2.415648500e-02" />
+            <mass value="3.468970000e-02" />
+            <inertia ixx="5.402978500e-06" ixy="5.416105500e-10" ixz="-8.548383300e-10"
+            iyy="5.037017300e-06" iyz="1.103563800e-07"
+            izz="2.258070300e-06" />
+         </inertial>
+      </link>
+      <joint name="${prefix}finger_joint_3" type="revolute">
+         <parent link="${prefix}finger_link_2" />
+         <child link="${prefix}finger_link_3" />
+         <origin xyz="0.0 0.0 0.0355" rpy="0 0 0" />
+         <axis xyz="0 1 0" />
+         <limit velocity="4.8" effort="1000" lower="${-pi*2.0}" upper="${pi*2.0}" />
+         <dynamics damping="0.05" />
+      </joint>
+      <link name="${prefix}finger_link_3">
+         <visual>
+            <origin xyz="0 0 0" rpy="0 0 0" />
+            <geometry>
+               <mesh filename="${meshes_file_direction}/04_08_12_16_finger_dip.stl" scale="0.001 0.001 0.001" />
+            </geometry>
+            <material name="grey">
+               <color rgba="0.2 0.2 0.2 1" />
+            </material>
+         </visual>
+         <collision>
+            <origin xyz="0 0 0" rpy="0 0 0" />
+            <geometry>
+               <mesh filename="${meshes_file_direction}/04_08_12_16_finger_dip.stl" scale="0.001 0.001 0.001" />
+            </geometry>
+            <material name="grey">
+               <color rgba="0.2 0.2 0.2 1" />
+            </material>
+         </collision>
+         <inertial>
+            <origin xyz="4.080555000e-06 1.014620300e-04 2.415648500e-02" />
+            <mass value="3.468970000e-02" />
+            <inertia ixx="5.402978500e-06" ixy="5.416105500e-10" ixz="-8.548383900e-10"
+            iyy="5.037017300e-06" iyz="1.103563800e-07"
+            izz="2.258070300e-06" />
+         </inertial>
+      </link>
+      <joint name="${prefix}finger_joint_4" type="revolute">
+         <parent link="${prefix}finger_link_3" />
+         <child link="${prefix}finger_link_4" />
+         <origin xyz="0.0 0.0 0.0355" rpy="0 0 0" />
+         <axis xyz="0 1 0" />
+         <limit velocity="4.8" effort="1000" lower="${-pi*2.0}" upper="${pi*2.0}" />
+         <dynamics damping="0.05" />
+      </joint>
+      <link name="${prefix}finger_link_4">
+         <visual>
+            <origin xyz="0 0 0" rpy="0 0 0" />
+            <geometry>
+               <mesh filename="${meshes_file_direction}/21_thumb_finger_tip.stl" scale="0.001 0.001 0.001" />
+            </geometry>
+            <material name="grey">
+               <color rgba="0.2 0.2 0.2 1" />
+            </material>
+         </visual>
+         <collision>
+            <origin xyz="0 0 0" rpy="0 0 0" />
+            <geometry>
+               <mesh filename="${meshes_file_direction}/21_thumb_finger_tip.stl" scale="0.001 0.001 0.001" />
+            </geometry>
+            <material name="grey">
+               <color rgba="0.2 0.2 0.2 1" />
+            </material>
+         </collision>
+         <inertial>
+            <origin xyz="7.102508500e-04 4.723840800e-04 1.809864000e-02" />
+            <mass value="1.363720100e-02" />
+            <inertia ixx="2.232432600e-06" ixy="2.731013800e-09" ixz="-1.436237900e-07"
+            iyy="2.018806500e-06" iyz="8.149987600e-08"
+            izz="1.078660600e-06" />
+         </inertial>
+      </link>
+   </xacro:macro>
+</robot>
+

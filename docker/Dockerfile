@@ -1,5 +1,5 @@
 # Use the base ROS 2 Jazzy image
-FROM ros:jazzy-ros-base AS rh-p12-rn-a
+FROM ros:jazzy-ros-base AS robotis-hand
 
 # Set environment variables
 ENV DEBIAN_FRONTEND=noninteractive
@@ -11,13 +11,14 @@ RUN mkdir -p ${COLCON_WS}/src && \
     cd ${COLCON_WS}/src && \
     git clone -b jazzy https://github.com/ROBOTIS-GIT/dynamixel_hardware_interface.git && \
     git clone -b jazzy https://github.com/ROBOTIS-GIT/dynamixel_interfaces.git && \
-    git clone -b jazzy https://github.com/ROBOTIS-GIT/DynamixelSDK.git && \
-    git clone -b jazzy https://github.com/ROBOTIS-GIT/RH-P12-RN-A.git
+    git clone -b jazzy https://github.com/ROBOTIS-GIT/DynamixelSDK.git
+    # git clone -b jazzy https://github.com/ROBOTIS-GIT/DynamixelSDK.git && \
+    # git clone -b jazzy https://github.com/ROBOTIS-GIT/robotis_hand.git
 
 RUN cd ${COLCON_WS} && \
     apt-get update && \
     rosdep update && \
-    rosdep install -i --from-path src --rosdistro $ROS_DISTRO --skip-keys="dynamixel_hardware_interface dynamixel_interfaces dynamixel_sdk rh_p12_rn_a" -y && \
+    rosdep install -i --from-path src --rosdistro $ROS_DISTRO -y && \
     rm -rf /var/lib/apt/lists/*
 
 RUN bash -c "source /opt/ros/${ROS_DISTRO}/setup.bash && \

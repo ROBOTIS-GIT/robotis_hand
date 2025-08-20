@@ -1,10 +1,10 @@
 services:
-  rh_p12_rn_a:
-    container_name: rh_p12_rn_a
+  :
+    container_name: 
     build:
       context: .
       dockerfile: Dockerfile
-    image: robotis/rh-p12-rn-a:latest
+    image: robotis/robotis_hand:latest
     tty: true
     restart: always
     cap_add:
@@ -22,6 +22,6 @@ services:
       - ./workspace:/workspace
       - /tmp/.X11-unix:/tmp/.X11-unix:rw
       - /tmp/.docker.xauth:/tmp/.docker.xauth:rw
-      - ../:/root/ros2_ws/src/RH-P12-RN-A/
+      - ../:/root/ros2_ws/src/robotis_hand/
     privileged: true
     command: bash
