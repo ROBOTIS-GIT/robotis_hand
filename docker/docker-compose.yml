@@ -1,6 +1,6 @@
 services:
-  :
-    container_name: 
+  robotis_hand:
+    container_name: robotis_hand
     build:
       context: .
       dockerfile: Dockerfile
