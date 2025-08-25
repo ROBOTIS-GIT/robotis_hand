@@ -1,15 +1,15 @@
 <?xml version="1.0"?>
 <robot name="robotis_hand" xmlns:xacro="http://www.ros.org/wiki/xacro">
   <xacro:arg name="prefix" default="" />
-  <xacro:arg name="use_sim" default="false" />
+  <!-- <xacro:arg name="use_sim" default="false" />
   <xacro:arg name="use_fake_hardware" default="false" />
-  <xacro:arg name="fake_sensor_commands" default="false" />
+  <xacro:arg name="fake_sensor_commands" default="false" /> -->
 
   <xacro:include filename="$(find robotis_hand_description)/urdf/robotis_hand.xacro" />
 
-  <xacro:include filename="$(find robotis_hand_description)/gazebo/robotis_hand.gazebo.xacro" />
+  <!-- <xacro:include filename="$(find robotis_hand_description)/gazebo/robotis_hand.gazebo.xacro" /> -->
 
-  <xacro:include filename="$(find robotis_hand_description)/ros2_control/robotis_hand.ros2_control.xacro" />
+  <!-- <xacro:include filename="$(find robotis_hand_description)/ros2_control/robotis_hand.ros2_control.xacro" /> -->
 
   <link name="world"/>
 
@@ -20,17 +20,17 @@
   </joint>
 
   <xacro:robotis_hand prefix="$(arg prefix)" />
-  <xacro:robotis_hand_gazebo prefix="$(arg prefix)" />
+  <!-- <xacro:robotis_hand_gazebo prefix="$(arg prefix)" /> -->
 
-  <xacro:robotis_hand_system
+  <!-- <xacro:robotis_hand_system
     name="RobotisHandSystem" prefix="$(arg prefix)" use_sim="$(arg use_sim)"
     use_fake_hardware="$(arg use_fake_hardware)"
-    fake_sensor_commands="$(arg fake_sensor_commands)"/>
+    fake_sensor_commands="$(arg fake_sensor_commands)"/> -->
 
-  <gazebo>
+  <!-- <gazebo>
     <plugin filename="gz_ros2_control-system" name="gz_ros2_control::GazeboSimROS2ControlPlugin">
       <parameters>$(find robotis_hand_bringup)/config/hardware_controller_manager.yaml</parameters>
     </plugin>
-  </gazebo>
+  </gazebo> -->
 
 </robot>
