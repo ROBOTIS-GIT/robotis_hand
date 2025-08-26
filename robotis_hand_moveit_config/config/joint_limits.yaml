@@ -8,23 +8,103 @@ default_acceleration_scaling_factor: 0.1
 # Specific joint properties can be changed with the keys [max_position, min_position, max_velocity, max_acceleration]
 # Joint limits can be turned off with [has_velocity_limits, has_acceleration_limits]
 joint_limits:
-  rh_l1:
+  finger_joint_1:
     has_velocity_limits: true
-    max_velocity: 6.5
+    max_velocity: 5.0
     has_acceleration_limits: true
-    max_acceleration: 6.5
-  rh_l2:
+    max_acceleration: 5.0
+  finger_joint_2:
     has_velocity_limits: true
-    max_velocity: 6.5
+    max_velocity: 5.0
     has_acceleration_limits: true
-    max_acceleration: 6.5
-  rh_r1:
+    max_acceleration: 5.0
+  finger_joint_3:
     has_velocity_limits: true
-    max_velocity: 6.5
+    max_velocity: 5.0
     has_acceleration_limits: true
-    max_acceleration: 6.5
-  rh_r2:
+    max_acceleration: 5.0
+  finger_joint_4:
     has_velocity_limits: true
-    max_velocity: 6.5
+    max_velocity: 5.0
     has_acceleration_limits: true
-    max_acceleration: 6.5
+    max_acceleration: 5.0
+  finger_joint_5:
+    has_velocity_limits: true
+    max_velocity: 5.0
+    has_acceleration_limits: true
+    max_acceleration: 5.0
+  finger_joint_6:
+    has_velocity_limits: true
+    max_velocity: 5.0
+    has_acceleration_limits: true
+    max_acceleration: 5.0
+  finger_joint_7:
+    has_velocity_limits: true
+    max_velocity: 5.0
+    has_acceleration_limits: true
+    max_acceleration: 5.0
+  finger_joint_8:
+    has_velocity_limits: true
+    max_velocity: 5.0
+    has_acceleration_limits: true
+    max_acceleration: 5.0
+  finger_joint_9:
+    has_velocity_limits: true
+    max_velocity: 5.0
+    has_acceleration_limits: true
+    max_acceleration: 5.0
+  finger_joint_10:
+    has_velocity_limits: true
+    max_velocity: 5.0
+    has_acceleration_limits: true
+    max_acceleration: 5.0
+  finger_joint_11:
+    has_velocity_limits: true
+    max_velocity: 5.0
+    has_acceleration_limits: true
+    max_acceleration: 5.0
+  finger_joint_12:
+    has_velocity_limits: true
+    max_velocity: 5.0
+    has_acceleration_limits: true
+    max_acceleration: 5.0
+  finger_joint_13:
+    has_velocity_limits: true
+    max_velocity: 5.0
+    has_acceleration_limits: true
+    max_acceleration: 5.0
+  finger_joint_14:
+    has_velocity_limits: true
+    max_velocity: 5.0
+    has_acceleration_limits: true
+    max_acceleration: 5.0
+  finger_joint_15:
+    has_velocity_limits: true
+    max_velocity: 5.0
+    has_acceleration_limits: true
+    max_acceleration: 5.0
+  finger_joint_16:
+    has_velocity_limits: true
+    max_velocity: 5.0
+    has_acceleration_limits: true
+    max_acceleration: 5.0
+  finger_joint_17:
+    has_velocity_limits: true
+    max_velocity: 5.0
+    has_acceleration_limits: true
+    max_acceleration: 5.0
+  finger_joint_18:
+    has_velocity_limits: true
+    max_velocity: 5.0
+    has_acceleration_limits: true
+    max_acceleration: 5.0
+  finger_joint_19:
+    has_velocity_limits: true
+    max_velocity: 5.0
+    has_acceleration_limits: true
+    max_acceleration: 5.0
+  finger_joint_20:
+    has_velocity_limits: true
+    max_velocity: 5.0
+    has_acceleration_limits: true
+    max_acceleration: 5.0

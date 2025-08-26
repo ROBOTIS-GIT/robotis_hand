@@ -101,7 +101,7 @@ def generate_launch_description():
     controller_manager_config = PathJoinSubstitution([
         FindPackageShare('robotis_hand_bringup'),
         'config',
-        'hardware_controller_manager.yaml',
+        'rh_5_hardware_controller_manager.yaml',
     ])
 
     rviz_config_file = PathJoinSubstitution([
@@ -123,7 +123,7 @@ def generate_launch_description():
         package='controller_manager',
         executable='spawner',
         arguments=[
-            'gripper_controller',
+            'hand_controller',
             'joint_state_broadcaster',
         ],
         output='both',

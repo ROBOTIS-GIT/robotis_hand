@@ -1,0 +1,76 @@
+<?xml version="1.0"?>
+
+<robot xmlns:xacro="http://ros.org/wiki/xacro">
+
+  <xacro:macro name="robotis_hand_gazebo" params="prefix">
+
+  <xacro:macro name="SimpleTransmission" params="trans joint actuator">
+    <transmission name="${trans}">
+      <type>transmission_interface/SimpleTransmission</type>
+      <joint name="${joint}">
+        <hardwareInterface>PositionJointInterface</hardwareInterface>
+      </joint>
+      <actuator name="${actuator}">
+        <mechanicalReduction>1</mechanicalReduction>
+        <hardwareInterface>PositionJointInterface</hardwareInterface>
+      </actuator>
+    </transmission>
+  </xacro:macro>
+
+  <xacro:macro name="Link" params="reference">
+    <gazebo reference="${reference}">
+      <kp>1000000.0</kp>
+      <kd>100.0</kd>
+      <mu1>30.0</mu1>
+      <mu2>30.0</mu2>
+      <maxVel>1.0</maxVel>
+      <minDepth>0.001</minDepth>
+    </gazebo>
+  </xacro:macro>
+
+  <xacro:Link reference="${prefix}robotis_hand_base"/>
+  <xacro:Link reference="${prefix}finger_link_1"/>
+  <xacro:Link reference="${prefix}finger_link_2"/>
+  <xacro:Link reference="${prefix}finger_link_3"/>
+  <xacro:Link reference="${prefix}finger_link_4"/>
+  <xacro:Link reference="${prefix}finger_link_5"/>
+  <xacro:Link reference="${prefix}finger_link_6"/>
+  <xacro:Link reference="${prefix}finger_link_7"/>
+  <xacro:Link reference="${prefix}finger_link_8"/>
+  <xacro:Link reference="${prefix}finger_link_9"/>
+  <xacro:Link reference="${prefix}finger_link_10"/>
+  <xacro:Link reference="${prefix}finger_link_11"/>
+  <xacro:Link reference="${prefix}finger_link_12"/>
+  <xacro:Link reference="${prefix}finger_link_13"/>
+  <xacro:Link reference="${prefix}finger_link_14"/>
+  <xacro:Link reference="${prefix}finger_link_15"/>
+  <xacro:Link reference="${prefix}finger_link_16"/>
+  <xacro:Link reference="${prefix}finger_link_17"/>
+  <xacro:Link reference="${prefix}finger_link_18"/>
+  <xacro:Link reference="${prefix}finger_link_19"/>
+  <xacro:Link reference="${prefix}finger_link_20"/>
+
+  <xacro:SimpleTransmission trans="${prefix}hand_trans1" joint="${prefix}finger_joint_1" actuator="${prefix}hand_actuator1" />
+  <xacro:SimpleTransmission trans="${prefix}hand_trans2" joint="${prefix}finger_joint_2" actuator="${prefix}hand_actuator2" />
+  <xacro:SimpleTransmission trans="${prefix}hand_trans3" joint="${prefix}finger_joint_3" actuator="${prefix}hand_actuator3" />
+  <xacro:SimpleTransmission trans="${prefix}hand_trans4" joint="${prefix}finger_joint_4" actuator="${prefix}hand_actuator4" />
+  <xacro:SimpleTransmission trans="${prefix}hand_trans5" joint="${prefix}finger_joint_5" actuator="${prefix}hand_actuator5" />
+  <xacro:SimpleTransmission trans="${prefix}hand_trans6" joint="${prefix}finger_joint_6" actuator="${prefix}hand_actuator6" />
+  <xacro:SimpleTransmission trans="${prefix}hand_trans7" joint="${prefix}finger_joint_7" actuator="${prefix}hand_actuator7" />
+  <xacro:SimpleTransmission trans="${prefix}hand_trans8" joint="${prefix}finger_joint_8" actuator="${prefix}hand_actuator8" />
+  <xacro:SimpleTransmission trans="${prefix}hand_trans9" joint="${prefix}finger_joint_9" actuator="${prefix}hand_actuator9" />
+  <xacro:SimpleTransmission trans="${prefix}hand_trans10" joint="${prefix}finger_joint_10" actuator="${prefix}hand_actuator10" />
+  <xacro:SimpleTransmission trans="${prefix}hand_trans11" joint="${prefix}finger_joint_11" actuator="${prefix}hand_actuator11" />
+  <xacro:SimpleTransmission trans="${prefix}hand_trans12" joint="${prefix}finger_joint_12" actuator="${prefix}hand_actuator12" />
+  <xacro:SimpleTransmission trans="${prefix}hand_trans13" joint="${prefix}finger_joint_13" actuator="${prefix}hand_actuator13" />
+  <xacro:SimpleTransmission trans="${prefix}hand_trans14" joint="${prefix}finger_joint_14" actuator="${prefix}hand_actuator14" />
+  <xacro:SimpleTransmission trans="${prefix}hand_trans15" joint="${prefix}finger_joint_15" actuator="${prefix}hand_actuator15" />
+  <xacro:SimpleTransmission trans="${prefix}hand_trans16" joint="${prefix}finger_joint_16" actuator="${prefix}hand_actuator16" />
+  <xacro:SimpleTransmission trans="${prefix}hand_trans17" joint="${prefix}finger_joint_17" actuator="${prefix}hand_actuator17" />
+  <xacro:SimpleTransmission trans="${prefix}hand_trans18" joint="${prefix}finger_joint_18" actuator="${prefix}hand_actuator18" />
+  <xacro:SimpleTransmission trans="${prefix}hand_trans19" joint="${prefix}finger_joint_19" actuator="${prefix}hand_actuator19" />
+  <xacro:SimpleTransmission trans="${prefix}hand_trans20" joint="${prefix}finger_joint_20" actuator="${prefix}hand_actuator20" />
+
+  </xacro:macro>
+
+</robot>

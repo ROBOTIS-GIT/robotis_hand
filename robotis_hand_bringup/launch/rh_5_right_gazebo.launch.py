@@ -126,10 +126,10 @@ def generate_launch_description():
         output='screen',
     )
 
-    gripper_controller_spawner = Node(
+    hand_controller_spawner = Node(
         package='controller_manager',
         executable='spawner',
-        arguments=['gripper_controller'],
+        arguments=['hand_controller'],
         output='screen',
     )
 
@@ -140,17 +140,17 @@ def generate_launch_description():
         output='screen',
     )
 
-    # rviz_config_file = os.path.join(
-    #     robotis_hand_description_path, 'rviz', 'robotis_hand.rviz'
-    # )
+    rviz_config_file = os.path.join(
+        robotis_hand_description_path, 'rviz', 'robotis_hand.rviz'
+    )
 
-    # rviz = Node(
-    #     package='rviz2',
-    #     executable='rviz2',
-    #     name='rviz2',
-    #     output='log',
-    #     arguments=['-d', rviz_config_file],
-    # )
+    rviz = Node(
+        package='rviz2',
+        executable='rviz2',
+        name='rviz2',
+        output='log',
+        arguments=['-d', rviz_config_file],
+    )
 
     return LaunchDescription([
         RegisterEventHandler(
@@ -162,7 +162,7 @@ def generate_launch_description():
         RegisterEventHandler(
             event_handler=OnProcessExit(
                 target_action=joint_state_broadcaster_spawner,
-                on_exit=[gripper_controller_spawner],
+                on_exit=[hand_controller_spawner],
             )
         ),
         bridge,
@@ -171,5 +171,5 @@ def generate_launch_description():
         gazebo,
         node_robot_state_publisher,
         gz_spawn_entity,
-        # rviz,
+        rviz,
     ])

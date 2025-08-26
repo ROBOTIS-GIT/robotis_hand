@@ -3,7 +3,7 @@
   <name>robotis_hand</name>
   <version>0.2.0</version>
   <description>
-    ROS messages packages for the ROBOTIS RH-P12-RN(A) (meta package)
+    ROS messages packages for the ROBOTIS RH-5 (meta package)
   </description>
   <license>Apache 2.0</license>
   <author email="zerom@robotis.com">Zerom</author>
