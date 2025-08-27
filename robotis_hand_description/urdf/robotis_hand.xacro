@@ -170,6 +170,22 @@
             izz="1.0814083e-06" />
          </inertial>
       </link>
+      <joint name="${prefix}finger_end_1" type="fixed">
+         <parent link="${prefix}finger_link_4" />
+         <child link="${prefix}finger_end_link_1" />
+         <origin xyz="0.0 0.0 0.02425" rpy="0 0 0" />
+      </joint>
+      <link name="$(arg prefix)finger_end_link_1">
+         <visual>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+            <box size="0.01 0.01 0.01" />
+            </geometry>
+            <material name="red">
+            <color rgba="1.0 0.0 0.0 1"/>
+            </material>
+         </visual>
+      </link>
       <!-- INDEX -->
       <joint name="${prefix}finger_joint_5" type="revolute">
          <parent link="${prefix}robotis_hand_base" />
@@ -310,6 +326,22 @@
             iyy="2.018806500e-06" iyz="8.149987600e-08"
             izz="1.078660600e-06" />
          </inertial>
+      </link>
+      <joint name="${prefix}finger_end_2" type="fixed">
+         <parent link="${prefix}finger_link_8" />
+         <child link="${prefix}finger_end_link_2" />
+         <origin xyz="0.0 0.0 0.02425" rpy="0 0 0" />
+      </joint>
+      <link name="$(arg prefix)finger_end_link_2">
+         <visual>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+            <box size="0.01 0.01 0.01" />
+            </geometry>
+            <material name="red">
+            <color rgba="1.0 0.0 0.0 1"/>
+            </material>
+         </visual>
       </link>
       <!-- MIDDLE -->
       <joint name="${prefix}finger_joint_9" type="revolute">
@@ -452,6 +484,22 @@
             izz="1.078660600e-06" />
          </inertial>
       </link>
+      <joint name="${prefix}finger_end_3" type="fixed">
+         <parent link="${prefix}finger_link_12" />
+         <child link="${prefix}finger_end_link_3" />
+         <origin xyz="0.0 0.0 0.02425" rpy="0 0 0" />
+      </joint>
+      <link name="$(arg prefix)finger_end_link_3">
+         <visual>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+            <box size="0.01 0.01 0.01" />
+            </geometry>
+            <material name="red">
+            <color rgba="1.0 0.0 0.0 1"/>
+            </material>
+         </visual>
+      </link>
       <!-- RING -->
       <joint name="${prefix}finger_joint_13" type="revolute">
          <parent link="${prefix}robotis_hand_base" />
@@ -592,6 +640,22 @@
             iyy="2.018806500e-06" iyz="8.149987600e-08"
             izz="1.078660600e-06" />
          </inertial>
+      </link>
+      <joint name="${prefix}finger_end_4" type="fixed">
+         <parent link="${prefix}finger_link_16" />
+         <child link="${prefix}finger_end_link_4" />
+         <origin xyz="0.0 0.0 0.02425" rpy="0 0 0" />
+      </joint>
+      <link name="$(arg prefix)finger_end_link_4">
+         <visual>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+            <box size="0.01 0.01 0.01" />
+            </geometry>
+            <material name="red">
+            <color rgba="1.0 0.0 0.0 1"/>
+            </material>
+         </visual>
       </link>
       <!-- PINKY -->
       <joint name="${prefix}finger_joint_17" type="revolute">
@@ -734,6 +798,21 @@
             izz="1.078660600e-06" />
          </inertial>
       </link>
+      <joint name="${prefix}finger_end_5" type="fixed">
+         <parent link="${prefix}finger_link_20" />
+         <child link="${prefix}finger_end_link_5" />
+         <origin xyz="0.0 0.0 0.02425" rpy="0 0 0" />
+      </joint>
+      <link name="$(arg prefix)finger_end_link_5">
+         <visual>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+            <box size="0.01 0.01 0.01" />
+            </geometry>
+            <material name="red">
+            <color rgba="1.0 0.0 0.0 1"/>
+            </material>
+         </visual>
+      </link>
    </xacro:macro>
 </robot>
-
