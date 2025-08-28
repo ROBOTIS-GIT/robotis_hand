@@ -15,6 +15,7 @@
   <exec_depend>robotis_hand_bringup</exec_depend>
   <exec_depend>robotis_hand_description</exec_depend>
   <exec_depend>robotis_hand_moveit_config</exec_depend>
+  <exec_depend>robotis_hand_teleop</exec_depend>
   <export>
     <build_type>ament_cmake</build_type>
   </export>

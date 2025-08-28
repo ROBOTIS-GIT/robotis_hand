@@ -140,17 +140,17 @@ def generate_launch_description():
         output='screen',
     )
 
-    rviz_config_file = os.path.join(
-        robotis_hand_description_path, 'rviz', 'robotis_hand.rviz'
-    )
+    # rviz_config_file = os.path.join(
+    #     robotis_hand_description_path, 'rviz', 'robotis_hand.rviz'
+    # )
 
-    rviz = Node(
-        package='rviz2',
-        executable='rviz2',
-        name='rviz2',
-        output='log',
-        arguments=['-d', rviz_config_file],
-    )
+    # rviz = Node(
+    #     package='rviz2',
+    #     executable='rviz2',
+    #     name='rviz2',
+    #     output='log',
+    #     arguments=['-d', rviz_config_file],
+    # )
 
     return LaunchDescription([
         RegisterEventHandler(
@@ -171,5 +171,5 @@ def generate_launch_description():
         gazebo,
         node_robot_state_publisher,
         gz_spawn_entity,
-        rviz,
+        # rviz,
     ])
