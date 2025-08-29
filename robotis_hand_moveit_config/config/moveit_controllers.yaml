@@ -4,28 +4,43 @@ moveit_controller_manager: moveit_simple_controller_manager/MoveItSimpleControll
 
 moveit_simple_controller_manager:
   controller_names:
-    - hand_controller
+    - thumb_controller
+    - index_controller
+    - middle_controller
+    - ring_controller
+    - pinky_controller
 
-  hand_controller:
+  thumb_controller:
     type: FollowJointTrajectory
-    action_ns: follow_joint_trajectory
     joints:
       - finger_joint_1
       - finger_joint_2
       - finger_joint_3
       - finger_joint_4
+  index_controller:
+    type: FollowJointTrajectory
+    joints:
       - finger_joint_5
       - finger_joint_6
       - finger_joint_7
       - finger_joint_8
+  middle_controller:
+    type: FollowJointTrajectory
+    joints:
       - finger_joint_9
       - finger_joint_10
       - finger_joint_11
       - finger_joint_12
+  ring_controller:
+    type: FollowJointTrajectory
+    joints:
       - finger_joint_13
       - finger_joint_14
       - finger_joint_15
       - finger_joint_16
+  pinky_controller:
+    type: FollowJointTrajectory
+    joints:
       - finger_joint_17
       - finger_joint_18
       - finger_joint_19

@@ -9,51 +9,99 @@
     <!--JOINTS: When a joint is specified, the child link of that joint (which will always exist) is automatically included-->
     <!--CHAINS: When a chain is specified, all the links along the chain (including endpoints) are included in the group. Additionally, all the joints that are parents to included links are also included. This means that joints along the chain and the parent joint of the base link are included in the group-->
     <!--SUBGROUPS: Groups can also be formed by referencing to already defined group names-->
-    <group name="hand">
+    <group name="thumb">
         <joint name="finger_joint_1"/>
         <joint name="finger_joint_2"/>
         <joint name="finger_joint_3"/>
         <joint name="finger_joint_4"/>
+        <joint name="finger_end_1"/>
+    </group>
+    <group name="index">
         <joint name="finger_joint_5"/>
         <joint name="finger_joint_6"/>
         <joint name="finger_joint_7"/>
         <joint name="finger_joint_8"/>
+        <joint name="finger_end_2"/>
+    </group>
+    <group name="middle">
         <joint name="finger_joint_9"/>
         <joint name="finger_joint_10"/>
         <joint name="finger_joint_11"/>
         <joint name="finger_joint_12"/>
+        <joint name="finger_end_3"/>
+    </group>
+    <group name="ring">
         <joint name="finger_joint_13"/>
         <joint name="finger_joint_14"/>
         <joint name="finger_joint_15"/>
         <joint name="finger_joint_16"/>
+        <joint name="finger_end_4"/>
+    </group>
+    <group name="pinky">
         <joint name="finger_joint_17"/>
         <joint name="finger_joint_18"/>
         <joint name="finger_joint_19"/>
         <joint name="finger_joint_20"/>
+        <joint name="finger_end_5"/>
     </group>
     <!--GROUP STATES: Purpose: Define a named state for a particular group, in terms of joint values. This is useful to define states like 'folded arms'-->
-    <group_state name="init" group="hand">
+    <group_state name="init" group="thumb">
         <joint name="finger_joint_1" value="0"/>
         <joint name="finger_joint_2" value="0"/>
         <joint name="finger_joint_3" value="0"/>
         <joint name="finger_joint_4" value="0"/>
+    </group_state>
+    <group_state name="init" group="index">
         <joint name="finger_joint_5" value="0"/>
         <joint name="finger_joint_6" value="0"/>
         <joint name="finger_joint_7" value="0"/>
         <joint name="finger_joint_8" value="0"/>
-        <joint name="finger_joint_9" value="0"/>
+    </group_state>
+    <group_state name="init" group="middle">
         <joint name="finger_joint_10" value="0"/>
         <joint name="finger_joint_11" value="0"/>
         <joint name="finger_joint_12" value="0"/>
+        <joint name="finger_joint_9" value="0"/>
+    </group_state>
+    <group_state name="init" group="ring">
         <joint name="finger_joint_13" value="0"/>
         <joint name="finger_joint_14" value="0"/>
         <joint name="finger_joint_15" value="0"/>
         <joint name="finger_joint_16" value="0"/>
+    </group_state>
+    <group_state name="init" group="pinky">
         <joint name="finger_joint_17" value="0"/>
         <joint name="finger_joint_18" value="0"/>
         <joint name="finger_joint_19" value="0"/>
         <joint name="finger_joint_20" value="0"/>
     </group_state>
+    <!--END EFFECTOR: Purpose: Represent information about an end effector.-->
+    <end_effector name="end_effector_thumb" parent_link="finger_end_link_1" group="thumb"/>
+    <end_effector name="end_effector_index" parent_link="finger_end_link_2" group="index"/>
+    <end_effector name="end_effector_middle" parent_link="finger_end_link_3" group="middle"/>
+    <end_effector name="end_effector_ring" parent_link="finger_end_link_4" group="ring"/>
+    <end_effector name="end_effector_pinky" parent_link="finger_end_link_5" group="pinky"/>
     <!--DISABLE COLLISIONS: By default it is assumed that any link of the robot could potentially come into collision with any other link in the robot. This tag disables collision checking between a specified pair of links. -->
-    <disable_collisions link1="robotis_hand_base" link2="finger_link_1" reason="Adjacent"/>
+    <disable_collisions link1="finger_link_1" link2="finger_link_17" reason="Never"/>
+    <disable_collisions link1="finger_link_1" link2="finger_link_2" reason="Adjacent"/>
+    <disable_collisions link1="finger_link_1" link2="robotis_hand_base" reason="Adjacent"/>
+    <disable_collisions link1="finger_link_10" link2="finger_link_11" reason="Adjacent"/>
+    <disable_collisions link1="finger_link_10" link2="finger_link_9" reason="Adjacent"/>
+    <disable_collisions link1="finger_link_11" link2="finger_link_12" reason="Adjacent"/>
+    <disable_collisions link1="finger_link_13" link2="finger_link_14" reason="Adjacent"/>
+    <disable_collisions link1="finger_link_13" link2="robotis_hand_base" reason="Adjacent"/>
+    <disable_collisions link1="finger_link_14" link2="finger_link_15" reason="Adjacent"/>
+    <disable_collisions link1="finger_link_15" link2="finger_link_16" reason="Adjacent"/>
+    <disable_collisions link1="finger_link_17" link2="finger_link_18" reason="Adjacent"/>
+    <disable_collisions link1="finger_link_17" link2="finger_link_5" reason="Never"/>
+    <disable_collisions link1="finger_link_17" link2="robotis_hand_base" reason="Adjacent"/>
+    <disable_collisions link1="finger_link_18" link2="finger_link_19" reason="Adjacent"/>
+    <disable_collisions link1="finger_link_19" link2="finger_link_20" reason="Adjacent"/>
+    <disable_collisions link1="finger_link_2" link2="finger_link_3" reason="Adjacent"/>
+    <disable_collisions link1="finger_link_3" link2="finger_link_4" reason="Adjacent"/>
+    <disable_collisions link1="finger_link_5" link2="finger_link_6" reason="Adjacent"/>
+    <disable_collisions link1="finger_link_5" link2="robotis_hand_base" reason="Adjacent"/>
+    <disable_collisions link1="finger_link_6" link2="finger_link_7" reason="Adjacent"/>
+    <disable_collisions link1="finger_link_7" link2="finger_link_8" reason="Adjacent"/>
+    <disable_collisions link1="finger_link_9" link2="robotis_hand_base" reason="Adjacent"/>
 </robot>
