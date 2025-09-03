@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="robotis_hand">
    <xacro:macro name="robotis_hand" params="prefix">
-      <xacro:property name="meshes_file_direction" value="package://robotis_hand_description/meshes/" />
+      <xacro:property name="meshes_file_direction" value="package://robotis_hand_description/meshes/rh_5_right/" />
       <link name="${prefix}robotis_hand_base">
          <visual>
             <origin xyz="0 0 0" rpy="0 0 0" />

@@ -5,9 +5,9 @@
   <xacro:arg name="use_fake_hardware" default="false" />
   <xacro:arg name="fake_sensor_commands" default="false" />
 
-  <xacro:include filename="$(find robotis_hand_description)/urdf/robotis_hand.xacro" />
+  <xacro:include filename="$(find robotis_hand_description)/urdf/rh_5_right.urdf.xacro" />
 
-  <xacro:include filename="$(find robotis_hand_description)/gazebo/rh_5_right.gazebo.xacro" />
+  <xacro:include filename="$(find robotis_hand_description)/gazebo/robotis_hand.gazebo.xacro" />
 
   <xacro:include filename="$(find robotis_hand_description)/ros2_control/robotis_hand.ros2_control.xacro" />
 

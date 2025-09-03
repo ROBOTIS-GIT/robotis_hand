@@ -38,7 +38,7 @@ def generate_launch_description():
         PathJoinSubstitution([
             FindPackageShare('robotis_hand_description'),
             'urdf',
-            'rh_5_right.xacro',
+            'rh_5_left.xacro',
         ]),
         ' ',
         'prefix:=',
