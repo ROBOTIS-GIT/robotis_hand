@@ -22,11 +22,11 @@
             </material>
          </collision>
          <inertial>
-            <origin xyz="-1.033899300e-03 2.272987300e-03 6.124897700e-02" />
-            <mass value="2.823506000e-01" />
-            <inertia ixx="4.620917800e-04" ixy="-2.064753200e-06" ixz="5.785037100e-06"
-            iyy="2.969158600e-04" iyz="-2.128225400e-05"
-            izz="2.153594900e-04" />
+            <origin xyz="-1.6712049e-03 -1.2917175e-03 6.0855259e-02" />
+            <mass value="3.5303653e-01" />
+            <inertia ixx="5.9370227e-04" ixy="1.9045567e-06" ixz="-4.5830168e-06"
+            iyy="3.8516080e-04" iyz="2.0197014e-05"
+            izz="3.1555740e-04" />
          </inertial>
       </link>
       <!-- THUMB -->
@@ -58,11 +58,11 @@
             </material>
          </collision>
          <inertial>
-            <origin xyz="3.6173493e-04 1.3999343e-02 -3.5920702e-04" />
+            <origin xyz="-3.5667993e-04 -1.3999343e-02 3.5920775e-04" />
             <mass value="1.1760611e-02" />
-            <inertia ixx="1.3023455e-06" ixy="-5.3373947e-08" ixz="-1.5281080e-10"
-            iyy="1.0555954e-06" iyz="-5.3427852e-08"
-            izz="1.3024281e-06" />
+            <inertia ixx="1.3023455e-06" ixy="-5.3492769e-08" ixz="-1.5068343e-10"
+            iyy="1.0556381e-06" iyz="-5.3427751e-08"
+            izz="1.3024709e-06" />
          </inertial>
       </link>
       <joint name="${prefix}finger_joint_2" type="revolute">
@@ -93,11 +93,11 @@
             </material>
          </collision>
          <inertial>
-            <origin xyz="-1.1716560e-05 1.3386946e-02 1.2376406e-02" />
-            <mass value="7.2236971e-02" />
-            <inertia ixx="2.0184250e-05" ixy="-1.4775140e-08" ixz="-6.7987785e-09"
-            iyy="1.7535820e-05" iyz="-1.6179073e-06"
-            izz="8.0683218e-06" />
+            <origin xyz="1.1730962e-05 -1.3370146e-02 1.2381933e-02" />
+            <mass value="7.2148285e-02" />
+            <inertia ixx="2.0147275e-05" ixy="-1.4760922e-08" ixz="6.8034568e-09"
+            iyy="1.7510414e-05" iyz="1.6235264e-06"
+            izz="8.0461430e-06" />
          </inertial>
       </link>
       <joint name="${prefix}finger_joint_3" type="revolute">
@@ -215,11 +215,11 @@
             </material>
          </collision>
          <inertial>
-            <origin xyz="5.193401000e-03 -1.816308100e-05 2.111550700e-02" />
-            <mass value="3.880441100e-02" />
-            <inertia ixx="3.524993200e-06" ixy="1.364133900e-08" ixz="-3.766210300e-07"
-            iyy="5.792157500e-06" iyz="1.153419900e-09"
-            izz="4.712679800e-06" />
+            <origin xyz="5.2161821e-03 -1.8190051e-05 2.1122832e-02" />
+            <mass value="3.8746882e-02" />
+            <inertia ixx="3.5211189e-06" ixy="1.3625281e-08" ixz="-3.7225930e-07"
+            iyy="5.7770789e-06" iyz="1.1482566e-09"
+            izz="4.6967406e-06" />
          </inertial>
       </link>
       <joint name="${prefix}finger_joint_6" type="revolute">
@@ -372,11 +372,11 @@
             </material>
          </collision>
          <inertial>
-            <origin xyz="5.193401000e-03 -1.816308100e-05 2.111550700e-02" />
-            <mass value="3.880441100e-02" />
-            <inertia ixx="3.524993200e-06" ixy="1.364133900e-08" ixz="-3.766210300e-07"
-            iyy="5.792157500e-06" iyz="1.153419900e-09"
-            izz="4.712679800e-06" />
+            <origin xyz="5.2161821e-03 -1.8190051e-05 2.1122832e-02" />
+            <mass value="3.8746882e-02" />
+            <inertia ixx="3.5211189e-06" ixy="1.3625281e-08" ixz="-3.7225930e-07"
+            iyy="5.7770789e-06" iyz="1.1482566e-09"
+            izz="4.6967406e-06" />
          </inertial>
       </link>
       <joint name="${prefix}finger_joint_10" type="revolute">
@@ -529,11 +529,11 @@
             </material>
          </collision>
          <inertial>
-            <origin xyz="5.193401000e-03 -1.816308100e-05 2.111550700e-02" />
-            <mass value="3.880441100e-02" />
-            <inertia ixx="3.524993200e-06" ixy="1.364133900e-08" ixz="-3.766210300e-07"
-            iyy="5.792157500e-06" iyz="1.153419900e-09"
-            izz="4.712679800e-06" />
+            <origin xyz="5.2161821e-03 -1.8190051e-05 2.1122832e-02" />
+            <mass value="3.8746882e-02" />
+            <inertia ixx="3.5211189e-06" ixy="1.3625281e-08" ixz="-3.7225930e-07"
+            iyy="5.7770789e-06" iyz="1.1482566e-09"
+            izz="4.6967406e-06" />
          </inertial>
       </link>
       <joint name="${prefix}finger_joint_14" type="revolute">
@@ -686,11 +686,11 @@
             </material>
          </collision>
          <inertial>
-            <origin xyz="5.193401000e-03 -1.816308100e-05 2.111550700e-02" />
-            <mass value="3.880441100e-02" />
-            <inertia ixx="3.524993200e-06" ixy="1.364133900e-08" ixz="-3.766210300e-07"
-            iyy="5.792157500e-06" iyz="1.153419900e-09"
-            izz="4.712679800e-06" />
+            <origin xyz="5.2161821e-03 -1.8190051e-05 2.1122832e-02" />
+            <mass value="3.8746882e-02" />
+            <inertia ixx="3.5211189e-06" ixy="1.3625281e-08" ixz="-3.7225930e-07"
+            iyy="5.7770789e-06" iyz="1.1482566e-09"
+            izz="4.6967406e-06" />
          </inertial>
       </link>
       <joint name="${prefix}finger_joint_18" type="revolute">
