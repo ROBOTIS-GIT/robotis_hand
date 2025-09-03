@@ -70,7 +70,7 @@ def generate_launch_description():
     xacro_file = os.path.join(
         robotis_hand_description_path,
         'urdf',
-        'robotis_hand.urdf.xacro',
+        'rh_5_right.xacro',
     )
 
     doc = xacro.process_file(xacro_file, mappings={'use_sim': 'true'})
