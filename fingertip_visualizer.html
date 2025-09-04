@@ -1,0 +1,808 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fingertip Pressure Sensor Visualizer</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            margin: 0;
+            padding: 20px;
+            min-height: 100vh;
+            color: white;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        h1 {
+            margin-bottom: 30px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .status {
+            background: rgba(255,255,255,0.1);
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            backdrop-filter: blur(10px);
+        }
+
+        .status.connected {
+            background: rgba(76, 175, 80, 0.2);
+            border: 2px solid #4CAF50;
+        }
+
+        .status.disconnected {
+            background: rgba(244, 67, 54, 0.2);
+            border: 2px solid #F44336;
+        }
+
+        .fingers-container {
+            display: flex;
+            flex-direction: row;
+            gap: 20px;
+            max-width: 1400px;
+            margin: 0 auto 30px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .finger-section {
+            background: rgba(255,255,255,0.05);
+            border-radius: 20px;
+            padding: 20px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.1);
+            min-width: 280px;
+            flex: 1;
+        }
+
+        .finger-title {
+            margin: 0 0 15px 0;
+            font-size: 18px;
+            color: #FFD700;
+            text-align: center;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+        }
+
+        .finger-sensors {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            max-width: 240px;
+            margin: 0 auto;
+        }
+
+        .pressure-sensor {
+            background: rgba(255,255,255,0.1);
+            border-radius: 12px;
+            padding: 15px;
+            text-align: center;
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255,255,255,0.2);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .pressure-sensor:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+        }
+
+        .sensor-number {
+            font-size: 16px;
+            font-weight: bold;
+            margin-bottom: 8px;
+            color: #FFD700;
+        }
+
+        .pressure-value {
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 4px;
+        }
+
+        .pressure-bar {
+            width: 100%;
+            height: 8px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 4px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .pressure-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #4CAF50, #8BC34A, #FFEB3B, #FF9800, #F44336);
+            transition: width 0.3s ease;
+            border-radius: 4px;
+        }
+
+        .finger-labels {
+            display: flex;
+            justify-content: space-between;
+            max-width: 1400px;
+            margin: 0 auto 20px;
+            font-size: 14px;
+            color: #FFD700;
+        }
+
+        .connection-controls {
+            margin-bottom: 30px;
+        }
+
+        button {
+            background: rgba(255,255,255,0.2);
+            border: 2px solid rgba(255,255,255,0.3);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 0 10px;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        button:hover {
+            background: rgba(255,255,255,0.3);
+            transform: translateY(-2px);
+        }
+
+        button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .data-info {
+            background: rgba(255,255,255,0.1);
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 20px;
+            backdrop-filter: blur(10px);
+            font-size: 14px;
+        }
+
+        .timestamp {
+            color: #FFD700;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🤖 Fingertip Pressure Sensor Visualizer</h1>
+
+        <div class="connection-controls">
+            <button id="connectBtn" onclick="connect()">Connect to ROS Bridge</button>
+            <button id="disconnectBtn" onclick="disconnect()" disabled>Disconnect</button>
+        </div>
+
+        <div id="status" class="status disconnected">
+            <strong>Status:</strong> <span id="statusText">Disconnected</span>
+        </div>
+
+        <div class="finger-labels">
+            <span>Thumb</span>
+            <span>Index</span>
+            <span>Middle</span>
+            <span>Ring</span>
+            <span>Pinky</span>
+        </div>
+
+        <div class="fingers-container">
+            <!-- Thumb Finger -->
+            <div class="finger-section">
+                <h3 class="finger-title">🖐️ Thumb (finger_sensor_1)</h3>
+                <div class="finger-sensors">
+                    <div class="pressure-sensor" id="sensor1">
+                        <div class="sensor-number">1</div>
+                        <div class="pressure-value" id="value1">0</div>
+                        <div class="pressure-bar">
+                            <div class="pressure-fill" id="bar1"></div>
+                        </div>
+                    </div>
+                    <div class="pressure-sensor" id="sensor2">
+                        <div class="sensor-number">2</div>
+                        <div class="pressure-value" id="value2">0</div>
+                        <div class="pressure-bar">
+                            <div class="pressure-fill" id="bar2"></div>
+                        </div>
+                    </div>
+                    <div class="pressure-sensor" id="sensor3">
+                        <div class="sensor-number">3</div>
+                        <div class="pressure-value" id="value3">0</div>
+                        <div class="pressure-bar">
+                            <div class="pressure-fill" id="bar3"></div>
+                        </div>
+                    </div>
+                    <div class="pressure-sensor" id="sensor4">
+                        <div class="sensor-number">4</div>
+                        <div class="pressure-value" id="value4">0</div>
+                        <div class="pressure-bar">
+                            <div class="pressure-fill" id="bar4"></div>
+                        </div>
+                    </div>
+                    <div class="pressure-sensor" id="sensor5">
+                        <div class="sensor-number">5</div>
+                        <div class="pressure-value" id="value5">0</div>
+                        <div class="pressure-bar">
+                            <div class="pressure-fill" id="bar5"></div>
+                        </div>
+                    </div>
+                    <div class="pressure-sensor" id="sensor6">
+                        <div class="sensor-number">6</div>
+                        <div class="pressure-value" id="value6">0</div>
+                        <div class="pressure-bar">
+                            <div class="pressure-fill" id="bar6"></div>
+                        </div>
+                    </div>
+                    <div class="pressure-sensor" id="sensor7">
+                        <div class="sensor-number">7</div>
+                        <div class="pressure-value" id="value7">0</div>
+                        <div class="pressure-bar">
+                            <div class="pressure-fill" id="bar7"></div>
+                        </div>
+                    </div>
+                    <div class="pressure-sensor" id="sensor8">
+                        <div class="sensor-number">8</div>
+                        <div class="pressure-value" id="value8">0</div>
+                        <div class="pressure-bar">
+                            <div class="pressure-fill" id="bar8"></div>
+                        </div>
+                    </div>
+                    <div class="pressure-sensor" id="sensor9">
+                        <div class="sensor-number">9</div>
+                        <div class="pressure-value" id="value9">0</div>
+                        <div class="pressure-bar">
+                            <div class="pressure-fill" id="bar9"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Index Finger -->
+            <div class="finger-section">
+                <h3 class="finger-title">👆 Index (finger_sensor_2)</h3>
+                <div class="finger-sensors">
+                    <div class="pressure-sensor" id="sensor10">
+                        <div class="sensor-number">1</div>
+                        <div class="pressure-value" id="value10">0</div>
+                        <div class="pressure-bar">
+                            <div class="pressure-fill" id="bar10"></div>
+                        </div>
+                    </div>
+                    <div class="pressure-sensor" id="sensor11">
+                        <div class="sensor-number">2</div>
+                        <div class="pressure-value" id="value11">0</div>
+                        <div class="pressure-bar">
+                            <div class="pressure-fill" id="bar11"></div>
+                        </div>
+                    </div>
+                    <div class="pressure-sensor" id="sensor12">
+                        <div class="sensor-number">3</div>
+                        <div class="pressure-value" id="value12">0</div>
+                        <div class="pressure-bar">
+                            <div class="pressure-fill" id="bar12"></div>
+                        </div>
+                    </div>
+                    <div class="pressure-sensor" id="sensor13">
+                        <div class="sensor-number">4</div>
+                        <div class="pressure-value" id="value13">0</div>
+                        <div class="pressure-bar">
+                            <div class="pressure-fill" id="bar13"></div>
+                        </div>
+                    </div>
+                    <div class="pressure-sensor" id="sensor14">
+                        <div class="sensor-number">5</div>
+                        <div class="pressure-value" id="value14">0</div>
+                        <div class="pressure-bar">
+                            <div class="pressure-fill" id="bar14"></div>
+                        </div>
+                    </div>
+                    <div class="pressure-sensor" id="sensor15">
+                        <div class="sensor-number">6</div>
+                        <div class="pressure-value" id="value15">0</div>
+                        <div class="pressure-bar">
+                            <div class="pressure-fill" id="bar15"></div>
+                        </div>
+                    </div>
+                    <div class="pressure-sensor" id="sensor16">
+                        <div class="sensor-number">7</div>
+                        <div class="pressure-value" id="value16">0</div>
+                        <div class="pressure-bar">
+                            <div class="pressure-fill" id="bar16"></div>
+                        </div>
+                    </div>
+                    <div class="pressure-sensor" id="sensor17">
+                        <div class="sensor-number">8</div>
+                        <div class="pressure-value" id="value17">0</div>
+                        <div class="pressure-bar">
+                            <div class="pressure-fill" id="bar17"></div>
+                        </div>
+                    </div>
+                    <div class="pressure-sensor" id="sensor18">
+                        <div class="sensor-number">9</div>
+                        <div class="pressure-value" id="value18">0</div>
+                        <div class="pressure-bar">
+                            <div class="pressure-fill" id="bar18"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Middle Finger -->
+            <div class="finger-section">
+                <h3 class="finger-title">🖕 Middle (finger_sensor_3)</h3>
+                <div class="finger-sensors">
+                    <div class="pressure-sensor" id="sensor19">
+                        <div class="sensor-number">1</div>
+                        <div class="pressure-value" id="value19">0</div>
+                        <div class="pressure-bar">
+                            <div class="pressure-fill" id="bar19"></div>
+                        </div>
+                    </div>
+                    <div class="pressure-sensor" id="sensor20">
+                        <div class="sensor-number">2</div>
+                        <div class="pressure-value" id="value20">0</div>
+                        <div class="pressure-bar">
+                            <div class="pressure-fill" id="bar20"></div>
+                        </div>
+                    </div>
+                    <div class="pressure-sensor" id="sensor21">
+                        <div class="sensor-number">3</div>
+                        <div class="pressure-value" id="value21">0</div>
+                        <div class="pressure-bar">
+                            <div class="pressure-fill" id="bar21"></div>
+                        </div>
+                    </div>
+                    <div class="pressure-sensor" id="sensor22">
+                        <div class="sensor-number">4</div>
+                        <div class="pressure-value" id="value22">0</div>
+                        <div class="pressure-bar">
+                            <div class="pressure-fill" id="bar22"></div>
+                        </div>
+                    </div>
+                    <div class="pressure-sensor" id="sensor23">
+                        <div class="sensor-number">5</div>
+                        <div class="pressure-value" id="value23">0</div>
+                        <div class="pressure-bar">
+                            <div class="pressure-fill" id="bar23"></div>
+                        </div>
+                    </div>
+                    <div class="pressure-sensor" id="sensor24">
+                        <div class="sensor-number">6</div>
+                        <div class="pressure-value" id="value24">0</div>
+                        <div class="pressure-bar">
+                            <div class="pressure-fill" id="bar24"></div>
+                        </div>
+                    </div>
+                    <div class="pressure-sensor" id="sensor25">
+                        <div class="sensor-number">7</div>
+                        <div class="pressure-value" id="value25">0</div>
+                        <div class="pressure-bar">
+                            <div class="pressure-fill" id="bar25"></div>
+                        </div>
+                    </div>
+                    <div class="pressure-sensor" id="sensor26">
+                        <div class="sensor-number">8</div>
+                        <div class="pressure-value" id="value26">0</div>
+                        <div class="pressure-bar">
+                            <div class="pressure-fill" id="bar26"></div>
+                        </div>
+                    </div>
+                    <div class="pressure-sensor" id="sensor27">
+                        <div class="sensor-number">9</div>
+                        <div class="pressure-value" id="value27">0</div>
+                        <div class="pressure-bar">
+                            <div class="pressure-fill" id="bar27"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Ring Finger -->
+            <div class="finger-section">
+                <h3 class="finger-title">💍 Ring (finger_sensor_4)</h3>
+                <div class="finger-sensors">
+                    <div class="pressure-sensor" id="sensor28">
+                        <div class="sensor-number">1</div>
+                        <div class="pressure-value" id="value28">0</div>
+                        <div class="pressure-bar">
+                            <div class="pressure-fill" id="bar28"></div>
+                        </div>
+                    </div>
+                    <div class="pressure-sensor" id="sensor29">
+                        <div class="sensor-number">2</div>
+                        <div class="pressure-value" id="value29">0</div>
+                        <div class="pressure-bar">
+                            <div class="pressure-fill" id="bar29"></div>
+                        </div>
+                    </div>
+                    <div class="pressure-sensor" id="sensor30">
+                        <div class="sensor-number">3</div>
+                        <div class="pressure-value" id="value30">0</div>
+                        <div class="pressure-bar">
+                            <div class="pressure-fill" id="bar30"></div>
+                        </div>
+                    </div>
+                    <div class="pressure-sensor" id="sensor31">
+                        <div class="sensor-number">4</div>
+                        <div class="pressure-value" id="value31">0</div>
+                        <div class="pressure-bar">
+                            <div class="pressure-fill" id="bar31"></div>
+                        </div>
+                    </div>
+                    <div class="pressure-sensor" id="sensor32">
+                        <div class="sensor-number">5</div>
+                        <div class="pressure-value" id="value32">0</div>
+                        <div class="pressure-bar">
+                            <div class="pressure-fill" id="bar32"></div>
+                        </div>
+                    </div>
+                    <div class="pressure-sensor" id="sensor33">
+                        <div class="sensor-number">6</div>
+                        <div class="pressure-value" id="value33">0</div>
+                        <div class="pressure-bar">
+                            <div class="pressure-fill" id="bar33"></div>
+                        </div>
+                    </div>
+                    <div class="pressure-sensor" id="sensor34">
+                        <div class="sensor-number">7</div>
+                        <div class="pressure-value" id="value34">0</div>
+                        <div class="pressure-bar">
+                            <div class="pressure-fill" id="bar34"></div>
+                        </div>
+                    </div>
+                    <div class="pressure-sensor" id="sensor35">
+                        <div class="sensor-number">8</div>
+                        <div class="pressure-value" id="value35">0</div>
+                        <div class="pressure-bar">
+                            <div class="pressure-fill" id="bar35"></div>
+                        </div>
+                    </div>
+                    <div class="pressure-sensor" id="sensor36">
+                        <div class="sensor-number">9</div>
+                        <div class="pressure-value" id="value36">0</div>
+                        <div class="pressure-bar">
+                            <div class="pressure-fill" id="bar36"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Pinky Finger -->
+            <div class="finger-section">
+                <h3 class="finger-title">🤏 Pinky (finger_sensor_5)</h3>
+                <div class="finger-sensors">
+                    <div class="pressure-sensor" id="sensor37">
+                        <div class="sensor-number">1</div>
+                        <div class="pressure-value" id="value37">0</div>
+                        <div class="pressure-bar">
+                            <div class="pressure-fill" id="bar37"></div>
+                        </div>
+                    </div>
+                    <div class="pressure-sensor" id="sensor38">
+                        <div class="sensor-number">2</div>
+                        <div class="pressure-value" id="value38">0</div>
+                        <div class="pressure-bar">
+                            <div class="pressure-fill" id="bar38"></div>
+                        </div>
+                    </div>
+                    <div class="pressure-sensor" id="sensor39">
+                        <div class="sensor-number">3</div>
+                        <div class="pressure-value" id="value39">0</div>
+                        <div class="pressure-bar">
+                            <div class="pressure-fill" id="bar39"></div>
+                        </div>
+                    </div>
+                    <div class="pressure-sensor" id="sensor40">
+                        <div class="sensor-number">4</div>
+                        <div class="pressure-value" id="value40">0</div>
+                        <div class="pressure-bar">
+                            <div class="pressure-fill" id="bar40"></div>
+                        </div>
+                    </div>
+                    <div class="pressure-sensor" id="sensor41">
+                        <div class="sensor-number">5</div>
+                        <div class="pressure-value" id="value41">0</div>
+                        <div class="pressure-bar">
+                            <div class="pressure-fill" id="bar41"></div>
+                        </div>
+                    </div>
+                    <div class="pressure-sensor" id="sensor42">
+                        <div class="sensor-number">6</div>
+                        <div class="pressure-value" id="value42">0</div>
+                        <div class="pressure-bar">
+                            <div class="pressure-fill" id="bar42"></div>
+                        </div>
+                    </div>
+                    <div class="pressure-sensor" id="sensor43">
+                        <div class="sensor-number">7</div>
+                        <div class="pressure-value" id="value43">0</div>
+                        <div class="pressure-bar">
+                            <div class="pressure-fill" id="bar43"></div>
+                        </div>
+                    </div>
+                    <div class="pressure-sensor" id="sensor44">
+                        <div class="sensor-number">8</div>
+                        <div class="pressure-value" id="value44">0</div>
+                        <div class="pressure-bar">
+                            <div class="pressure-fill" id="bar44"></div>
+                        </div>
+                    </div>
+                    <div class="pressure-sensor" id="sensor45">
+                        <div class="sensor-number">9</div>
+                        <div class="pressure-value" id="value45">0</div>
+                        <div class="pressure-bar">
+                            <div class="pressure-fill" id="bar45"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="data-info">
+            <div><strong>Topic:</strong> dynamic_joint_states</div>
+            <div><strong>Last Update:</strong> <span id="lastUpdate" class="timestamp">Never</span></div>
+            <div><strong>Pressure Range:</strong> 0 - 255</div>
+            <div><strong>Total Sensors:</strong> 45 (5 fingers × 9 sensors each)</div>
+        </div>
+    </div>
+
+    <script>
+        let ros = null;
+        let topic = null;
+        let isConnected = false;
+
+        function connect() {
+            // Check if ROSLIB is available
+            if (typeof ROSLIB === 'undefined') {
+                console.error('ROSLIB is not loaded');
+                updateStatus('ROSLIB.js Not Loaded - Please refresh page', false);
+                return;
+            }
+
+            try {
+                // Create ROS connection
+                ros = new ROSLIB.Ros({
+                    url: 'ws://127.0.0.1:9090'
+                });
+
+                ros.on('connection', function() {
+                    console.log('Connected to ROS bridge');
+                    isConnected = true;
+                    updateStatus('Connected', true);
+                    document.getElementById('connectBtn').disabled = true;
+                    document.getElementById('disconnectBtn').disabled = false;
+
+                    // Subscribe to the topic
+                    subscribeToTopic();
+                });
+
+                ros.on('error', function(error) {
+                    console.error('ROS connection error:', error);
+                    updateStatus('Connection Error', false);
+                });
+
+                ros.on('close', function() {
+                    console.log('ROS connection closed');
+                    isConnected = false;
+                    updateStatus('Disconnected', false);
+                    document.getElementById('connectBtn').disabled = false;
+                    document.getElementById('disconnectBtn').disabled = true;
+                });
+
+            } catch (error) {
+                console.error('Failed to create ROS connection:', error);
+                updateStatus('Connection Failed', false);
+            }
+        }
+
+        function disconnect() {
+            if (topic) {
+                topic.unsubscribe();
+                topic = null;
+            }
+            if (ros) {
+                ros.close();
+                ros = null;
+            }
+        }
+
+        function subscribeToTopic() {
+            if (!ros) return;
+
+            topic = new ROSLIB.Topic({
+                ros: ros,
+                name: '/dynamic_joint_states',
+                messageType: 'control_msgs/DynamicJointState'
+            });
+
+            topic.subscribe(function(message) {
+                console.log('Received message:', message);
+                processMessage(message);
+            });
+        }
+
+        function processMessage(message) {
+            try {
+                // Find the finger sensor data - 5 fingers × 9 sensors each
+                let pressureValues = new Array(45).fill(0);
+
+                // Find the indices of finger sensors in joint_names
+                const fingerSensorIndices = [];
+                for (let i = 0; i < message.joint_names.length; i++) {
+                    if (message.joint_names[i].startsWith('finger_sensor_')) {
+                        fingerSensorIndices.push(i);
+                    }
+                }
+
+                console.log('Found finger sensor indices:', fingerSensorIndices);
+
+                // Process each finger sensor's interface values
+                for (let fingerIndex = 0; fingerIndex < fingerSensorIndices.length; fingerIndex++) {
+                    const jointIndex = fingerSensorIndices[fingerIndex];
+                    const interface = message.interface_values[jointIndex];
+
+                    if (interface && interface.interface_names && interface.values) {
+                        // Each finger has 9 pressure sensors (1-9)
+                        for (let j = 0; j < interface.interface_names.length; j++) {
+                            const interfaceName = interface.interface_names[j];
+                            if (interfaceName.startsWith('Present Pressure ')) {
+                                const pressureNum = parseInt(interfaceName.split(' ')[2]);
+                                if (pressureNum >= 1 && pressureNum <= 9) {
+                                    // Calculate the global sensor index: fingerIndex * 9 + (pressureNum - 1)
+                                    const globalIndex = fingerIndex * 9 + (pressureNum - 1);
+                                    pressureValues[globalIndex] = interface.values[j] || 0;
+                                }
+                            }
+                        }
+                    }
+                }
+
+                console.log('Processed pressure values:', pressureValues);
+
+                // Update the visualization
+                updatePressureDisplay(pressureValues);
+                updateTimestamp();
+
+            } catch (error) {
+                console.error('Error processing message:', error);
+            }
+        }
+
+        function updatePressureDisplay(pressureValues) {
+            for (let i = 1; i <= 45; i++) {
+                const value = pressureValues[i - 1];
+                const valueElement = document.getElementById(`value${i}`);
+                const barElement = document.getElementById(`bar${i}`);
+                const sensorElement = document.getElementById(`sensor${i}`);
+
+                if (valueElement && barElement && sensorElement) {
+                    // Update value display
+                    valueElement.textContent = Math.round(value);
+
+                    // Update progress bar (0-255 to 0-100%)
+                    const percentage = Math.min((value / 255) * 100, 100);
+                    barElement.style.width = percentage + '%';
+
+                    // Update color based on pressure intensity
+                    updateSensorColor(sensorElement, value);
+                }
+            }
+        }
+
+        function updateSensorColor(sensorElement, value) {
+            // Remove existing color classes
+            sensorElement.classList.remove('low-pressure', 'medium-pressure', 'high-pressure');
+
+            // Add color class based on pressure value
+            if (value < 85) {
+                sensorElement.classList.add('low-pressure');
+                sensorElement.style.borderColor = '#4CAF50';
+            } else if (value < 170) {
+                sensorElement.classList.add('medium-pressure');
+                sensorElement.style.borderColor = '#FF9800';
+            } else {
+                sensorElement.classList.add('high-pressure');
+                sensorElement.style.borderColor = '#F44336';
+            }
+        }
+
+        function updateTimestamp() {
+            const now = new Date();
+            const timeString = now.toLocaleTimeString();
+            document.getElementById('lastUpdate').textContent = timeString;
+        }
+
+        function updateStatus(statusText, isConnected) {
+            document.getElementById('statusText').textContent = statusText;
+            const statusElement = document.getElementById('status');
+            statusElement.className = 'status ' + (isConnected ? 'connected' : 'disconnected');
+        }
+
+        // Load ROSLIB.js from CDN
+        function loadROSLib() {
+            const script = document.createElement('script');
+            // Try multiple CDN sources for better reliability
+            script.src = 'https://cdn.jsdelivr.net/npm/roslib@1.3.0/build/roslib.min.js';
+            script.onload = function() {
+                console.log('ROSLIB.js loaded successfully');
+                document.getElementById('connectBtn').disabled = false;
+            };
+            script.onerror = function() {
+                console.error('Failed to load ROSLIB.js from primary CDN, trying alternative...');
+                // Try alternative CDN
+                const altScript = document.createElement('script');
+                altScript.src = 'https://unpkg.com/roslib@1.3.0/build/roslib.min.js';
+                altScript.onload = function() {
+                    console.log('ROSLIB.js loaded successfully from alternative CDN');
+                    document.getElementById('connectBtn').disabled = false;
+                };
+                altScript.onerror = function() {
+                    console.error('Failed to load ROSLIB.js from all CDNs');
+                    updateStatus('ROSLIB.js Load Failed - Check internet connection', false);
+                    document.getElementById('connectBtn').disabled = true;
+                };
+                document.head.appendChild(altScript);
+            };
+            document.head.appendChild(script);
+        }
+
+        // Initialize when page loads
+        window.onload = function() {
+            loadROSLib();
+
+            // Add manual download option if CDN fails
+            setTimeout(function() {
+                if (typeof ROSLIB === 'undefined') {
+                    console.warn('ROSLIB not loaded, showing manual download option');
+                    showManualDownloadOption();
+                }
+            }, 5000); // Wait 5 seconds to check if library loaded
+        };
+
+        function showManualDownloadOption() {
+            const statusElement = document.getElementById('status');
+            statusElement.innerHTML = `
+                <strong>Status:</strong> <span id="statusText">ROSLIB.js Load Failed</span>
+                <br><br>
+                <strong>Manual Download Required:</strong>
+                <br>
+                <a href="https://github.com/RobotWebTools/roslibjs/releases" target="_blank" style="color: #FFD700; text-decoration: underline;">
+                    Download ROSLIB.js from GitHub
+                </a>
+                <br>
+                Then place roslib.min.js in the same folder as this HTML file.
+                <br>
+                <button onclick="loadLocalROSLib()" style="margin-top: 10px;">Try Local File</button>
+            `;
+            statusElement.className = 'status disconnected';
+        }
+
+        function loadLocalROSLib() {
+            const script = document.createElement('script');
+            script.src = './roslib.min.js';
+            script.onload = function() {
+                console.log('ROSLIB.js loaded successfully from local file');
+                document.getElementById('connectBtn').disabled = false;
+                updateStatus('Connected to Local ROSLIB.js', true);
+            };
+            script.onerror = function() {
+                console.error('Failed to load local ROSLIB.js');
+                updateStatus('Local ROSLIB.js Not Found', false);
+            };
+            document.head.appendChild(script);
+        }
+    </script>
+</body>
+</html>

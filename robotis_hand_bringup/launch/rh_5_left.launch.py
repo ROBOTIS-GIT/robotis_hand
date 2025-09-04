@@ -91,7 +91,7 @@ def generate_launch_description():
         PathJoinSubstitution([
             FindPackageShare('robotis_hand_description'),
             'urdf',
-            'rh_5_right.xacro',
+            'rh_5_left.xacro',
         ]),
         ' ',
         'prefix:=',
@@ -142,9 +142,10 @@ def generate_launch_description():
         package='controller_manager',
         executable='spawner',
         arguments=[
-            'hand_controller',
+            # 'hand_controller',
             'joint_state_broadcaster',
             'effort_controller',
+            'position_controller',
         ],
         output='both',
         parameters=[{'robot_description': urdf_file}],
@@ -196,11 +197,11 @@ def generate_launch_description():
             '-p', '50',
             '/effort_controller/commands',
             'std_msgs/msg/Float64MultiArray',
-            'data: [200.0, 200.0, 200.0, 200.0,'
-                    '200.0, 200.0, 200.0, 200.0,'
-                    '200.0, 200.0, 200.0, 200.0,'
-                    '200.0, 200.0, 200.0, 200.0,'
-                    '200.0, 200.0, 200.0, 200.0]',
+            'data: [100.0, 100.0, 100.0, 100.0,'
+                    '100.0, 100.0, 100.0, 100.0,'
+                    '100.0, 100.0, 100.0, 100.0,'
+                    '100.0, 100.0, 100.0, 100.0,'
+                    '100.0, 100.0, 100.0, 100.0]',
         ],
     )
 
@@ -219,6 +220,6 @@ def generate_launch_description():
             robot_state_publisher_node,
             delay_rviz_after_joint_state_broadcaster_spawner,
             delay_current_command_process_after_controllers,
-            delay_joint_trajectory_executor_after_controllers,
+            # delay_joint_trajectory_executor_after_controllers,
         ]
     )
