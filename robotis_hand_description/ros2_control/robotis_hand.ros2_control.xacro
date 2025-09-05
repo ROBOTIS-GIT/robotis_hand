@@ -574,10 +574,10 @@
         <param name="Position P Gain">1600</param>
         <param name="Position D Gain">5000</param>
         <param name="Startup Configuration">2</param>
-        <param name="Drive Mode">8</param>
+        <param name="Drive Mode">12</param>
         <param name="Bus Watchdog">0</param>
         <param name="Profile Velocity">20</param>
-        <param name="Profile Acceleration">50</param>
+        <param name="Profile Acceleration">10</param>
       </gpio>
       <gpio name="dxl2_init">
         <param name="type">controller</param>
@@ -585,10 +585,10 @@
         <param name="Position P Gain">1600</param>
         <param name="Position D Gain">5000</param>
         <param name="Startup Configuration">2</param>
-        <param name="Drive Mode">8</param>
+        <param name="Drive Mode">12</param>
         <param name="Bus Watchdog">0</param>
         <param name="Profile Velocity">20</param>
-        <param name="Profile Acceleration">50</param>
+        <param name="Profile Acceleration">10</param>
       </gpio>
       <gpio name="dxl3_init">
         <param name="type">controller</param>
@@ -596,10 +596,10 @@
         <param name="Position P Gain">1600</param>
         <param name="Position D Gain">5000</param>
         <param name="Startup Configuration">2</param>
-        <param name="Drive Mode">8</param>
+        <param name="Drive Mode">12</param>
         <param name="Bus Watchdog">0</param>
         <param name="Profile Velocity">20</param>
-        <param name="Profile Acceleration">50</param>
+        <param name="Profile Acceleration">10</param>
       </gpio>
       <gpio name="dxl4_init">
         <param name="type">controller</param>
@@ -607,10 +607,10 @@
         <param name="Position P Gain">1600</param>
         <param name="Position D Gain">5000</param>
         <param name="Startup Configuration">2</param>
-        <param name="Drive Mode">8</param>
+        <param name="Drive Mode">12</param>
         <param name="Bus Watchdog">0</param>
         <param name="Profile Velocity">20</param>
-        <param name="Profile Acceleration">50</param>
+        <param name="Profile Acceleration">10</param>
       </gpio>
 
       <gpio name="dxl6_init">
@@ -619,10 +619,10 @@
         <param name="Position P Gain">1600</param>
         <param name="Position D Gain">5000</param>
         <param name="Startup Configuration">2</param>
-        <param name="Drive Mode">8</param>
+        <param name="Drive Mode">12</param>
         <param name="Bus Watchdog">0</param>
         <param name="Profile Velocity">20</param>
-        <param name="Profile Acceleration">50</param>
+        <param name="Profile Acceleration">10</param>
       </gpio>
       <gpio name="dxl7_init">
         <param name="type">controller</param>
@@ -630,10 +630,10 @@
         <param name="Position P Gain">1600</param>
         <param name="Position D Gain">5000</param>
         <param name="Startup Configuration">2</param>
-        <param name="Drive Mode">8</param>
+        <param name="Drive Mode">12</param>
         <param name="Bus Watchdog">0</param>
         <param name="Profile Velocity">20</param>
-        <param name="Profile Acceleration">50</param>
+        <param name="Profile Acceleration">10</param>
       </gpio>
       <gpio name="dxl8_init">
         <param name="type">controller</param>
@@ -641,10 +641,10 @@
         <param name="Position P Gain">1600</param>
         <param name="Position D Gain">5000</param>
         <param name="Startup Configuration">2</param>
-        <param name="Drive Mode">8</param>
+        <param name="Drive Mode">12</param>
         <param name="Bus Watchdog">0</param>
         <param name="Profile Velocity">20</param>
-        <param name="Profile Acceleration">50</param>
+        <param name="Profile Acceleration">10</param>
       </gpio>
       <gpio name="dxl9_init">
         <param name="type">controller</param>
@@ -652,10 +652,10 @@
         <param name="Position P Gain">1600</param>
         <param name="Position D Gain">5000</param>
         <param name="Startup Configuration">2</param>
-        <param name="Drive Mode">8</param>
+        <param name="Drive Mode">12</param>
         <param name="Bus Watchdog">0</param>
         <param name="Profile Velocity">20</param>
-        <param name="Profile Acceleration">50</param>
+        <param name="Profile Acceleration">10</param>
       </gpio>
 
       <gpio name="dxl11_init">
@@ -664,10 +664,10 @@
         <param name="Position P Gain">1600</param>
         <param name="Position D Gain">5000</param>
         <param name="Startup Configuration">2</param>
-        <param name="Drive Mode">8</param>
+        <param name="Drive Mode">12</param>
         <param name="Bus Watchdog">0</param>
         <param name="Profile Velocity">20</param>
-        <param name="Profile Acceleration">50</param>
+        <param name="Profile Acceleration">10</param>
       </gpio>
       <gpio name="dxl12_init">
         <param name="type">controller</param>
@@ -675,10 +675,10 @@
         <param name="Position P Gain">1600</param>
         <param name="Position D Gain">5000</param>
         <param name="Startup Configuration">2</param>
-        <param name="Drive Mode">8</param>
+        <param name="Drive Mode">12</param>
         <param name="Bus Watchdog">0</param>
         <param name="Profile Velocity">20</param>
-        <param name="Profile Acceleration">50</param>
+        <param name="Profile Acceleration">10</param>
       </gpio>
       <gpio name="dxl13_init">
         <param name="type">controller</param>
@@ -686,10 +686,10 @@
         <param name="Position P Gain">1600</param>
         <param name="Position D Gain">5000</param>
         <param name="Startup Configuration">2</param>
-        <param name="Drive Mode">8</param>
+        <param name="Drive Mode">12</param>
         <param name="Bus Watchdog">0</param>
         <param name="Profile Velocity">20</param>
-        <param name="Profile Acceleration">50</param>
+        <param name="Profile Acceleration">10</param>
       </gpio>
       <gpio name="dxl14_init">
         <param name="type">controller</param>
@@ -697,10 +697,10 @@
         <param name="Position P Gain">1600</param>
         <param name="Position D Gain">5000</param>
         <param name="Startup Configuration">2</param>
-        <param name="Drive Mode">8</param>
+        <param name="Drive Mode">12</param>
         <param name="Bus Watchdog">0</param>
         <param name="Profile Velocity">20</param>
-        <param name="Profile Acceleration">50</param>
+        <param name="Profile Acceleration">10</param>
       </gpio>
 
       <gpio name="dxl16_init">
@@ -709,10 +709,10 @@
         <param name="Position P Gain">1600</param>
         <param name="Position D Gain">5000</param>
         <param name="Startup Configuration">2</param>
-        <param name="Drive Mode">8</param>
+        <param name="Drive Mode">12</param>
         <param name="Bus Watchdog">0</param>
         <param name="Profile Velocity">20</param>
-        <param name="Profile Acceleration">50</param>
+        <param name="Profile Acceleration">10</param>
       </gpio>
       <gpio name="dxl17_init">
         <param name="type">controller</param>
@@ -720,10 +720,10 @@
         <param name="Position P Gain">1600</param>
         <param name="Position D Gain">5000</param>
         <param name="Startup Configuration">2</param>
-        <param name="Drive Mode">8</param>
+        <param name="Drive Mode">12</param>
         <param name="Bus Watchdog">0</param>
         <param name="Profile Velocity">20</param>
-        <param name="Profile Acceleration">50</param>
+        <param name="Profile Acceleration">10</param>
       </gpio>
       <gpio name="dxl18_init">
         <param name="type">controller</param>
@@ -731,10 +731,10 @@
         <param name="Position P Gain">1600</param>
         <param name="Position D Gain">5000</param>
         <param name="Startup Configuration">2</param>
-        <param name="Drive Mode">8</param>
+        <param name="Drive Mode">12</param>
         <param name="Bus Watchdog">0</param>
         <param name="Profile Velocity">20</param>
-        <param name="Profile Acceleration">50</param>
+        <param name="Profile Acceleration">10</param>
       </gpio>
       <gpio name="dxl19_init">
         <param name="type">controller</param>
@@ -742,10 +742,10 @@
         <param name="Position P Gain">1600</param>
         <param name="Position D Gain">5000</param>
         <param name="Startup Configuration">2</param>
-        <param name="Drive Mode">8</param>
+        <param name="Drive Mode">12</param>
         <param name="Bus Watchdog">0</param>
         <param name="Profile Velocity">20</param>
-        <param name="Profile Acceleration">50</param>
+        <param name="Profile Acceleration">10</param>
       </gpio>
 
       <gpio name="dxl21_init">
@@ -754,10 +754,10 @@
         <param name="Position P Gain">1600</param>
         <param name="Position D Gain">5000</param>
         <param name="Startup Configuration">2</param>
-        <param name="Drive Mode">8</param>
+        <param name="Drive Mode">12</param>
         <param name="Bus Watchdog">0</param>
         <param name="Profile Velocity">20</param>
-        <param name="Profile Acceleration">50</param>
+        <param name="Profile Acceleration">10</param>
       </gpio>
       <gpio name="dxl22_init">
         <param name="type">controller</param>
@@ -765,10 +765,10 @@
         <param name="Position P Gain">1600</param>
         <param name="Position D Gain">5000</param>
         <param name="Startup Configuration">2</param>
-        <param name="Drive Mode">8</param>
+        <param name="Drive Mode">12</param>
         <param name="Bus Watchdog">0</param>
         <param name="Profile Velocity">20</param>
-        <param name="Profile Acceleration">50</param>
+        <param name="Profile Acceleration">10</param>
       </gpio>
       <gpio name="dxl23_init">
         <param name="type">controller</param>
@@ -776,10 +776,10 @@
         <param name="Position P Gain">1600</param>
         <param name="Position D Gain">5000</param>
         <param name="Startup Configuration">2</param>
-        <param name="Drive Mode">8</param>
+        <param name="Drive Mode">12</param>
         <param name="Bus Watchdog">0</param>
         <param name="Profile Velocity">20</param>
-        <param name="Profile Acceleration">50</param>
+        <param name="Profile Acceleration">10</param>
       </gpio>
       <gpio name="dxl24_init">
         <param name="type">controller</param>
@@ -787,10 +787,10 @@
         <param name="Position P Gain">1600</param>
         <param name="Position D Gain">5000</param>
         <param name="Startup Configuration">2</param>
-        <param name="Drive Mode">8</param>
+        <param name="Drive Mode">12</param>
         <param name="Bus Watchdog">0</param>
         <param name="Profile Velocity">20</param>
-        <param name="Profile Acceleration">50</param>
+        <param name="Profile Acceleration">10</param>
       </gpio>
 
       <gpio name="hand_controller">

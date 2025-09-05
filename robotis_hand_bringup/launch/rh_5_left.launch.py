@@ -69,7 +69,7 @@ def generate_launch_description():
         ),
         DeclareLaunchArgument(
             'init_position_file',
-            default_value='rh_5_initial_positions.yaml',
+            default_value='rh_5_left_initial_positions.yaml',
             description='Path to the initial position file',
         ),
     ]
@@ -114,7 +114,7 @@ def generate_launch_description():
     controller_manager_config = PathJoinSubstitution([
         FindPackageShare('robotis_hand_bringup'),
         'config',
-        'rh_5_hardware_controller_manager.yaml',
+        'robotis_hand_hardware_controller_manager.yaml',
     ])
 
     rviz_config_file = PathJoinSubstitution([
@@ -142,10 +142,10 @@ def generate_launch_description():
         package='controller_manager',
         executable='spawner',
         arguments=[
-            # 'hand_controller',
+            'hand_controller',
             'joint_state_broadcaster',
             'effort_controller',
-            'position_controller',
+            # 'position_controller',
         ],
         output='both',
         parameters=[{'robot_description': urdf_file}],
@@ -220,6 +220,6 @@ def generate_launch_description():
             robot_state_publisher_node,
             delay_rviz_after_joint_state_broadcaster_spawner,
             delay_current_command_process_after_controllers,
-            # delay_joint_trajectory_executor_after_controllers,
+            delay_joint_trajectory_executor_after_controllers,
         ]
     )

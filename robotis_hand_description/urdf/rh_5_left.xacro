@@ -29,7 +29,7 @@
 
   <gazebo>
     <plugin filename="gz_ros2_control-system" name="gz_ros2_control::GazeboSimROS2ControlPlugin">
-      <parameters>$(find robotis_hand_bringup)/config/rh_5_hardware_controller_manager.yaml</parameters>
+      <parameters>$(find robotis_hand_bringup)/config/robotis_hand_hardware_controller_manager.yaml</parameters>
     </plugin>
   </gazebo>
 

@@ -69,7 +69,7 @@ def generate_launch_description():
         ),
         DeclareLaunchArgument(
             'init_position_file',
-            default_value='rh_5_initial_positions.yaml',
+            default_value='rh_5_right_initial_positions.yaml',
             description='Path to the initial position file',
         ),
     ]
@@ -114,7 +114,7 @@ def generate_launch_description():
     controller_manager_config = PathJoinSubstitution([
         FindPackageShare('robotis_hand_bringup'),
         'config',
-        'rh_5_hardware_controller_manager.yaml',
+        'robotis_hand_hardware_controller_manager.yaml',
     ])
 
     rviz_config_file = PathJoinSubstitution([
