@@ -77,9 +77,9 @@ def generate_launch_description():
             arguments=['-d', rviz_config_file],
             output='screen',
         ),
-        Node(
-            package='joint_state_publisher_gui',
-            executable='joint_state_publisher_gui',
-            condition=IfCondition(use_gui),
-        ),
+        # Node(
+        #     package='joint_state_publisher_gui',
+        #     executable='joint_state_publisher_gui',
+        #     condition=IfCondition(use_gui),
+        # ),
     ])

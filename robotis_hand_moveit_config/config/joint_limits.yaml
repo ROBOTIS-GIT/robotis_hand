@@ -9,102 +9,135 @@ default_acceleration_scaling_factor: 0.1
 # Joint limits can be turned off with [has_velocity_limits, has_acceleration_limits]
 joint_limits:
   finger_joint_1:
+    has_position_limits: true
+    min_position: -2.2
+    max_position: 0.0
     has_velocity_limits: true
     max_velocity: 5.0
     has_acceleration_limits: true
     max_acceleration: 5.0
   finger_joint_2:
+    has_position_limits: true
+    min_position: -2.0
+    max_position: 0.3
     has_velocity_limits: true
     max_velocity: 5.0
     has_acceleration_limits: true
     max_acceleration: 5.0
   finger_joint_3:
+    has_position_limits: true
+    min_position: 0.0
+    max_position: 1.57
     has_velocity_limits: true
     max_velocity: 5.0
     has_acceleration_limits: true
     max_acceleration: 5.0
   finger_joint_4:
+    has_position_limits: true
+    min_position: 0.0
+    max_position: 1.57
     has_velocity_limits: true
     max_velocity: 5.0
     has_acceleration_limits: true
     max_acceleration: 5.0
   finger_joint_5:
+    has_position_limits: true
     has_velocity_limits: true
     max_velocity: 5.0
     has_acceleration_limits: true
     max_acceleration: 5.0
   finger_joint_6:
+    has_position_limits: true
     has_velocity_limits: true
     max_velocity: 5.0
     has_acceleration_limits: true
     max_acceleration: 5.0
   finger_joint_7:
+    has_position_limits: true
     has_velocity_limits: true
     max_velocity: 5.0
     has_acceleration_limits: true
     max_acceleration: 5.0
   finger_joint_8:
+    has_position_limits: true
     has_velocity_limits: true
     max_velocity: 5.0
     has_acceleration_limits: true
     max_acceleration: 5.0
   finger_joint_9:
+    has_position_limits: true
     has_velocity_limits: true
     max_velocity: 5.0
     has_acceleration_limits: true
     max_acceleration: 5.0
   finger_joint_10:
+    has_position_limits: true
     has_velocity_limits: true
     max_velocity: 5.0
     has_acceleration_limits: true
     max_acceleration: 5.0
   finger_joint_11:
+    has_position_limits: true
     has_velocity_limits: true
     max_velocity: 5.0
     has_acceleration_limits: true
     max_acceleration: 5.0
   finger_joint_12:
+    has_position_limits: true
     has_velocity_limits: true
     max_velocity: 5.0
     has_acceleration_limits: true
     max_acceleration: 5.0
   finger_joint_13:
+    has_position_limits: true
     has_velocity_limits: true
     max_velocity: 5.0
     has_acceleration_limits: true
     max_acceleration: 5.0
   finger_joint_14:
+    has_position_limits: true
     has_velocity_limits: true
     max_velocity: 5.0
     has_acceleration_limits: true
     max_acceleration: 5.0
   finger_joint_15:
+    has_position_limits: true
     has_velocity_limits: true
     max_velocity: 5.0
     has_acceleration_limits: true
     max_acceleration: 5.0
   finger_joint_16:
+    has_position_limits: true
     has_velocity_limits: true
     max_velocity: 5.0
     has_acceleration_limits: true
     max_acceleration: 5.0
   finger_joint_17:
+    has_position_limits: true
     has_velocity_limits: true
     max_velocity: 5.0
     has_acceleration_limits: true
     max_acceleration: 5.0
   finger_joint_18:
+    has_position_limits: true
     has_velocity_limits: true
     max_velocity: 5.0
     has_acceleration_limits: true
     max_acceleration: 5.0
   finger_joint_19:
+    has_position_limits: true
     has_velocity_limits: true
     max_velocity: 5.0
     has_acceleration_limits: true
     max_acceleration: 5.0
   finger_joint_20:
+    has_position_limits: true
     has_velocity_limits: true
     max_velocity: 5.0
     has_acceleration_limits: true
     max_acceleration: 5.0
+
+# Goal Tolerances for the entire planning group
+thumb:
+  goal_position_tolerance: 0.01
+  goal_orientation_tolerance: 0.01
