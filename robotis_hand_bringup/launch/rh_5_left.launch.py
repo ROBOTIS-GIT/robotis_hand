@@ -142,9 +142,9 @@ def generate_launch_description():
         package='controller_manager',
         executable='spawner',
         arguments=[
-            'hand_controller',
+            'left_hand_controller',
             'joint_state_broadcaster',
-            'effort_controller',
+            'left_effort_controller',
             # 'position_controller',
         ],
         output='both',
@@ -195,7 +195,7 @@ def generate_launch_description():
             '-r', '50',
             '-t', '50',
             '-p', '50',
-            '/effort_controller/commands',
+            '/left_effort_controller/commands',
             'std_msgs/msg/Float64MultiArray',
             'data: [100.0, 100.0, 100.0, 100.0,'
                     '100.0, 100.0, 100.0, 100.0,'

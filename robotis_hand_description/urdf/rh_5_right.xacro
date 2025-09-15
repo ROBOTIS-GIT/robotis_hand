@@ -9,7 +9,7 @@
 
   <xacro:include filename="$(find robotis_hand_description)/gazebo/robotis_hand.gazebo.xacro" />
 
-  <xacro:include filename="$(find robotis_hand_description)/ros2_control/robotis_hand.ros2_control.xacro" />
+  <xacro:include filename="$(find robotis_hand_description)/ros2_control/rh_5_right.ros2_control.xacro" />
 
   <link name="world"/>
 

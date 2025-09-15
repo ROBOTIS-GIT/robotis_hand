@@ -142,9 +142,9 @@ def generate_launch_description():
         package='controller_manager',
         executable='spawner',
         arguments=[
-            'hand_controller',
+            'right_hand_controller',
             'joint_state_broadcaster',
-            'effort_controller',
+            'right_effort_controller',
         ],
         output='both',
         parameters=[{'robot_description': urdf_file}],
@@ -194,7 +194,7 @@ def generate_launch_description():
             '-r', '50',
             '-t', '50',
             '-p', '50',
-            '/effort_controller/commands',
+            '/right_effort_controller/commands',
             'std_msgs/msg/Float64MultiArray',
             'data: [200.0, 200.0, 200.0, 200.0,'
                     '200.0, 200.0, 200.0, 200.0,'

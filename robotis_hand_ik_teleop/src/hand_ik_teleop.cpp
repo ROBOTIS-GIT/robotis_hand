@@ -40,14 +40,14 @@ void HandInverseKinematics::robot_description_callback(const std_msgs::msg::Stri
   RCLCPP_INFO(this->get_logger(), "KDL tree created with %d segments", tree_.getNrOfSegments());
 
   // Extract chain from tree
-  if (!tree_.getChain("rh_5_left_base", "finger_l_end_link1", left_thumb_chain_)) {
+  if (!tree_.getChain("rh_5_left_base", "finger_end_l_link1", left_thumb_chain_)) {
     RCLCPP_ERROR(this->get_logger(), "Failed to extract left chain from %s to %s",
-    "rh_5_left_base", "finger_l_end_link1");
+    "rh_5_left_base", "finger_end_l_link1");
   }
 
-  // if (!tree_.getChain("rh_5_right_base", "finger_r_end_link1", right_thumb_chain_)) {
+  // if (!tree_.getChain("rh_5_right_base", "finger_end_r_link1", right_thumb_chain_)) {
   //   RCLCPP_ERROR(this->get_logger(), "Failed to extract right chain from %s to %s",
-  //   "rh_5_right_base", "finger_r_end_link1");
+  //   "rh_5_right_base", "finger_end_r_link1");
   // }
 
   RCLCPP_INFO(this->get_logger(), "KDL left chain created with %d joints", left_thumb_chain_.getNrOfJoints());
@@ -131,8 +131,8 @@ void HandInverseKinematics::solve_ik(const std::shared_ptr<geometry_msgs::msg::P
 
     double thumb_joint_4 = -get_roll_pitch_yaw(quat_inverse(msg->poses[1].orientation), msg->poses[2].orientation, 'r');
 
-    KDL::JntArray initial_joint_positions(thumb_chain_.getNrOfJoints());
-    KDL::JntArray solution_joint_positions(thumb_chain_.getNrOfJoints());
+    KDL::JntArray initial_joint_positions(left_thumb_chain_.getNrOfJoints());
+    KDL::JntArray solution_joint_positions(left_thumb_chain_.getNrOfJoints());
 
     // Set initial joint positions for the ik solver
     for (unsigned int i = 0; i < n_joints_; ++i) {
@@ -156,7 +156,7 @@ void HandInverseKinematics::solve_ik(const std::shared_ptr<geometry_msgs::msg::P
       RCLCPP_WARN(this->get_logger(), "Solution: %.3f, %.3f, %.3f, %.3f", solution_joint_positions(0), solution_joint_positions(1), solution_joint_positions(2), solution_joint_positions(3));
       auto response = sensor_msgs::msg::JointState();
       response.header.stamp = this->get_clock()->now();
-      response.name = joint_names_;
+      response.name = left_joint_names_;
       response.position.resize(total_n_joints_);
       for (unsigned int i = 0; i < total_n_joints_; ++i)
       {
@@ -175,7 +175,7 @@ void HandInverseKinematics::solve_ik(const std::shared_ptr<geometry_msgs::msg::P
       RCLCPP_INFO(this->get_logger(), "Solution: %.3f, %.3f, %.3f, %.3f", solution_joint_positions(0), solution_joint_positions(1), solution_joint_positions(2), solution_joint_positions(3));
       auto response = sensor_msgs::msg::JointState();
       response.header.stamp = this->get_clock()->now();
-      response.name = joint_names_;
+      response.name = left_joint_names_;
       response.position.resize(total_n_joints_);
       for (unsigned int i = 0; i < total_n_joints_; ++i)
       {

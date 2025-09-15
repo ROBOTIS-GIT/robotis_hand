@@ -62,7 +62,7 @@ class TestPublisher(Node):
         )
 
         # self.publisher_ = self.create_publisher(JointState, '/joint_states', 10)
-        self.publisher_ = self.create_publisher(JointTrajectory, '/hand_controller/joint_trajectory', 10)
+        self.publisher_ = self.create_publisher(JointTrajectory, '/left_hand_controller/joint_trajectory', 10)
         # self.publisher_ = self.create_publisher(JointTrajectory, '/leader/joint_trajectory_command_broadcaster_left_hand/joint_trajectory', 10)
         self.timer_period = 0.005
         self.timer = self.create_timer(self.timer_period, self.timer_callback) # JointTrajectory
