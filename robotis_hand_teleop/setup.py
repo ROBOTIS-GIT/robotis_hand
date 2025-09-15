@@ -20,7 +20,9 @@ setup(
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
-            'hand_joint_state_publisher = robotis_hand_teleop.hand_joint_state_publisher:main'
+            'hand_joint_state_publisher = robotis_hand_teleop.hand_joint_state_publisher:main',
+            'test_publisher = robotis_hand_teleop.test_publisher:main',
+            'vr_publisher = robotis_hand_teleop.vr_publisher:main'
         ],
     },
 )

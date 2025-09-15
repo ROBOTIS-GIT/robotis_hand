@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<robot name="robotis_hand" xmlns:xacro="http://www.ros.org/wiki/xacro">
+<robot name="rh_5_right" xmlns:xacro="http://www.ros.org/wiki/xacro">
   <xacro:arg name="prefix" default="" />
   <xacro:arg name="use_sim" default="false" />
   <xacro:arg name="use_fake_hardware" default="false" />
@@ -15,7 +15,7 @@
 
   <joint name="$(arg prefix)world_fixed" type="fixed">
     <parent link="world"/>
-    <child link="$(arg prefix)robotis_hand_base"/>
+    <child link="$(arg prefix)rh_5_right_base"/>
     <origin xyz="0 0 0" rpy="0 0 0"/>
   </joint>
 

@@ -17,9 +17,7 @@
 
 #include <kdl/chain.hpp>
 #include <kdl/chainfksolverpos_recursive.hpp>
-#include <kdl/chainiksolvervel_pinv.hpp>
 #include <kdl/chainiksolverpos_nr_jl.hpp>
-#include <kdl/chainiksolverpos_lma.hpp>
 #include <kdl/frames.hpp>
 #include <kdl/jntarray.hpp>
 #include <kdl/tree.hpp>
@@ -33,12 +31,20 @@ public:
   HandInverseKinematics();
 
 protected:
-  std::vector<std::string> joint_names_ = {
-    "finger_joint_1", "finger_joint_2", "finger_joint_3", "finger_joint_4",
-    "finger_joint_5", "finger_joint_6", "finger_joint_7", "finger_joint_8",
-    "finger_joint_9", "finger_joint_10", "finger_joint_11", "finger_joint_12",
-    "finger_joint_13", "finger_joint_14", "finger_joint_15", "finger_joint_16",
-    "finger_joint_17", "finger_joint_18", "finger_joint_19", "finger_joint_20"
+  std::vector<std::string> left_joint_names_ = {
+    "finger_l_joint1", "finger_l_joint2", "finger_l_joint3", "finger_l_joint4",
+    "finger_l_joint5", "finger_l_joint6", "finger_l_joint7", "finger_l_joint8",
+    "finger_l_joint9", "finger_l_joint10", "finger_l_joint11", "finger_l_joint12",
+    "finger_l_joint13", "finger_l_joint14", "finger_l_joint15", "finger_l_joint16",
+    "finger_l_joint17", "finger_l_joint18", "finger_l_joint19", "finger_l_joint20"
+  };
+
+  std::vector<std::string> right_joint_names_ = {
+    "finger_r_joint1", "finger_r_joint2", "finger_r_joint3", "finger_r_joint4",
+    "finger_r_joint5", "finger_r_joint6", "finger_r_joint7", "finger_r_joint8",
+    "finger_r_joint9", "finger_r_joint10", "finger_r_joint11", "finger_r_joint12",
+    "finger_r_joint13", "finger_r_joint14", "finger_r_joint15", "finger_r_joint16",
+    "finger_r_joint17", "finger_r_joint18", "finger_r_joint19", "finger_r_joint20"
   };
 
   std::vector<float> min_joint_positions_ = {
@@ -55,16 +61,16 @@ protected:
   double thumb_length_offset = 0.02;
   float thumb_ik_x_offset = 0.01;
   float thumb_ik_y_offset = 0.0; //0.01;
-  float thumb_ik_z_offset = 0.02; //0.025;
+  float thumb_ik_z_offset = 0.025; //0.025;
 
   KDL::Tree tree_;
-  KDL::Chain thumb_chain_;
-  std::unique_ptr<KDL::ChainIkSolverPos_NR_JL> ik_solver_;
-  // std::unique_ptr<KDL::ChainIkSolverPos_LMA> ik_solver_;
+  KDL::Chain left_thumb_chain_;
+  KDL::Chain right_thumb_chain_;
 
+  std::unique_ptr<KDL::ChainIkSolverPos_NR_JL> ik_solver_;
   std::unique_ptr<KDL::ChainFkSolverPos_recursive> fk_solver_;
-  // std::unique_ptr<KDL::ChainIkSolverVel_pinv> ik_vel_solver_;
   std::unique_ptr<PositionOnlyIKVelSolver> ik_vel_solver_;
+
   KDL::JntArray q_min_;
   KDL::JntArray q_max_;
 

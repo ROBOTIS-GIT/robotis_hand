@@ -21,7 +21,8 @@ HandInverseKinematics::HandInverseKinematics()
 
   // Publisher
   joint_states_pub_ = this->create_publisher<sensor_msgs::msg::JointState>(
-    "/joint_states", 10);
+    "/left_thumb/joint_states", 10);
+    // "/joint_states", 10);
 
   hand_pub_ = this->create_publisher<geometry_msgs::msg::PoseStamped>(
     "/hand_ik_pose", 10);
@@ -39,16 +40,20 @@ void HandInverseKinematics::robot_description_callback(const std_msgs::msg::Stri
   RCLCPP_INFO(this->get_logger(), "KDL tree created with %d segments", tree_.getNrOfSegments());
 
   // Extract chain from tree
-  if (!tree_.getChain("robotis_hand_base", "finger_end_link_1", thumb_chain_)) {
-  // if (!tree_.getChain("robotis_hand_base", "finger_link_4", thumb_chain_)) {
-    RCLCPP_ERROR(this->get_logger(), "Failed to extract chain from %s to %s",
-    "robotis_hand_base", "finger_end_link_1");
-    // "robotis_hand_base", "finger_link_4");
+  if (!tree_.getChain("rh_5_left_base", "finger_l_end_link1", left_thumb_chain_)) {
+    RCLCPP_ERROR(this->get_logger(), "Failed to extract left chain from %s to %s",
+    "rh_5_left_base", "finger_l_end_link1");
   }
 
-  RCLCPP_INFO(this->get_logger(), "KDL chain created with %d joints", thumb_chain_.getNrOfJoints());
+  // if (!tree_.getChain("rh_5_right_base", "finger_r_end_link1", right_thumb_chain_)) {
+  //   RCLCPP_ERROR(this->get_logger(), "Failed to extract right chain from %s to %s",
+  //   "rh_5_right_base", "finger_r_end_link1");
+  // }
 
-  n_joints_ = thumb_chain_.getNrOfJoints();
+  RCLCPP_INFO(this->get_logger(), "KDL left chain created with %d joints", left_thumb_chain_.getNrOfJoints());
+  // RCLCPP_INFO(this->get_logger(), "KDL right chain created with %d joints", right_thumb_chain_.getNrOfJoints());
+
+  n_joints_ = left_thumb_chain_.getNrOfJoints();
   total_n_joints_ = tree_.getNrOfJoints();
 
   q_min_.resize(n_joints_);
@@ -59,13 +64,11 @@ void HandInverseKinematics::robot_description_callback(const std_msgs::msg::Stri
     q_max_(i) = max_joint_positions_[i];
   }
 
-  fk_solver_ = std::make_unique<KDL::ChainFkSolverPos_recursive>(thumb_chain_);
-  // ik_vel_solver_ = std::make_unique<KDL::ChainIkSolverVel_pinv>(thumb_chain_);
-  ik_vel_solver_ = std::make_unique<PositionOnlyIKVelSolver>(thumb_chain_);
+  fk_solver_ = std::make_unique<KDL::ChainFkSolverPos_recursive>(left_thumb_chain_);
+  ik_vel_solver_ = std::make_unique<PositionOnlyIKVelSolver>(left_thumb_chain_);
 
-  // ik_solver_ = std::make_unique<KDL::ChainIkSolverPos_LMA>(thumb_chain_);
   ik_solver_ = std::make_unique<KDL::ChainIkSolverPos_NR_JL>(
-    thumb_chain_, q_min_, q_max_, *fk_solver_, *ik_vel_solver_, 300, 1e-6);
+    left_thumb_chain_, q_min_, q_max_, *fk_solver_, *ik_vel_solver_, 300, 1e-6);
 
   setup_complete_ = true;
 
@@ -75,23 +78,23 @@ void HandInverseKinematics::robot_description_callback(const std_msgs::msg::Stri
 void HandInverseKinematics::solve_ik(const std::shared_ptr<geometry_msgs::msg::PoseArray> msg)
 {
   if (setup_complete_) {
-    geometry_msgs::msg::Quaternion target_quat = quat_multiply(quat_inverse(msg->poses[0].orientation), msg->poses[2].orientation);
+    geometry_msgs::msg::Quaternion target_quat = quat_multiply(quat_inverse(msg->poses[0].orientation), msg->poses[3].orientation);
     KDL::Frame target_pose;
     KDL::Rotation R_bw = KDL::Rotation::Quaternion(msg->poses[0].orientation.x,
                                                   msg->poses[0].orientation.y,
                                                   msg->poses[0].orientation.z,
                                                   msg->poses[0].orientation.w).Inverse();
 
-    KDL::Vector ip_tip = KDL::Vector(msg->poses[2].position.x - msg->poses[1].position.x,
-                                    msg->poses[2].position.y - msg->poses[1].position.y,
-                                    msg->poses[2].position.z - msg->poses[1].position.z);
+    KDL::Vector ip_tip = KDL::Vector(msg->poses[3].position.x - msg->poses[2].position.x,
+                                    msg->poses[3].position.y - msg->poses[2].position.y,
+                                    msg->poses[3].position.z - msg->poses[2].position.z);
 
     double mag = ip_tip.Norm();
 
     if (mag == 0) {
       RCLCPP_WARN(this->get_logger(), "Invalid Norm ip-tip");
-    } else {
-      RCLCPP_INFO(this->get_logger(), "Norm ip-tip : %f", mag);
+    // } else {
+    //   RCLCPP_INFO(this->get_logger(), "Norm ip-tip : %f", mag);
     }
 
     ip_tip = ip_tip * (thumb_length_offset/mag);
@@ -115,7 +118,7 @@ void HandInverseKinematics::solve_ik(const std::shared_ptr<geometry_msgs::msg::P
 
     auto pub_msg = geometry_msgs::msg::PoseStamped();
     pub_msg.header.stamp = this->get_clock()->now();
-    pub_msg.header.frame_id = "robotis_hand_base";
+    pub_msg.header.frame_id = "rh_5_left_base";
     pub_msg.pose.position.x = target_pose.p(0);
     pub_msg.pose.position.y = target_pose.p(1);
     pub_msg.pose.position.z = target_pose.p(2);
@@ -125,6 +128,8 @@ void HandInverseKinematics::solve_ik(const std::shared_ptr<geometry_msgs::msg::P
     pub_msg.pose.orientation.z = 0.0;
     pub_msg.pose.orientation.w = 1.0;
     hand_pub_->publish(pub_msg);
+
+    double thumb_joint_4 = -get_roll_pitch_yaw(quat_inverse(msg->poses[1].orientation), msg->poses[2].orientation, 'r');
 
     KDL::JntArray initial_joint_positions(thumb_chain_.getNrOfJoints());
     KDL::JntArray solution_joint_positions(thumb_chain_.getNrOfJoints());
@@ -139,7 +144,6 @@ void HandInverseKinematics::solve_ik(const std::shared_ptr<geometry_msgs::msg::P
     }
     // initial_joint_positions.data.setZero();
 
-    // RCLCPP_INFO(this->get_logger(), "IK SOLVER START");
     int solver_status = ik_solver_->CartToJnt(initial_joint_positions,
                                             target_pose,
                                             solution_joint_positions);
@@ -157,22 +161,15 @@ void HandInverseKinematics::solve_ik(const std::shared_ptr<geometry_msgs::msg::P
       for (unsigned int i = 0; i < total_n_joints_; ++i)
       {
           if (i < 3) {
-              response.position[i] = solution_joint_positions(i);
+            response.position[i] = solution_joint_positions(i);
+          } else if (i == 3) {
+            response.position[i] = std::min(max_joint_positions_[i], std::max(min_joint_positions_[i], static_cast<float>(thumb_joint_4)));
           } else {
-              response.position[i] = 0.0;
+            response.position[i] = 0.0;
           }
       }
       // Publish the joint state
       joint_states_pub_->publish(response);
-
-      // auto pub_msg = geometry_msgs::msg::PoseStamped();
-      // pub_msg.header.stamp = this->get_clock()->now();
-      // pub_msg.header.frame_id = "robotis_hand_base";
-      // pub_msg.pose.position.x = target_pose.p(0);
-      // pub_msg.pose.position.y = target_pose.p(1);
-      // pub_msg.pose.position.z = target_pose.p(2);
-      // pub_msg.pose.orientation = target_quat;
-      // hand_pub_->publish(pub_msg);
     } else {
       RCLCPP_INFO(this->get_logger(), "✅ IK solved");
       RCLCPP_INFO(this->get_logger(), "Solution: %.3f, %.3f, %.3f, %.3f", solution_joint_positions(0), solution_joint_positions(1), solution_joint_positions(2), solution_joint_positions(3));
