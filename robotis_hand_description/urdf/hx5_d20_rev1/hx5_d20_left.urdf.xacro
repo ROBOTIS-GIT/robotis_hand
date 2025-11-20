@@ -1,0 +1,818 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+   <xacro:macro name="hx5_d20_left" params="prefix">
+      <xacro:property name="meshes_file_direction" value="package://robotis_hand_description/meshes/hx5_d20_rev1/hx5_d20_left/" />
+      <link name="${prefix}hx5_d20_left_base">
+         <visual>
+            <origin xyz="0 0 0" rpy="0 0 0" />
+            <geometry>
+               <mesh filename="${meshes_file_direction}/hx5_d20_base_unit.stl" scale="0.001 0.001 0.001" />
+            </geometry>
+            <material name="grey">
+               <color rgba="0.2 0.2 0.2 1" />
+            </material>
+         </visual>
+         <collision>
+            <origin xyz="0 0 0" rpy="0 0 0" />
+            <geometry>
+               <mesh filename="${meshes_file_direction}/hx5_d20_base_unit.stl" scale="0.001 0.001 0.001" />
+            </geometry>
+            <material name="grey">
+               <color rgba="0.2 0.2 0.2 1" />
+            </material>
+         </collision>
+         <inertial>
+            <origin xyz="-1.6712049e-03 -1.2917175e-03 6.0855259e-02" />
+            <mass value="3.5303653e-01" />
+            <inertia ixx="5.9370227e-04" ixy="1.9045567e-06" ixz="-4.5830168e-06"
+            iyy="3.8516080e-04" iyz="2.0197014e-05"
+            izz="3.1555740e-04" />
+         </inertial>
+      </link>
+      <!-- THUMB -->
+      <joint name="${prefix}finger_l_joint1" type="revolute">
+         <parent link="${prefix}hx5_d20_left_base" />
+         <child link="${prefix}finger_l_link1" />
+         <origin xyz="0.0145 -0.02624 0.05394" rpy="0.523599 0 0" />
+         <axis xyz="0 0 1" />
+         <limit velocity="4.8" effort="1000" lower="0.0" upper="2.2" />
+         <dynamics damping="0.05" />
+      </joint>
+      <link name="${prefix}finger_l_link1">
+         <visual>
+            <origin xyz="0 0 0" rpy="0 0 0" />
+            <geometry>
+               <mesh filename="${meshes_file_direction}/hx5_d20_thumb_mcp.stl" scale="0.001 0.001 0.001" />
+            </geometry>
+            <material name="grey">
+               <color rgba="0.2 0.2 0.2 1" />
+            </material>
+         </visual>
+         <collision>
+            <origin xyz="0 0 0" rpy="0 0 0" />
+            <geometry>
+               <mesh filename="${meshes_file_direction}/hx5_d20_thumb_mcp.stl" scale="0.001 0.001 0.001" />
+            </geometry>
+            <material name="grey">
+               <color rgba="0.2 0.2 0.2 1" />
+            </material>
+         </collision>
+         <inertial>
+            <origin xyz="-3.5667993e-04 -1.3999343e-02 3.5920775e-04" />
+            <mass value="1.1760611e-02" />
+            <inertia ixx="1.3023455e-06" ixy="-5.3492769e-08" ixz="-1.5068343e-10"
+            iyy="1.0556381e-06" iyz="-5.3427751e-08"
+            izz="1.3024709e-06" />
+         </inertial>
+      </link>
+      <joint name="${prefix}finger_l_joint2" type="revolute">
+         <parent link="${prefix}finger_l_link1" />
+         <child link="${prefix}finger_l_link2" />
+         <origin xyz="0.0 -0.028 0.0" rpy="-0.523599 0 0" />
+         <axis xyz="1 0 0" />
+         <limit velocity="4.8" effort="1000" lower="-0.3" upper="2.0" />
+         <dynamics damping="0.05" />
+      </joint>
+      <link name="${prefix}finger_l_link2">
+         <visual>
+            <origin xyz="0 0 0" rpy="0 0 0" />
+            <geometry>
+               <mesh filename="${meshes_file_direction}/hx5_d20_thumb_mcp2.stl" scale="0.001 0.001 0.001" />
+            </geometry>
+            <material name="grey">
+               <color rgba="0.2 0.2 0.2 1" />
+            </material>
+         </visual>
+         <collision>
+            <origin xyz="0 0 0" rpy="0 0 0" />
+            <geometry>
+               <mesh filename="${meshes_file_direction}/hx5_d20_thumb_mcp2.stl" scale="0.001 0.001 0.001" />
+            </geometry>
+            <material name="grey">
+               <color rgba="0.2 0.2 0.2 1" />
+            </material>
+         </collision>
+         <inertial>
+            <origin xyz="1.1730962e-05 -1.3370146e-02 1.2381933e-02" />
+            <mass value="7.2148285e-02" />
+            <inertia ixx="2.0147275e-05" ixy="-1.4760922e-08" ixz="6.8034568e-09"
+            iyy="1.7510414e-05" iyz="1.6235264e-06"
+            izz="8.0461430e-06" />
+         </inertial>
+      </link>
+      <joint name="${prefix}finger_l_joint3" type="revolute">
+         <parent link="${prefix}finger_l_link2" />
+         <child link="${prefix}finger_l_link3" />
+         <origin xyz="0.0 -0.0145 0.035" rpy="0 0 0" />
+         <axis xyz="0 1 0" />
+         <limit velocity="4.8" effort="1000" lower="0.0" upper="1.57" />
+         <dynamics damping="0.05" />
+      </joint>
+      <link name="${prefix}finger_l_link3">
+         <visual>
+            <origin xyz="0 0 0" rpy="0 0 0" />
+            <geometry>
+               <mesh filename="${meshes_file_direction}/hx5_d20_thumb_ip.stl" scale="0.001 0.001 0.001" />
+            </geometry>
+            <material name="grey">
+               <color rgba="0.2 0.2 0.2 1" />
+            </material>
+         </visual>
+         <collision>
+            <origin xyz="0 0 0" rpy="0 0 0" />
+            <geometry>
+               <mesh filename="${meshes_file_direction}/hx5_d20_thumb_ip.stl" scale="0.001 0.001 0.001" />
+            </geometry>
+            <material name="grey">
+               <color rgba="0.2 0.2 0.2 1" />
+            </material>
+         </collision>
+         <inertial>
+            <origin xyz="-4.0805550e-06 -1.0146203e-04 2.4156485e-02" />
+            <mass value="3.4689700e-02" />
+            <inertia ixx="5.4029785e-06" ixy="5.4161055e-10" ixz="8.5483839e-10"
+            iyy="5.0370173e-06" iyz="-1.1035638e-07"
+            izz="2.2580703e-06" />
+         </inertial>
+      </link>
+      <joint name="${prefix}finger_l_joint4" type="revolute">
+         <parent link="${prefix}finger_l_link3" />
+         <child link="${prefix}finger_l_link4" />
+         <origin xyz="0.0 0.0 0.0355" rpy="0 0 0" />
+         <axis xyz="0 1 0" />
+         <limit velocity="4.8" effort="1000" lower="0.0" upper="1.57" />
+         <dynamics damping="0.05" />
+      </joint>
+      <link name="${prefix}finger_l_link4">
+         <visual>
+            <origin xyz="0 0 0" rpy="0 0 0" />
+            <geometry>
+               <mesh filename="${meshes_file_direction}/hx5_d20_thumb_tip.stl" scale="0.001 0.001 0.001" />
+            </geometry>
+            <material name="grey">
+               <color rgba="0.2 0.2 0.2 1" />
+            </material>
+         </visual>
+         <collision>
+            <origin xyz="0 0 0" rpy="0 0 0" />
+            <geometry>
+               <mesh filename="${meshes_file_direction}/hx5_d20_thumb_tip.stl" scale="0.001 0.001 0.001" />
+            </geometry>
+            <material name="grey">
+               <color rgba="0.2 0.2 0.2 1" />
+            </material>
+         </collision>
+         <inertial>
+            <origin xyz="7.1025148e-04 -1.4717103e-04 1.8098640e-02" />
+            <mass value="1.3637201e-02" />
+            <inertia ixx="2.2351803e-06" ixy="-3.2698952e-09" ixz="-1.4362365e-07"
+            iyy="2.0188065e-06" iyz="-5.9990689e-08"
+            izz="1.0814083e-06" />
+         </inertial>
+      </link>
+      <joint name="${prefix}finger_end_l_joint1" type="fixed">
+         <parent link="${prefix}finger_l_link4" />
+         <child link="${prefix}finger_end_l_link1" />
+         <origin xyz="0.0 0.0 0.02425" rpy="0 0 0" />
+      </joint>
+      <link name="${prefix}finger_end_l_link1">
+         <visual>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+            <box size="0.01 0.01 0.01" />
+            </geometry>
+            <material name="red">
+            <color rgba="1.0 0.0 0.0 1"/>
+            </material>
+         </visual>
+      </link>
+      <!-- INDEX -->
+      <joint name="${prefix}finger_l_joint5" type="revolute">
+         <parent link="${prefix}hx5_d20_left_base" />
+         <child link="${prefix}finger_l_link5" />
+         <origin xyz="-0.0015 -0.03608 0.09575" rpy="0 0 0" />
+         <axis xyz="1 0 0" />
+         <limit velocity="4.8" effort="1000" lower="-0.6" upper="0.6" />
+         <dynamics damping="0.05" />
+      </joint>
+      <link name="${prefix}finger_l_link5">
+         <visual>
+            <origin xyz="0 0 0" rpy="0 0 0" />
+            <geometry>
+               <mesh filename="${meshes_file_direction}/hx5_d20_finger_mcp.stl" scale="0.001 0.001 0.001" />
+            </geometry>
+            <material name="grey">
+               <color rgba="0.2 0.2 0.2 1" />
+            </material>
+         </visual>
+         <collision>
+            <origin xyz="0 0 0" rpy="0 0 0" />
+            <geometry>
+               <mesh filename="${meshes_file_direction}/hx5_d20_finger_mcp.stl" scale="0.001 0.001 0.001" />
+            </geometry>
+            <material name="grey">
+               <color rgba="0.2 0.2 0.2 1" />
+            </material>
+         </collision>
+         <inertial>
+            <origin xyz="5.2161821e-03 -1.8190051e-05 2.1122832e-02" />
+            <mass value="3.8746882e-02" />
+            <inertia ixx="3.5211189e-06" ixy="1.3625281e-08" ixz="-3.7225930e-07"
+            iyy="5.7770789e-06" iyz="1.1482566e-09"
+            izz="4.6967406e-06" />
+         </inertial>
+      </link>
+      <joint name="${prefix}finger_l_joint6" type="revolute">
+         <parent link="${prefix}finger_l_link5" />
+         <child link="${prefix}finger_l_link6" />
+         <origin xyz="0.0165 0.0 0.0235" rpy="0 0 0" />
+         <axis xyz="0 1 0" />
+         <limit velocity="4.8" effort="1000" lower="0.0" upper="2.0" />
+         <dynamics damping="0.05" />
+      </joint>
+      <link name="${prefix}finger_l_link6">
+         <visual>
+            <origin xyz="0 0 0" rpy="0 0 0" />
+            <geometry>
+               <mesh filename="${meshes_file_direction}/hx5_d20_finger_pip.stl" scale="0.001 0.001 0.001" />
+            </geometry>
+            <material name="grey">
+               <color rgba="0.2 0.2 0.2 1" />
+            </material>
+         </visual>
+         <collision>
+            <origin xyz="0 0 0" rpy="0 0 0" />
+            <geometry>
+               <mesh filename="${meshes_file_direction}/hx5_d20_finger_pip.stl" scale="0.001 0.001 0.001" />
+            </geometry>
+            <material name="grey">
+               <color rgba="0.2 0.2 0.2 1" />
+            </material>
+         </collision>
+         <inertial>
+            <origin xyz="4.080555000e-06 1.014620300e-04 2.415648500e-02" />
+            <mass value="3.468970000e-02" />
+            <inertia ixx="5.402978500e-06" ixy="5.416105500e-10" ixz="-8.548383300e-10"
+            iyy="5.037017300e-06" iyz="1.103563800e-07"
+            izz="2.258070300e-06" />
+         </inertial>
+      </link>
+      <joint name="${prefix}finger_l_joint7" type="revolute">
+         <parent link="${prefix}finger_l_link6" />
+         <child link="${prefix}finger_l_link7" />
+         <origin xyz="0.0 0.0 0.0355" rpy="0 0 0" />
+         <axis xyz="0 1 0" />
+         <limit velocity="4.8" effort="1000" lower="0.0" upper="1.57" />
+         <dynamics damping="0.05" />
+      </joint>
+      <link name="${prefix}finger_l_link7">
+         <visual>
+            <origin xyz="0 0 0" rpy="0 0 0" />
+            <geometry>
+               <mesh filename="${meshes_file_direction}/hx5_d20_finger_dip.stl" scale="0.001 0.001 0.001" />
+            </geometry>
+            <material name="grey">
+               <color rgba="0.2 0.2 0.2 1" />
+            </material>
+         </visual>
+         <collision>
+            <origin xyz="0 0 0" rpy="0 0 0" />
+            <geometry>
+               <mesh filename="${meshes_file_direction}/hx5_d20_finger_dip.stl" scale="0.001 0.001 0.001" />
+            </geometry>
+            <material name="grey">
+               <color rgba="0.2 0.2 0.2 1" />
+            </material>
+         </collision>
+         <inertial>
+            <origin xyz="4.080555000e-06 1.014620300e-04 2.415648500e-02" />
+            <mass value="3.468970000e-02" />
+            <inertia ixx="5.402978500e-06" ixy="5.416105500e-10" ixz="-8.548383900e-10"
+            iyy="5.037017300e-06" iyz="1.103563800e-07"
+            izz="2.258070300e-06" />
+         </inertial>
+      </link>
+      <joint name="${prefix}finger_l_joint8" type="revolute">
+         <parent link="${prefix}finger_l_link7" />
+         <child link="${prefix}finger_l_link8" />
+         <origin xyz="0.0 0.0 0.0355" rpy="0 0 0" />
+         <axis xyz="0 1 0" />
+         <limit velocity="4.8" effort="1000" lower="0.0" upper="1.57" />
+         <dynamics damping="0.05" />
+      </joint>
+      <link name="${prefix}finger_l_link8">
+         <visual>
+            <origin xyz="0 0 0" rpy="0 0 0" />
+            <geometry>
+               <mesh filename="${meshes_file_direction}/hx5_d20_finger_tip.stl" scale="0.001 0.001 0.001" />
+            </geometry>
+            <material name="grey">
+               <color rgba="0.2 0.2 0.2 1" />
+            </material>
+         </visual>
+         <collision>
+            <origin xyz="0 0 0" rpy="0 0 0" />
+            <geometry>
+               <mesh filename="${meshes_file_direction}/hx5_d20_finger_tip.stl" scale="0.001 0.001 0.001" />
+            </geometry>
+            <material name="grey">
+               <color rgba="0.2 0.2 0.2 1" />
+            </material>
+         </collision>
+         <inertial>
+            <origin xyz="7.102508500e-04 4.723840800e-04 1.809864000e-02" />
+            <mass value="1.363720100e-02" />
+            <inertia ixx="2.232432600e-06" ixy="2.731013800e-09" ixz="-1.436237900e-07"
+            iyy="2.018806500e-06" iyz="8.149987600e-08"
+            izz="1.078660600e-06" />
+         </inertial>
+      </link>
+      <joint name="${prefix}finger_end_l_joint2" type="fixed">
+         <parent link="${prefix}finger_l_link8" />
+         <child link="${prefix}finger_end_l_link2" />
+         <origin xyz="0.0 0.0 0.02425" rpy="0 0 0" />
+      </joint>
+      <link name="${prefix}finger_end_l_link2">
+         <visual>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+            <box size="0.01 0.01 0.01" />
+            </geometry>
+            <material name="red">
+            <color rgba="1.0 0.0 0.0 1"/>
+            </material>
+         </visual>
+      </link>
+      <!-- MIDDLE -->
+      <joint name="${prefix}finger_l_joint9" type="revolute">
+         <parent link="${prefix}hx5_d20_left_base" />
+         <child link="${prefix}finger_l_link9" />
+         <origin xyz="-0.0015 -0.00908 0.10353" rpy="0 0 0" />
+         <axis xyz="1 0 0" />
+         <limit velocity="4.8" effort="1000" lower="-0.6" upper="0.6" />
+         <dynamics damping="0.05" />
+      </joint>
+      <link name="${prefix}finger_l_link9">
+         <visual>
+            <origin xyz="0 0 0" rpy="0 0 0" />
+            <geometry>
+               <mesh filename="${meshes_file_direction}/hx5_d20_finger_mcp.stl" scale="0.001 0.001 0.001" />
+            </geometry>
+            <material name="grey">
+               <color rgba="0.2 0.2 0.2 1" />
+            </material>
+         </visual>
+         <collision>
+            <origin xyz="0 0 0" rpy="0 0 0" />
+            <geometry>
+               <mesh filename="${meshes_file_direction}/hx5_d20_finger_mcp.stl" scale="0.001 0.001 0.001" />
+            </geometry>
+            <material name="grey">
+               <color rgba="0.2 0.2 0.2 1" />
+            </material>
+         </collision>
+         <inertial>
+            <origin xyz="5.2161821e-03 -1.8190051e-05 2.1122832e-02" />
+            <mass value="3.8746882e-02" />
+            <inertia ixx="3.5211189e-06" ixy="1.3625281e-08" ixz="-3.7225930e-07"
+            iyy="5.7770789e-06" iyz="1.1482566e-09"
+            izz="4.6967406e-06" />
+         </inertial>
+      </link>
+      <joint name="${prefix}finger_l_joint10" type="revolute">
+         <parent link="${prefix}finger_l_link9" />
+         <child link="${prefix}finger_l_link10" />
+         <origin xyz="0.0165 0.0 0.0235" rpy="0 0 0" />
+         <axis xyz="0 1 0" />
+         <limit velocity="4.8" effort="1000" lower="0.0" upper="2.0" />
+         <dynamics damping="0.05" />
+      </joint>
+      <link name="${prefix}finger_l_link10">
+         <visual>
+            <origin xyz="0 0 0" rpy="0 0 0" />
+            <geometry>
+               <mesh filename="${meshes_file_direction}/hx5_d20_finger_pip.stl" scale="0.001 0.001 0.001" />
+            </geometry>
+            <material name="grey">
+               <color rgba="0.2 0.2 0.2 1" />
+            </material>
+         </visual>
+         <collision>
+            <origin xyz="0 0 0" rpy="0 0 0" />
+            <geometry>
+               <mesh filename="${meshes_file_direction}/hx5_d20_finger_pip.stl" scale="0.001 0.001 0.001" />
+            </geometry>
+            <material name="grey">
+               <color rgba="0.2 0.2 0.2 1" />
+            </material>
+         </collision>
+         <inertial>
+            <origin xyz="4.080555000e-06 1.014620300e-04 2.415648500e-02" />
+            <mass value="3.468970000e-02" />
+            <inertia ixx="5.402978500e-06" ixy="5.416105500e-10" ixz="-8.548383300e-10"
+            iyy="5.037017300e-06" iyz="1.103563800e-07"
+            izz="2.258070300e-06" />
+         </inertial>
+      </link>
+      <joint name="${prefix}finger_l_joint11" type="revolute">
+         <parent link="${prefix}finger_l_link10" />
+         <child link="${prefix}finger_l_link11" />
+         <origin xyz="0.0 0.0 0.0355" rpy="0 0 0" />
+         <axis xyz="0 1 0" />
+         <limit velocity="4.8" effort="1000" lower="0.0" upper="1.57" />
+         <dynamics damping="0.05" />
+      </joint>
+      <link name="${prefix}finger_l_link11">
+         <visual>
+            <origin xyz="0 0 0" rpy="0 0 0" />
+            <geometry>
+               <mesh filename="${meshes_file_direction}/hx5_d20_finger_dip.stl" scale="0.001 0.001 0.001" />
+            </geometry>
+            <material name="grey">
+               <color rgba="0.2 0.2 0.2 1" />
+            </material>
+         </visual>
+         <collision>
+            <origin xyz="0 0 0" rpy="0 0 0" />
+            <geometry>
+               <mesh filename="${meshes_file_direction}/hx5_d20_finger_dip.stl" scale="0.001 0.001 0.001" />
+            </geometry>
+            <material name="grey">
+               <color rgba="0.2 0.2 0.2 1" />
+            </material>
+         </collision>
+         <inertial>
+            <origin xyz="4.080555000e-06 1.014620300e-04 2.415648500e-02" />
+            <mass value="3.468970000e-02" />
+            <inertia ixx="5.402978500e-06" ixy="5.416105500e-10" ixz="-8.548383900e-10"
+            iyy="5.037017300e-06" iyz="1.103563800e-07"
+            izz="2.258070300e-06" />
+         </inertial>
+      </link>
+      <joint name="${prefix}finger_l_joint12" type="revolute">
+         <parent link="${prefix}finger_l_link11" />
+         <child link="${prefix}finger_l_link12" />
+         <origin xyz="0.0 0.0 0.0355" rpy="0 0 0" />
+         <axis xyz="0 1 0" />
+         <limit velocity="4.8" effort="1000" lower="0.0" upper="1.57" />
+         <dynamics damping="0.05" />
+      </joint>
+      <link name="${prefix}finger_l_link12">
+         <visual>
+            <origin xyz="0 0 0" rpy="0 0 0" />
+            <geometry>
+               <mesh filename="${meshes_file_direction}/hx5_d20_finger_tip.stl" scale="0.001 0.001 0.001" />
+            </geometry>
+            <material name="grey">
+               <color rgba="0.2 0.2 0.2 1" />
+            </material>
+         </visual>
+         <collision>
+            <origin xyz="0 0 0" rpy="0 0 0" />
+            <geometry>
+               <mesh filename="${meshes_file_direction}/hx5_d20_finger_tip.stl" scale="0.001 0.001 0.001" />
+            </geometry>
+            <material name="grey">
+               <color rgba="0.2 0.2 0.2 1" />
+            </material>
+         </collision>
+         <inertial>
+            <origin xyz="7.102508500e-04 4.723840800e-04 1.809864000e-02" />
+            <mass value="1.363720100e-02" />
+            <inertia ixx="2.232432600e-06" ixy="2.731013800e-09" ixz="-1.436237900e-07"
+            iyy="2.018806500e-06" iyz="8.149987600e-08"
+            izz="1.078660600e-06" />
+         </inertial>
+      </link>
+      <joint name="${prefix}finger_end_l_joint3" type="fixed">
+         <parent link="${prefix}finger_l_link12" />
+         <child link="${prefix}finger_end_l_link3" />
+         <origin xyz="0.0 0.0 0.02425" rpy="0 0 0" />
+      </joint>
+      <link name="${prefix}finger_end_l_link3">
+         <visual>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+            <box size="0.01 0.01 0.01" />
+            </geometry>
+            <material name="red">
+            <color rgba="1.0 0.0 0.0 1"/>
+            </material>
+         </visual>
+      </link>
+      <!-- RING -->
+      <joint name="${prefix}finger_l_joint13" type="revolute">
+         <parent link="${prefix}hx5_d20_left_base" />
+         <child link="${prefix}finger_l_link13" />
+         <origin xyz="-0.0015 0.01792 0.09775" rpy="0 0 0" />
+         <axis xyz="1 0 0" />
+         <limit velocity="4.8" effort="1000" lower="-0.6" upper="0.6" />
+         <dynamics damping="0.05" />
+      </joint>
+      <link name="${prefix}finger_l_link13">
+         <visual>
+            <origin xyz="0 0 0" rpy="0 0 0" />
+            <geometry>
+               <mesh filename="${meshes_file_direction}/hx5_d20_finger_mcp.stl" scale="0.001 0.001 0.001" />
+            </geometry>
+            <material name="grey">
+               <color rgba="0.2 0.2 0.2 1" />
+            </material>
+         </visual>
+         <collision>
+            <origin xyz="0 0 0" rpy="0 0 0" />
+            <geometry>
+               <mesh filename="${meshes_file_direction}/hx5_d20_finger_mcp.stl" scale="0.001 0.001 0.001" />
+            </geometry>
+            <material name="grey">
+               <color rgba="0.2 0.2 0.2 1" />
+            </material>
+         </collision>
+         <inertial>
+            <origin xyz="5.2161821e-03 -1.8190051e-05 2.1122832e-02" />
+            <mass value="3.8746882e-02" />
+            <inertia ixx="3.5211189e-06" ixy="1.3625281e-08" ixz="-3.7225930e-07"
+            iyy="5.7770789e-06" iyz="1.1482566e-09"
+            izz="4.6967406e-06" />
+         </inertial>
+      </link>
+      <joint name="${prefix}finger_l_joint14" type="revolute">
+         <parent link="${prefix}finger_l_link13" />
+         <child link="${prefix}finger_l_link14" />
+         <origin xyz="0.0165 0.0 0.0235" rpy="0 0 0" />
+         <axis xyz="0 1 0" />
+         <limit velocity="4.8" effort="1000" lower="0.0" upper="2.0" />
+         <dynamics damping="0.05" />
+      </joint>
+      <link name="${prefix}finger_l_link14">
+         <visual>
+            <origin xyz="0 0 0" rpy="0 0 0" />
+            <geometry>
+               <mesh filename="${meshes_file_direction}/hx5_d20_finger_pip.stl" scale="0.001 0.001 0.001" />
+            </geometry>
+            <material name="grey">
+               <color rgba="0.2 0.2 0.2 1" />
+            </material>
+         </visual>
+         <collision>
+            <origin xyz="0 0 0" rpy="0 0 0" />
+            <geometry>
+               <mesh filename="${meshes_file_direction}/hx5_d20_finger_pip.stl" scale="0.001 0.001 0.001" />
+            </geometry>
+            <material name="grey">
+               <color rgba="0.2 0.2 0.2 1" />
+            </material>
+         </collision>
+         <inertial>
+            <origin xyz="4.080555000e-06 1.014620300e-04 2.415648500e-02" />
+            <mass value="3.468970000e-02" />
+            <inertia ixx="5.402978500e-06" ixy="5.416105500e-10" ixz="-8.548383300e-10"
+            iyy="5.037017300e-06" iyz="1.103563800e-07"
+            izz="2.258070300e-06" />
+         </inertial>
+      </link>
+      <joint name="${prefix}finger_l_joint15" type="revolute">
+         <parent link="${prefix}finger_l_link14" />
+         <child link="${prefix}finger_l_link15" />
+         <origin xyz="0.0 0.0 0.0355" rpy="0 0 0" />
+         <axis xyz="0 1 0" />
+         <limit velocity="4.8" effort="1000" lower="0.0" upper="1.57" />
+         <dynamics damping="0.05" />
+      </joint>
+      <link name="${prefix}finger_l_link15">
+         <visual>
+            <origin xyz="0 0 0" rpy="0 0 0" />
+            <geometry>
+               <mesh filename="${meshes_file_direction}/hx5_d20_finger_dip.stl" scale="0.001 0.001 0.001" />
+            </geometry>
+            <material name="grey">
+               <color rgba="0.2 0.2 0.2 1" />
+            </material>
+         </visual>
+         <collision>
+            <origin xyz="0 0 0" rpy="0 0 0" />
+            <geometry>
+               <mesh filename="${meshes_file_direction}/hx5_d20_finger_dip.stl" scale="0.001 0.001 0.001" />
+            </geometry>
+            <material name="grey">
+               <color rgba="0.2 0.2 0.2 1" />
+            </material>
+         </collision>
+         <inertial>
+            <origin xyz="4.080555000e-06 1.014620300e-04 2.415648500e-02" />
+            <mass value="3.468970000e-02" />
+            <inertia ixx="5.402978500e-06" ixy="5.416105500e-10" ixz="-8.548383900e-10"
+            iyy="5.037017300e-06" iyz="1.103563800e-07"
+            izz="2.258070300e-06" />
+         </inertial>
+      </link>
+      <joint name="${prefix}finger_l_joint16" type="revolute">
+         <parent link="${prefix}finger_l_link15" />
+         <child link="${prefix}finger_l_link16" />
+         <origin xyz="0.0 0.0 0.0355" rpy="0 0 0" />
+         <axis xyz="0 1 0" />
+         <limit velocity="4.8" effort="1000" lower="0.0" upper="1.57" />
+         <dynamics damping="0.05" />
+      </joint>
+      <link name="${prefix}finger_l_link16">
+         <visual>
+            <origin xyz="0 0 0" rpy="0 0 0" />
+            <geometry>
+               <mesh filename="${meshes_file_direction}/hx5_d20_finger_tip.stl" scale="0.001 0.001 0.001" />
+            </geometry>
+            <material name="grey">
+               <color rgba="0.2 0.2 0.2 1" />
+            </material>
+         </visual>
+         <collision>
+            <origin xyz="0 0 0" rpy="0 0 0" />
+            <geometry>
+               <mesh filename="${meshes_file_direction}/hx5_d20_finger_tip.stl" scale="0.001 0.001 0.001" />
+            </geometry>
+            <material name="grey">
+               <color rgba="0.2 0.2 0.2 1" />
+            </material>
+         </collision>
+         <inertial>
+            <origin xyz="7.102508500e-04 4.723840800e-04 1.809864000e-02" />
+            <mass value="1.363720100e-02" />
+            <inertia ixx="2.232432600e-06" ixy="2.731013800e-09" ixz="-1.436237900e-07"
+            iyy="2.018806500e-06" iyz="8.149987600e-08"
+            izz="1.078660600e-06" />
+         </inertial>
+      </link>
+      <joint name="${prefix}finger_end_l_joint4" type="fixed">
+         <parent link="${prefix}finger_l_link16" />
+         <child link="${prefix}finger_end_l_link4" />
+         <origin xyz="0.0 0.0 0.02425" rpy="0 0 0" />
+      </joint>
+      <link name="${prefix}finger_end_l_link4">
+         <visual>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+            <box size="0.01 0.01 0.01" />
+            </geometry>
+            <material name="red">
+            <color rgba="1.0 0.0 0.0 1"/>
+            </material>
+         </visual>
+      </link>
+      <!-- PINKY -->
+      <joint name="${prefix}finger_l_joint17" type="revolute">
+         <parent link="${prefix}hx5_d20_left_base" />
+         <child link="${prefix}finger_l_link17" />
+         <origin xyz="-0.0015 0.04492 0.07875" rpy="0 0 0" />
+         <axis xyz="1 0 0" />
+         <limit velocity="4.8" effort="1000" lower="-0.6" upper="0.6" />
+         <dynamics damping="0.05" />
+      </joint>
+      <link name="${prefix}finger_l_link17">
+         <visual>
+            <origin xyz="0 0 0" rpy="0 0 0" />
+            <geometry>
+               <mesh filename="${meshes_file_direction}/hx5_d20_finger_mcp.stl" scale="0.001 0.001 0.001" />
+            </geometry>
+            <material name="grey">
+               <color rgba="0.2 0.2 0.2 1" />
+            </material>
+         </visual>
+         <collision>
+            <origin xyz="0 0 0" rpy="0 0 0" />
+            <geometry>
+               <mesh filename="${meshes_file_direction}/hx5_d20_finger_mcp.stl" scale="0.001 0.001 0.001" />
+            </geometry>
+            <material name="grey">
+               <color rgba="0.2 0.2 0.2 1" />
+            </material>
+         </collision>
+         <inertial>
+            <origin xyz="5.2161821e-03 -1.8190051e-05 2.1122832e-02" />
+            <mass value="3.8746882e-02" />
+            <inertia ixx="3.5211189e-06" ixy="1.3625281e-08" ixz="-3.7225930e-07"
+            iyy="5.7770789e-06" iyz="1.1482566e-09"
+            izz="4.6967406e-06" />
+         </inertial>
+      </link>
+      <joint name="${prefix}finger_l_joint18" type="revolute">
+         <parent link="${prefix}finger_l_link17" />
+         <child link="${prefix}finger_l_link18" />
+         <origin xyz="0.0165 0.0 0.0235" rpy="0 0 0" />
+         <axis xyz="0 1 0" />
+         <limit velocity="4.8" effort="1000" lower="0.0" upper="2.0" />
+         <dynamics damping="0.05" />
+      </joint>
+      <link name="${prefix}finger_l_link18">
+         <visual>
+            <origin xyz="0 0 0" rpy="0 0 0" />
+            <geometry>
+               <mesh filename="${meshes_file_direction}/hx5_d20_finger_pip.stl" scale="0.001 0.001 0.001" />
+            </geometry>
+            <material name="grey">
+               <color rgba="0.2 0.2 0.2 1" />
+            </material>
+         </visual>
+         <collision>
+            <origin xyz="0 0 0" rpy="0 0 0" />
+            <geometry>
+               <mesh filename="${meshes_file_direction}/hx5_d20_finger_pip.stl" scale="0.001 0.001 0.001" />
+            </geometry>
+            <material name="grey">
+               <color rgba="0.2 0.2 0.2 1" />
+            </material>
+         </collision>
+         <inertial>
+            <origin xyz="4.080555000e-06 1.014620300e-04 2.415648500e-02" />
+            <mass value="3.468970000e-02" />
+            <inertia ixx="5.402978500e-06" ixy="5.416105500e-10" ixz="-8.548383300e-10"
+            iyy="5.037017300e-06" iyz="1.103563800e-07"
+            izz="2.258070300e-06" />
+         </inertial>
+      </link>
+      <joint name="${prefix}finger_l_joint19" type="revolute">
+         <parent link="${prefix}finger_l_link18" />
+         <child link="${prefix}finger_l_link19" />
+         <origin xyz="0.0 0.0 0.0355" rpy="0 0 0" />
+         <axis xyz="0 1 0" />
+         <limit velocity="4.8" effort="1000" lower="0.0" upper="1.57" />
+         <dynamics damping="0.05" />
+      </joint>
+      <link name="${prefix}finger_l_link19">
+         <visual>
+            <origin xyz="0 0 0" rpy="0 0 0" />
+            <geometry>
+               <mesh filename="${meshes_file_direction}/hx5_d20_finger_dip.stl" scale="0.001 0.001 0.001" />
+            </geometry>
+            <material name="grey">
+               <color rgba="0.2 0.2 0.2 1" />
+            </material>
+         </visual>
+         <collision>
+            <origin xyz="0 0 0" rpy="0 0 0" />
+            <geometry>
+               <mesh filename="${meshes_file_direction}/hx5_d20_finger_dip.stl" scale="0.001 0.001 0.001" />
+            </geometry>
+            <material name="grey">
+               <color rgba="0.2 0.2 0.2 1" />
+            </material>
+         </collision>
+         <inertial>
+            <origin xyz="4.080555000e-06 1.014620300e-04 2.415648500e-02" />
+            <mass value="3.468970000e-02" />
+            <inertia ixx="5.402978500e-06" ixy="5.416105500e-10" ixz="-8.548383900e-10"
+            iyy="5.037017300e-06" iyz="1.103563800e-07"
+            izz="2.258070300e-06" />
+         </inertial>
+      </link>
+      <joint name="${prefix}finger_l_joint20" type="revolute">
+         <parent link="${prefix}finger_l_link19" />
+         <child link="${prefix}finger_l_link20" />
+         <origin xyz="0.0 0.0 0.0355" rpy="0 0 0" />
+         <axis xyz="0 1 0" />
+         <limit velocity="4.8" effort="1000" lower="0.0" upper="1.57" />
+         <dynamics damping="0.05" />
+      </joint>
+      <link name="${prefix}finger_l_link20">
+         <visual>
+            <origin xyz="0 0 0" rpy="0 0 0" />
+            <geometry>
+               <mesh filename="${meshes_file_direction}/hx5_d20_finger_tip.stl" scale="0.001 0.001 0.001" />
+            </geometry>
+            <material name="grey">
+               <color rgba="0.2 0.2 0.2 1" />
+            </material>
+         </visual>
+         <collision>
+            <origin xyz="0 0 0" rpy="0 0 0" />
+            <geometry>
+               <mesh filename="${meshes_file_direction}/hx5_d20_finger_tip.stl" scale="0.001 0.001 0.001" />
+            </geometry>
+            <material name="grey">
+               <color rgba="0.2 0.2 0.2 1" />
+            </material>
+         </collision>
+         <inertial>
+            <origin xyz="7.102508500e-04 4.723840800e-04 1.809864000e-02" />
+            <mass value="1.363720100e-02" />
+            <inertia ixx="2.232432600e-06" ixy="2.731013800e-09" ixz="-1.436237900e-07"
+            iyy="2.018806500e-06" iyz="8.149987600e-08"
+            izz="1.078660600e-06" />
+         </inertial>
+      </link>
+      <joint name="${prefix}finger_end_l_joint5" type="fixed">
+         <parent link="${prefix}finger_l_link20" />
+         <child link="${prefix}finger_end_l_link5" />
+         <origin xyz="0.0 0.0 0.02425" rpy="0 0 0" />
+      </joint>
+      <link name="${prefix}finger_end_l_link5">
+         <visual>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+            <box size="0.01 0.01 0.01" />
+            </geometry>
+            <material name="red">
+            <color rgba="1.0 0.0 0.0 1"/>
+            </material>
+         </visual>
+      </link>
+   </xacro:macro>
+</robot>

@@ -1,0 +1,27 @@
+services:
+  ai_hand:
+    container_name: ai_hand
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: robotis/ai_hand:latest
+    tty: true
+    restart: always
+    cap_add:
+      - SYS_NICE
+    ulimits:
+      rtprio: 99
+      rttime: -1
+      memlock: 8428281856
+    network_mode: host
+    environment:
+     - DISPLAY=${DISPLAY}
+     - QT_X11_NO_MITSHM=1
+    volumes:
+      - /dev:/dev
+      - ./workspace:/workspace
+      - /tmp/.X11-unix:/tmp/.X11-unix:rw
+      - /tmp/.docker.xauth:/tmp/.docker.xauth:rw
+      - ../:/root/ros2_ws/src/robotis_hand/
+    privileged: true
+    command: bash

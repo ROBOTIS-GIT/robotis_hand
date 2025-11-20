@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<package format="3">
+  <name>robotis_hand</name>
+  <version>0.1.0</version>
+  <description>
+    ROS messages packages for the ROBOTIS Hand (meta package)
+  </description>
+  <license>Apache 2.0</license>
+  <author email="wwj@robotis.com">Woojin Wie</author>
+  <author email="nhw@robotis.com">Hyunwoo Nam</author>
+  <maintainer email="pyo@robotis.com">Pyo</maintainer>
+  <url type="repository">https://github.com/ROBOTIS-GIT/robotis_hand</url>
+  <url type="bugtracker">https://github.com/ROBOTIS-GIT/robotis_hand/issues</url>
+  <buildtool_depend>ament_cmake</buildtool_depend>
+  <exec_depend>robotis_hand_bringup</exec_depend>
+  <exec_depend>robotis_hand_description</exec_depend>
+  <exec_depend>robotis_hand_moveit_config</exec_depend>
+  <export>
+    <build_type>ament_cmake</build_type>
+  </export>
+</package>
