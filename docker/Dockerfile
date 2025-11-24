@@ -1,5 +1,5 @@
 # Use the base ROS 2 Jazzy image
-FROM ros:jazzy-ros-base AS ai-hand
+FROM ros:jazzy-ros-base AS robotis-hand
 
 # Set environment variables
 ENV DEBIAN_FRONTEND=noninteractive

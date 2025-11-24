@@ -2,7 +2,7 @@
 
 # Get the directory where the script is located
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-CONTAINER_NAME="ai_hand"
+CONTAINER_NAME="robotis_hand"
 
 # Function to display help
 show_help() {
@@ -30,7 +30,17 @@ start_container() {
         echo "Warning: DISPLAY environment variable is not set. X11 forwarding will not be available."
     fi
 
-    echo "Starting container..."
+    # echo "Starting container..."
+    echo "Building images without cache and starting container..."
+
+    # Force a clean rebuild of the images, ignoring the cache
+    docker compose -f "${SCRIPT_DIR}/docker-compose.yml" build --no-cache
+
+    # Check the exit status of the build command
+    if [ $? -ne 0 ]; then
+        echo "Error: Docker image build failed. Aborting container start."
+        return 1
+    fi
 
     # Run docker-compose
     docker compose -f "${SCRIPT_DIR}/docker-compose.yml" up -d

@@ -28,10 +28,9 @@ from launch.actions import SetEnvironmentVariable
 from launch.event_handlers import OnProcessExit
 from launch.launch_description_sources import PythonLaunchDescriptionSource
 from launch.substitutions import LaunchConfiguration
-from launch_ros.actions import Node
-
 from launch.substitutions import PathJoinSubstitution
 from launch.substitutions import Command
+from launch_ros.actions import Node
 from launch_ros.descriptions import ParameterValue
 
 import xacro
@@ -77,13 +76,6 @@ def generate_launch_description():
 
     model = LaunchConfiguration('model')
 
-    # xacro_file = os.path.join(
-    #     robotis_hand_description_path,
-    #     'urdf',
-    #     model,
-    #     'hx5_d20_right.xacro',
-    # )
-
     xacro_file = PathJoinSubstitution([
         robotis_hand_description_path,
         'urdf',
@@ -104,17 +96,10 @@ def generate_launch_description():
         value_type=str
     )
 
-    # doc = xacro.process_file(xacro_file, mappings={'use_sim': 'true'})
-
-    # robot_desc = doc.toprettyxml(indent='  ')
-
-    # params = {'robot_description': robot_desc}
-
     node_robot_state_publisher = Node(
         package='robot_state_publisher',
         executable='robot_state_publisher',
         output='screen',
-        # parameters=[params],
         parameters=[
             {'robot_description': robot_desc_content}
         ]
@@ -126,7 +111,6 @@ def generate_launch_description():
         output='screen',
         arguments=[
             '-string',
-            # robot_desc,
             robot_desc_command,
             '-x',
             '0.0',

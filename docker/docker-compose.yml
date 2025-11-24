@@ -1,10 +1,10 @@
 services:
-  ai_hand:
-    container_name: ai_hand
+  robotis_hand:
+    container_name: robotis_hand
     build:
       context: .
       dockerfile: Dockerfile
-    image: robotis/ai_hand:latest
+    image: robotis/robotis_hand:latest
     tty: true
     restart: always
     cap_add:
