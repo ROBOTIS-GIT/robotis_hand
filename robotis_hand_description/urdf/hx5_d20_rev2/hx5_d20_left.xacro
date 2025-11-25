@@ -2,8 +2,8 @@
 <robot name="hx5_d20_left" xmlns:xacro="http://www.ros.org/wiki/xacro">
   <xacro:arg name="prefix" default="" />
   <xacro:arg name="use_sim" default="false" />
-  <xacro:arg name="use_fake_hardware" default="false" />
-  <xacro:arg name="fake_sensor_commands" default="false" />
+  <xacro:arg name="use_mock_hardware" default="false" />
+  <xacro:arg name="mock_sensor_commands" default="false" />
 
   <xacro:include filename="$(find robotis_hand_description)/urdf/hx5_d20_rev2/hx5_d20_left.urdf.xacro" />
 
@@ -24,8 +24,8 @@
 
   <xacro:robotis_hand_system
     name="RobotisHandSystem" prefix="$(arg prefix)" use_sim="$(arg use_sim)"
-    use_fake_hardware="$(arg use_fake_hardware)"
-    fake_sensor_commands="$(arg fake_sensor_commands)"/>
+    use_mock_hardware="$(arg use_mock_hardware)"
+    mock_sensor_commands="$(arg mock_sensor_commands)"/>
 
   <gazebo>
     <plugin filename="gz_ros2_control-system" name="gz_ros2_control::GazeboSimROS2ControlPlugin">

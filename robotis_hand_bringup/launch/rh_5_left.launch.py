@@ -14,7 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-# Author: Wonho Yun, Sungho Woo, Woojin Wie, Hyunwoo Nam
+# Author: Wonho Yun, Sungho Woo, Woojin Wie
 
 from launch import LaunchDescription
 from launch.actions import DeclareLaunchArgument
@@ -35,7 +35,7 @@ def generate_launch_description():
     # Declare launch arguments
     declared_arguments = [
         DeclareLaunchArgument(
-            'start_rviz', default_value='true', description='Whether to execute rviz2'
+            'start_rviz', default_value='false', description='Whether to execute rviz2'
         ),
         DeclareLaunchArgument(
             'prefix',
@@ -69,13 +69,8 @@ def generate_launch_description():
         ),
         DeclareLaunchArgument(
             'init_position_file',
-            default_value='hx5_d20_left_initial_positions.yaml',
+            default_value='rh_5_left_initial_positions.yaml',
             description='Path to the initial position file',
-        ),
-        DeclareLaunchArgument(
-            'model',
-            default_value='hx5_d20_rev2',
-            description='Robot model name'
         ),
     ]
 
@@ -88,7 +83,6 @@ def generate_launch_description():
     port_name = LaunchConfiguration('port_name')
     init_position = LaunchConfiguration('init_position')
     init_position_file = LaunchConfiguration('init_position_file')
-    model = LaunchConfiguration('model')
 
     # Generate URDF file using xacro
     urdf_file = Command([
@@ -97,8 +91,7 @@ def generate_launch_description():
         PathJoinSubstitution([
             FindPackageShare('robotis_hand_description'),
             'urdf',
-            model,
-            'hx5_d20_left.xacro',
+            'rh_5_left.xacro',
         ]),
         ' ',
         'prefix:=',
@@ -152,6 +145,7 @@ def generate_launch_description():
             'left_hand_controller',
             'joint_state_broadcaster',
             'left_effort_controller',
+            # 'position_controller',
         ],
         output='both',
         parameters=[{'robot_description': urdf_file}],
@@ -203,11 +197,11 @@ def generate_launch_description():
             '-p', '50',
             '/left_effort_controller/commands',
             'std_msgs/msg/Float64MultiArray',
-            'data: [200.0, 200.0, 200.0, 200.0,'
-                    '200.0, 200.0, 200.0, 200.0,'
-                    '200.0, 200.0, 200.0, 200.0,'
-                    '200.0, 200.0, 200.0, 200.0,'
-                    '200.0, 200.0, 200.0, 200.0]',
+            'data: [100.0, 100.0, 100.0, 100.0,'
+                    '100.0, 100.0, 100.0, 100.0,'
+                    '100.0, 100.0, 100.0, 100.0,'
+                    '100.0, 100.0, 100.0, 100.0,'
+                    '100.0, 100.0, 100.0, 100.0]',
         ],
     )
 
