@@ -30,17 +30,18 @@ start_container() {
         echo "Warning: DISPLAY environment variable is not set. X11 forwarding will not be available."
     fi
 
-    # echo "Starting container..."
-    echo "Building images without cache and starting container..."
+    echo "Starting robotis_hand container..."
 
-    # Force a clean rebuild of the images, ignoring the cache
-    docker compose -f "${SCRIPT_DIR}/docker-compose.yml" build --no-cache
+    # Copy udev rule for FTDI (U2D2)
+    sudo cp "${SCRIPT_DIR}/99-u2d2.rules" /etc/udev/rules.d/99-u2d2.rules
 
-    # Check the exit status of the build command
-    if [ $? -ne 0 ]; then
-        echo "Error: Docker image build failed. Aborting container start."
-        return 1
-    fi
+    # Reload udev rules
+    echo "Reloading udev rules..."
+    sudo udevadm control --reload-rules
+    sudo udevadm trigger
+
+    # Pull the latest images
+    docker compose -f "${SCRIPT_DIR}/docker-compose.yml" pull
 
     # Run docker-compose
     docker compose -f "${SCRIPT_DIR}/docker-compose.yml" up -d
