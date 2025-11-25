@@ -190,7 +190,7 @@
             <div class="pressure-sensor" id="sensor9"><div class="sensor-number">9</div><div class="pressure-value" id="value9">0</div><div class="pressure-bar"><div class="pressure-fill" id="bar9"></div></div></div>
           </div>
         </div>
-  
+
         <div class="finger-section" id="indexSection">
           <h3 class="finger-title">👆 Index (finger_sensor_2)</h3>
           <div class="finger-sensors">
@@ -205,7 +205,7 @@
             <div class="pressure-sensor" id="sensor18"><div class="sensor-number">9</div><div class="pressure-value" id="value18">0</div><div class="pressure-bar"><div class="pressure-fill" id="bar18"></div></div></div>
           </div>
         </div>
-  
+
         <div class="finger-section" id="middleSection">
           <h3 class="finger-title">🖕 Middle (finger_sensor_3)</h3>
           <div class="finger-sensors">
@@ -220,7 +220,7 @@
             <div class="pressure-sensor" id="sensor27"><div class="sensor-number">9</div><div class="pressure-value" id="value27">0</div><div class="pressure-bar"><div class="pressure-fill" id="bar27"></div></div></div>
           </div>
         </div>
-  
+
         <div class="finger-section" id="ringSection">
           <h3 class="finger-title">💍 Ring (finger_sensor_4)</h3>
           <div class="finger-sensors">
@@ -235,7 +235,7 @@
             <div class="pressure-sensor" id="sensor36"><div class="sensor-number">9</div><div class="pressure-value" id="value36">0</div><div class="pressure-bar"><div class="pressure-fill" id="bar36"></div></div></div>
           </div>
         </div>
-  
+
         <div class="finger-section" id="pinkySection">
           <h3 class="finger-title">🤏 Pinky (finger_sensor_5)</h3>
           <div class="finger-sensors">
@@ -250,22 +250,22 @@
             <div class="pressure-sensor" id="sensor45"><div class="sensor-number">9</div><div class="pressure-value" id="value45">0</div><div class="pressure-bar"><div class="pressure-fill" id="bar45"></div></div></div>
           </div>
         </div>
-  
+
       </div>
-  
+
     </div>
-  
+
     <script>
       let ros = null;
       let topic = null;
-  
+
       function connect() {
         if (typeof ROSLIB === 'undefined') {
           console.error('ROSLIB is not loaded');
           return;
         }
         try {
-          ros = new ROSLIB.Ros({ url: 'ws://127.0.0.1:9090' });
+          ros = new ROSLIB.Ros({ url: 'ws://127.0.0.1:40153' });
           ros.on('connection', function () {
             console.log('Connected to ROS Bridge');
             subscribeToTopic();
@@ -280,7 +280,7 @@
           console.error('Failed to create ROS connection:', err);
         }
       }
-  
+
       function subscribeToTopic() {
         if (!ros) return;
         topic = new ROSLIB.Topic({
@@ -292,25 +292,23 @@
           processMessage(message);
         });
       }
-  
+
       function processMessage(message) {
         try {
           const pressureValues = new Array(45).fill(0);
-          const fingerSensorIndices = [];
-          for (let i = 0; i < message.joint_names.length; i++) {
-            if (message.joint_names[i].startsWith('finger_sensor_')) {
-              fingerSensorIndices.push(i);
-            }
-          }
-          // Sort to ensure finger order: 1..5
-          fingerSensorIndices.sort((a, b) => {
-            const fa = parseInt(message.joint_names[a].split('_').pop(), 10);
-            const fb = parseInt(message.joint_names[b].split('_').pop(), 10);
-            return fa - fb;
-          });
-  
-          for (let fingerIndex = 0; fingerIndex < fingerSensorIndices.length; fingerIndex++) {
-            const jointIndex = fingerSensorIndices[fingerIndex];
+          const prefix = 'finger_r_sensor';
+          const sensorJointNames = [
+            `${prefix}1`,
+            `${prefix}2`,
+            `${prefix}3`,
+            `${prefix}4`,
+            `${prefix}5`
+          ];
+
+          for (let fingerIndex = 0; fingerIndex < sensorJointNames.length; fingerIndex++) {
+            const jointName = sensorJointNames[fingerIndex];
+            const jointIndex = message.joint_names.indexOf(jointName);
+            if (jointIndex === -1) continue;
             const iface = message.interface_values[jointIndex];
             if (iface && iface.interface_names && iface.values) {
               for (let j = 0; j < iface.interface_names.length; j++) {
@@ -331,7 +329,7 @@
           console.error('Error processing message:', e);
         }
       }
-  
+
       function updatePressureDisplay(vals) {
         for (let i = 1; i <= 45; i++) {
           const value = vals[i - 1] ?? 0;
@@ -349,24 +347,24 @@
           }
         }
       }
-  
+
       function updateTimestamp() {
         const now = new Date();
         document.getElementById('lastUpdate').textContent = now.toLocaleTimeString();
       }
-  
+
       // Load ROSLIB from CDN(s) and auto-connect
       (function loadROSLib() {
         const script = document.createElement('script');
         script.src = 'https://cdn.jsdelivr.net/npm/roslib@1.3.0/build/roslib.min.js';
-        script.onload = () => { 
+        script.onload = () => {
           console.log('ROSLIB loaded, connecting...');
           connect();
         };
         script.onerror = () => {
           const alt = document.createElement('script');
           alt.src = 'https://unpkg.com/roslib@1.3.0/build/roslib.min.js';
-          alt.onload = () => { 
+          alt.onload = () => {
             console.log('ROSLIB loaded from alt source, connecting...');
             connect();
           };
