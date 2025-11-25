@@ -201,7 +201,7 @@ def generate_launch_description():
             '-r', '50',
             '-t', '50',
             '-p', '50',
-            '/right_effort_controller/commands',
+            '/left_effort_controller/commands',
             'std_msgs/msg/Float64MultiArray',
             'data: [200.0, 200.0, 200.0, 200.0,'
                     '200.0, 200.0, 200.0, 200.0,'

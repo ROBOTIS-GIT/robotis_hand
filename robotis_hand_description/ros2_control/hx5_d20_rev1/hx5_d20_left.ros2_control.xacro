@@ -1035,7 +1035,7 @@
         <param name="comm_id">140</param>
         <param name="model_num">6017</param>
       </gpio>
-      <gpio name="dxl18">
+      <gpio name="dxl158">
         <command_interface name="Goal Position"/>
         <command_interface name="Goal Current"/>
         <state_interface name="Present Position"/>
