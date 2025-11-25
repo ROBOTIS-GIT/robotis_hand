@@ -76,22 +76,22 @@ def generate_launch_description():
 
     return LaunchDescription(
         declared_arguments + [
-        Node(
-            package='robot_state_publisher',
-            executable='robot_state_publisher',
-            parameters=[{'robot_description': urdf_file}],
-            output='screen',
-        ),
-        Node(
-            package='rviz2',
-            executable='rviz2',
-            arguments=['-d', rviz_config_file],
-            output='screen',
-        ),
-        Node(
-            package='joint_state_publisher_gui',
-            executable='joint_state_publisher_gui',
-            condition=IfCondition(use_gui),
-        ),
+            Node(
+                package='robot_state_publisher',
+                executable='robot_state_publisher',
+                parameters=[{'robot_description': urdf_file}],
+                output='screen',
+            ),
+            Node(
+                package='rviz2',
+                executable='rviz2',
+                arguments=['-d', rviz_config_file],
+                output='screen',
+            ),
+            Node(
+                package='joint_state_publisher_gui',
+                executable='joint_state_publisher_gui',
+                condition=IfCondition(use_gui),
+            ),
         ]
     )

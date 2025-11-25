@@ -27,9 +27,9 @@ from launch.actions import RegisterEventHandler
 from launch.actions import SetEnvironmentVariable
 from launch.event_handlers import OnProcessExit
 from launch.launch_description_sources import PythonLaunchDescriptionSource
+from launch.substitutions import Command
 from launch.substitutions import LaunchConfiguration
 from launch.substitutions import PathJoinSubstitution
-from launch.substitutions import Command
 from launch_ros.actions import Node
 from launch_ros.descriptions import ParameterValue
 
