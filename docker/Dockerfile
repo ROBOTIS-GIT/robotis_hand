@@ -1,5 +1,4 @@
-# Use the base ROS 2 Jazzy image
-FROM ros:jazzy-ros-base AS robotis-hand
+FROM ros:jazzy-ros-base
 
 # Set environment variables
 ENV DEBIAN_FRONTEND=noninteractive
@@ -29,5 +28,3 @@ RUN echo "source /opt/ros/${ROS_DISTRO}/setup.bash" >> ~/.bashrc  && \
     echo "source ${COLCON_WS}/install/setup.bash" >> ~/.bashrc  && \
     echo "alias cb='colcon build --symlink-install --cmake-args -DCMAKE_BUILD_TYPE=Release'" >> ~/.bashrc && \
     echo "export ROS_DOMAIN_ID=30" >> ~/.bashrc
-
-CMD ["bash"]
