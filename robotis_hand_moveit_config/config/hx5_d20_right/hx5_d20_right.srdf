@@ -76,11 +76,11 @@
         <joint name="finger_r_joint20" value="0"/>
     </group_state>
     <!--END EFFECTOR: Purpose: Represent information about an end effector.-->
-    <end_effector name="end_effector_thumb" parent_link="finger_end_link1" group="thumb"/>
-    <end_effector name="end_effector_index" parent_link="finger_end_link2" group="index"/>
-    <end_effector name="end_effector_middle" parent_link="finger_end_link3" group="middle"/>
-    <end_effector name="end_effector_ring" parent_link="finger_end_link4" group="ring"/>
-    <end_effector name="end_effector_pinky" parent_link="finger_end_link5" group="pinky"/>
+    <end_effector name="end_effector_thumb" parent_link="finger_end_r_link1" group="thumb"/>
+    <end_effector name="end_effector_index" parent_link="finger_end_r_link2" group="index"/>
+    <end_effector name="end_effector_middle" parent_link="finger_end_r_link3" group="middle"/>
+    <end_effector name="end_effector_ring" parent_link="finger_end_r_link4" group="ring"/>
+    <end_effector name="end_effector_pinky" parent_link="finger_end_r_link5" group="pinky"/>
     <!--DISABLE COLLISIONS: By default it is assumed that any link of the robot could potentially come into collision with any other link in the robot. This tag disables collision checking between a specified pair of links. -->
     <disable_collisions link1="finger_r_link1" link2="finger_r_link17" reason="Never"/>
     <disable_collisions link1="finger_r_link1" link2="finger_r_link2" reason="Adjacent"/>
