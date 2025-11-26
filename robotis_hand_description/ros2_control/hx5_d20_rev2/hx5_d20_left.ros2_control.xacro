@@ -366,7 +366,7 @@
         <param name="Reboot">1</param>
         <param name="Startup Configuration">2</param>
         <param name="Operating Mode">5</param>
-        <param name="Drive Mode">12</param>
+        <param name="Drive Mode">13</param>
         <param name="Bus Watchdog">100</param>
         <param name="Profile Velocity">100</param>
         <param name="Profile Acceleration">50</param>
@@ -414,7 +414,7 @@
         <param name="Reboot">1</param>
         <param name="Startup Configuration">2</param>
         <param name="Operating Mode">5</param>
-        <param name="Drive Mode">12</param>
+        <param name="Drive Mode">13</param>
         <param name="Bus Watchdog">100</param>
         <param name="Profile Velocity">100</param>
         <param name="Profile Acceleration">50</param>
@@ -437,7 +437,7 @@
         <param name="Reboot">1</param>
         <param name="Startup Configuration">2</param>
         <param name="Operating Mode">5</param>
-        <param name="Drive Mode">12</param>
+        <param name="Drive Mode">13</param>
         <param name="Bus Watchdog">100</param>
         <param name="Profile Velocity">100</param>
         <param name="Profile Acceleration">50</param>
