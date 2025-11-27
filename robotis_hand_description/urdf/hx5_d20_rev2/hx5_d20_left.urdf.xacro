@@ -163,11 +163,11 @@
             </material>
          </collision>
          <inertial>
-            <origin xyz="6.6604979e-05 -1.6824458e-02 2.2398502e-04" />
-            <mass value="4.3875236e-02" />
-            <inertia ixx="1.1160744e-05" ixy="-8.5593479e-09" ixz="-1.7171147e-09"
-            iyy="2.8079428e-06" iyz="3.0446511e-07"
-            izz="1.1343106e-05" />
+            <origin xyz="-1.7938916e-05 -1.6839136e-02 2.3602399e-04" />
+            <mass value="4.3781048e-02" />
+            <inertia ixx="1.1225495e-05" ixy="1.5543842e-08" ixz="5.8360810e-10"
+            iyy="2.7956646e-06" iyz="3.1575945e-07"
+            izz="1.1392997e-05" />
          </inertial>
       </link>
       <joint name="${prefix}finger_end_l_joint1" type="fixed">
