@@ -50,7 +50,7 @@ joint_limits:
     max_acceleration: 5.0
   finger_l_joint6:
     has_position_limits: true
-    min_position: 0.0
+    min_position: -0.1
     max_position: 2.0
     has_velocity_limits: true
     max_velocity: 5.0
@@ -58,7 +58,7 @@ joint_limits:
     max_acceleration: 5.0
   finger_l_joint7:
     has_position_limits: true
-    min_position: 0.0
+    min_position: -0.1
     max_position: 1.57
     has_velocity_limits: true
     max_velocity: 5.0
@@ -66,7 +66,7 @@ joint_limits:
     max_acceleration: 5.0
   finger_l_joint8:
     has_position_limits: true
-    min_position: 0.0
+    min_position: -0.1
     max_position: 1.57
     has_velocity_limits: true
     max_velocity: 5.0
@@ -82,7 +82,7 @@ joint_limits:
     max_acceleration: 5.0
   finger_l_joint10:
     has_position_limits: true
-    min_position: 0.0
+    min_position: -0.1
     max_position: 2.0
     has_velocity_limits: true
     max_velocity: 5.0
@@ -90,7 +90,7 @@ joint_limits:
     max_acceleration: 5.0
   finger_l_joint11:
     has_position_limits: true
-    min_position: 0.0
+    min_position: -0.1
     max_position: 1.57
     has_velocity_limits: true
     max_velocity: 5.0
@@ -98,7 +98,7 @@ joint_limits:
     max_acceleration: 5.0
   finger_l_joint12:
     has_position_limits: true
-    min_position: 0.0
+    min_position: -0.1
     max_position: 1.57
     has_velocity_limits: true
     max_velocity: 5.0
@@ -114,7 +114,7 @@ joint_limits:
     max_acceleration: 5.0
   finger_l_joint14:
     has_position_limits: true
-    min_position: 0.0
+    min_position: -0.1
     max_position: 2.0
     has_velocity_limits: true
     max_velocity: 5.0
@@ -122,7 +122,7 @@ joint_limits:
     max_acceleration: 5.0
   finger_l_joint15:
     has_position_limits: true
-    min_position: 0.0
+    min_position: -0.1
     max_position: 1.57
     has_velocity_limits: true
     max_velocity: 5.0
@@ -130,7 +130,7 @@ joint_limits:
     max_acceleration: 5.0
   finger_l_joint16:
     has_position_limits: true
-    min_position: 0.0
+    min_position: -0.1
     max_position: 1.57
     has_velocity_limits: true
     max_velocity: 5.0
@@ -146,7 +146,7 @@ joint_limits:
     max_acceleration: 5.0
   finger_l_joint18:
     has_position_limits: true
-    min_position: 0.0
+    min_position: -0.1
     max_position: 2.0
     has_velocity_limits: true
     max_velocity: 5.0
@@ -154,7 +154,7 @@ joint_limits:
     max_acceleration: 5.0
   finger_l_joint19:
     has_position_limits: true
-    min_position: 0.0
+    min_position: -0.1
     max_position: 1.57
     has_velocity_limits: true
     max_velocity: 5.0
@@ -162,7 +162,7 @@ joint_limits:
     max_acceleration: 5.0
   finger_l_joint20:
     has_position_limits: true
-    min_position: 0.0
+    min_position: -0.1
     max_position: 1.57
     has_velocity_limits: true
     max_velocity: 5.0
