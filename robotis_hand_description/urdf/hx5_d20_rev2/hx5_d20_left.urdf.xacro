@@ -190,7 +190,7 @@
       <joint name="${prefix}finger_l_joint5" type="revolute">
          <parent link="${prefix}hx5_d20_left_base" />
          <child link="${prefix}finger_l_link5" />
-         <origin xyz="-0.0015 -0.03608 0.09575" rpy="0 0 0" />
+         <origin xyz="-0.0015 -0.03608 0.10275" rpy="0 0 0" />
          <axis xyz="1 0 0" />
          <limit velocity="4.8" effort="1000" lower="-0.6" upper="0.6" />
          <dynamics damping="0.05" />
@@ -347,7 +347,7 @@
       <joint name="${prefix}finger_l_joint9" type="revolute">
          <parent link="${prefix}hx5_d20_left_base" />
          <child link="${prefix}finger_l_link9" />
-         <origin xyz="-0.0015 -0.00908 0.10353" rpy="0 0 0" />
+         <origin xyz="-0.0015 -0.00908 0.11053" rpy="0 0 0" />
          <axis xyz="1 0 0" />
          <limit velocity="4.8" effort="1000" lower="-0.6" upper="0.6" />
          <dynamics damping="0.05" />
@@ -504,7 +504,7 @@
       <joint name="${prefix}finger_l_joint13" type="revolute">
          <parent link="${prefix}hx5_d20_left_base" />
          <child link="${prefix}finger_l_link13" />
-         <origin xyz="-0.0015 0.01792 0.09775" rpy="0 0 0" />
+         <origin xyz="-0.0015 0.01792 0.10475" rpy="0 0 0" />
          <axis xyz="1 0 0" />
          <limit velocity="4.8" effort="1000" lower="-0.6" upper="0.6" />
          <dynamics damping="0.05" />
@@ -661,7 +661,7 @@
       <joint name="${prefix}finger_l_joint17" type="revolute">
          <parent link="${prefix}hx5_d20_left_base" />
          <child link="${prefix}finger_l_link17" />
-         <origin xyz="-0.0015 0.04492 0.07875" rpy="0 0 0" />
+         <origin xyz="-0.0015 0.04492 0.08575" rpy="0 0 0" />
          <axis xyz="1 0 0" />
          <limit velocity="4.8" effort="1000" lower="-0.6" upper="0.6" />
          <dynamics damping="0.05" />
