@@ -176,4 +176,5 @@
     <disable_collisions link1="finger_l_link7" link2="hx5_d20_left_base" reason="Never"/>
     <disable_collisions link1="finger_l_link8" link2="finger_l_link9" reason="Never"/>
     <disable_collisions link1="finger_l_link9" link2="hx5_d20_left_base" reason="Adjacent"/>
+    <disable_collisions link1="finger_l_link2" link2="hx5_d20_left_base" reason="Never"/>
 </robot>
