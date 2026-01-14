@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <package format="3">
   <name>robotis_hand</name>
-  <version>0.0.1</version>
+  <version>0.0.2</version>
   <description>
     ROS messages packages for the ROBOTIS Hand (meta package)
   </description>

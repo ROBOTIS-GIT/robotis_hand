@@ -2,7 +2,7 @@
 Changelog for package robotis_hand_description
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-0.0.2 (2026-1-14)
+0.0.2 (2026-01-14)
 ------------------
 * Fixed robot description files for hx5_d20_rev2
 * Contributors: Hyunwoo Nam

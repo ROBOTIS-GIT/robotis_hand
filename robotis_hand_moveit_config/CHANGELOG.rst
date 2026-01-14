@@ -2,7 +2,7 @@
 Changelog for package robotis_hand_moveit_config
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-0.0.2 (2026-1-14)
+0.0.2 (2026-01-14)
 ------------------
 * Fixed moveit_config srdf files for correct disable_collisions settings
 * Contributors: Hyunwoo Nam

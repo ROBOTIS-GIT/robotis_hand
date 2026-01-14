@@ -2,7 +2,7 @@
 Changelog for package robotis_hand
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-0.0.2 (2026-1-14)
+0.0.2 (2026-01-14)
 ------------------
 * Fixed moveit_config srdf files for correct disable_collisions settings
 * Fixed robot description files for hx5_d20_rev2
