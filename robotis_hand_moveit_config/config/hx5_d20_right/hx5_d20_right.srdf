@@ -82,26 +82,99 @@
     <end_effector name="end_effector_ring" parent_link="finger_end_r_link4" group="ring"/>
     <end_effector name="end_effector_pinky" parent_link="finger_end_r_link5" group="pinky"/>
     <!--DISABLE COLLISIONS: By default it is assumed that any link of the robot could potentially come into collision with any other link in the robot. This tag disables collision checking between a specified pair of links. -->
+    <disable_collisions link1="finger_r_link1" link2="finger_r_link10" reason="Never"/>
+    <disable_collisions link1="finger_r_link1" link2="finger_r_link11" reason="Never"/>
+    <disable_collisions link1="finger_r_link1" link2="finger_r_link13" reason="Never"/>
+    <disable_collisions link1="finger_r_link1" link2="finger_r_link14" reason="Never"/>
+    <disable_collisions link1="finger_r_link1" link2="finger_r_link15" reason="Never"/>
+    <disable_collisions link1="finger_r_link1" link2="finger_r_link16" reason="Never"/>
     <disable_collisions link1="finger_r_link1" link2="finger_r_link17" reason="Never"/>
+    <disable_collisions link1="finger_r_link1" link2="finger_r_link18" reason="Never"/>
+    <disable_collisions link1="finger_r_link1" link2="finger_r_link19" reason="Never"/>
     <disable_collisions link1="finger_r_link1" link2="finger_r_link2" reason="Adjacent"/>
+    <disable_collisions link1="finger_r_link1" link2="finger_r_link20" reason="Never"/>
+    <disable_collisions link1="finger_r_link1" link2="finger_r_link3" reason="Never"/>
+    <disable_collisions link1="finger_r_link1" link2="finger_r_link4" reason="Never"/>
+    <disable_collisions link1="finger_r_link1" link2="finger_r_link5" reason="Never"/>
+    <disable_collisions link1="finger_r_link1" link2="finger_r_link6" reason="Never"/>
+    <disable_collisions link1="finger_r_link1" link2="finger_r_link7" reason="Never"/>
+    <disable_collisions link1="finger_r_link1" link2="finger_r_link9" reason="Never"/>
     <disable_collisions link1="finger_r_link1" link2="hx5_d20_right_base" reason="Adjacent"/>
     <disable_collisions link1="finger_r_link10" link2="finger_r_link11" reason="Adjacent"/>
+    <disable_collisions link1="finger_r_link10" link2="finger_r_link12" reason="Never"/>
+    <disable_collisions link1="finger_r_link10" link2="finger_r_link17" reason="Never"/>
+    <disable_collisions link1="finger_r_link10" link2="finger_r_link2" reason="Never"/>
     <disable_collisions link1="finger_r_link10" link2="finger_r_link9" reason="Adjacent"/>
     <disable_collisions link1="finger_r_link11" link2="finger_r_link12" reason="Adjacent"/>
+    <disable_collisions link1="finger_r_link11" link2="finger_r_link13" reason="Never"/>
+    <disable_collisions link1="finger_r_link11" link2="finger_r_link17" reason="Never"/>
+    <disable_collisions link1="finger_r_link11" link2="finger_r_link5" reason="Never"/>
+    <disable_collisions link1="finger_r_link11" link2="finger_r_link9" reason="Never"/>
+    <disable_collisions link1="finger_r_link11" link2="hx5_d20_right_base" reason="Never"/>
+    <disable_collisions link1="finger_r_link12" link2="finger_r_link13" reason="Never"/>
+    <disable_collisions link1="finger_r_link12" link2="finger_r_link17" reason="Never"/>
+    <disable_collisions link1="finger_r_link12" link2="finger_r_link18" reason="Never"/>
+    <disable_collisions link1="finger_r_link12" link2="finger_r_link5" reason="Never"/>
     <disable_collisions link1="finger_r_link13" link2="finger_r_link14" reason="Adjacent"/>
+    <disable_collisions link1="finger_r_link13" link2="finger_r_link15" reason="Never"/>
+    <disable_collisions link1="finger_r_link13" link2="finger_r_link2" reason="Never"/>
+    <disable_collisions link1="finger_r_link13" link2="finger_r_link20" reason="Never"/>
+    <disable_collisions link1="finger_r_link13" link2="finger_r_link3" reason="Never"/>
+    <disable_collisions link1="finger_r_link13" link2="finger_r_link5" reason="Never"/>
+    <disable_collisions link1="finger_r_link13" link2="finger_r_link7" reason="Never"/>
+    <disable_collisions link1="finger_r_link13" link2="finger_r_link8" reason="Never"/>
     <disable_collisions link1="finger_r_link13" link2="hx5_d20_right_base" reason="Adjacent"/>
     <disable_collisions link1="finger_r_link14" link2="finger_r_link15" reason="Adjacent"/>
+    <disable_collisions link1="finger_r_link14" link2="finger_r_link16" reason="Never"/>
+    <disable_collisions link1="finger_r_link14" link2="finger_r_link2" reason="Never"/>
+    <disable_collisions link1="finger_r_link14" link2="finger_r_link5" reason="Never"/>
     <disable_collisions link1="finger_r_link15" link2="finger_r_link16" reason="Adjacent"/>
+    <disable_collisions link1="finger_r_link15" link2="finger_r_link17" reason="Never"/>
+    <disable_collisions link1="finger_r_link15" link2="finger_r_link2" reason="Never"/>
+    <disable_collisions link1="finger_r_link15" link2="finger_r_link5" reason="Never"/>
+    <disable_collisions link1="finger_r_link15" link2="finger_r_link9" reason="Never"/>
+    <disable_collisions link1="finger_r_link15" link2="hx5_d20_right_base" reason="Never"/>
+    <disable_collisions link1="finger_r_link16" link2="finger_r_link5" reason="Never"/>
+    <disable_collisions link1="finger_r_link16" link2="finger_r_link9" reason="Never"/>
     <disable_collisions link1="finger_r_link17" link2="finger_r_link18" reason="Adjacent"/>
+    <disable_collisions link1="finger_r_link17" link2="finger_r_link19" reason="Never"/>
+    <disable_collisions link1="finger_r_link17" link2="finger_r_link2" reason="Never"/>
+    <disable_collisions link1="finger_r_link17" link2="finger_r_link3" reason="Never"/>
     <disable_collisions link1="finger_r_link17" link2="finger_r_link5" reason="Never"/>
+    <disable_collisions link1="finger_r_link17" link2="finger_r_link6" reason="Never"/>
+    <disable_collisions link1="finger_r_link17" link2="finger_r_link7" reason="Never"/>
+    <disable_collisions link1="finger_r_link17" link2="finger_r_link8" reason="Never"/>
+    <disable_collisions link1="finger_r_link17" link2="finger_r_link9" reason="Never"/>
     <disable_collisions link1="finger_r_link17" link2="hx5_d20_right_base" reason="Adjacent"/>
     <disable_collisions link1="finger_r_link18" link2="finger_r_link19" reason="Adjacent"/>
+    <disable_collisions link1="finger_r_link18" link2="finger_r_link2" reason="Never"/>
+    <disable_collisions link1="finger_r_link18" link2="finger_r_link20" reason="Never"/>
+    <disable_collisions link1="finger_r_link18" link2="finger_r_link3" reason="Never"/>
+    <disable_collisions link1="finger_r_link18" link2="finger_r_link5" reason="Never"/>
+    <disable_collisions link1="finger_r_link18" link2="finger_r_link7" reason="Never"/>
+    <disable_collisions link1="finger_r_link18" link2="finger_r_link8" reason="Never"/>
+    <disable_collisions link1="finger_r_link18" link2="hx5_d20_right_base" reason="Default"/>
+    <disable_collisions link1="finger_r_link19" link2="finger_r_link2" reason="Never"/>
     <disable_collisions link1="finger_r_link19" link2="finger_r_link20" reason="Adjacent"/>
+    <disable_collisions link1="finger_r_link19" link2="finger_r_link5" reason="Never"/>
+    <disable_collisions link1="finger_r_link19" link2="hx5_d20_right_base" reason="Never"/>
+    <disable_collisions link1="finger_r_link2" link2="finger_r_link20" reason="Never"/>
     <disable_collisions link1="finger_r_link2" link2="finger_r_link3" reason="Adjacent"/>
+    <disable_collisions link1="finger_r_link2" link2="finger_r_link4" reason="Never"/>
+    <disable_collisions link1="finger_r_link2" link2="finger_r_link5" reason="Never"/>
+    <disable_collisions link1="finger_r_link2" link2="finger_r_link6" reason="Never"/>
+    <disable_collisions link1="finger_r_link2" link2="finger_r_link9" reason="Never"/>
+    <disable_collisions link1="finger_r_link20" link2="finger_r_link5" reason="Never"/>
+    <disable_collisions link1="finger_r_link20" link2="finger_r_link9" reason="Never"/>
     <disable_collisions link1="finger_r_link3" link2="finger_r_link4" reason="Adjacent"/>
     <disable_collisions link1="finger_r_link5" link2="finger_r_link6" reason="Adjacent"/>
+    <disable_collisions link1="finger_r_link5" link2="finger_r_link7" reason="Never"/>
     <disable_collisions link1="finger_r_link5" link2="hx5_d20_right_base" reason="Adjacent"/>
     <disable_collisions link1="finger_r_link6" link2="finger_r_link7" reason="Adjacent"/>
+    <disable_collisions link1="finger_r_link6" link2="finger_r_link8" reason="Never"/>
     <disable_collisions link1="finger_r_link7" link2="finger_r_link8" reason="Adjacent"/>
+    <disable_collisions link1="finger_r_link7" link2="hx5_d20_right_base" reason="Never"/>
+    <disable_collisions link1="finger_r_link8" link2="finger_r_link9" reason="Never"/>
     <disable_collisions link1="finger_r_link9" link2="hx5_d20_right_base" reason="Adjacent"/>
+    <disable_collisions link1="finger_r_link2" link2="hx5_d20_right_base" reason="Never"/>
 </robot>
