@@ -25,10 +25,6 @@ RUN cd ${COLCON_WS} && \
     rosdep install -i --from-path src --rosdistro $ROS_DISTRO -y && \
     rm -rf /var/lib/apt/lists/*
 
-RUN python3 -m pip config set global.break-system-packages true
-
-RUN pip3 install --no-cache-dir zenoh-ros2-sdk
-
 RUN bash -c "source /opt/ros/${ROS_DISTRO}/setup.bash && \
     cd ${COLCON_WS} && \
     colcon build --symlink-install --cmake-args -DCMAKE_BUILD_TYPE=Release"
