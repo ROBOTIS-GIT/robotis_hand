@@ -1,7 +1,7 @@
 services:
   robotis_hand:
     container_name: robotis_hand
-    image: robotis/robotis-hand:latest
+    image: robotis/robotis-hand:0.0.3
     build:
       context: .
       dockerfile: Dockerfile

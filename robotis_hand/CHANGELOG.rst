@@ -2,6 +2,12 @@
 Changelog for package robotis_hand
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+0.0.3 (2026-03-11)
+------------------
+* Updated the Docker image tag
+* Added rmw_zenoh_cpp to the Docker image
+* Contributors: Hyunwoo Nam
+
 0.0.2 (2026-01-14)
 ------------------
 * Fixed moveit_config srdf files for correct disable_collisions settings
