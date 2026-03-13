@@ -70,7 +70,11 @@
          <child link="${prefix}finger_l_link2" />
          <origin xyz="0.039 0.0 0.0" rpy="0 0 0" />
          <axis xyz="0 0 1" />
+<<<<<<< HEAD
          <limit velocity="4.8" effort="1000" lower="0.0" upper="1.57" />
+=======
+         <limit velocity="4.8" effort="1000" lower="-0.5" upper="3.5" />
+>>>>>>> 4188d46 (Add hx5_d20 keyboard teleop)
          <dynamics damping="0.05" />
       </joint>
       <link name="${prefix}finger_l_link2">
@@ -105,7 +109,7 @@
          <child link="${prefix}finger_l_link3" />
          <origin xyz="0.0 -0.028 0.0" rpy="0 0 0" />
          <axis xyz="1 0 0" />
-         <limit velocity="4.8" effort="1000" lower="-1.57" upper="0.0" />
+         <limit velocity="4.8" effort="1000" lower="-1.57" upper="0.5" />
          <dynamics damping="0.05" />
       </joint>
       <link name="${prefix}finger_l_link3">
@@ -140,7 +144,7 @@
          <child link="${prefix}finger_l_link4" />
          <origin xyz="0.0 -0.0355 0.0" rpy="0 0 0" />
          <axis xyz="1 0 0" />
-         <limit velocity="4.8" effort="1000" lower="-1.57" upper="0.0" />
+         <limit velocity="4.8" effort="1000" lower="-1.57" upper="0.5" />
          <dynamics damping="0.05" />
       </joint>
       <link name="${prefix}finger_l_link4">
