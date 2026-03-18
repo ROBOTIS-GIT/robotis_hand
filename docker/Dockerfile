@@ -11,8 +11,7 @@ RUN mkdir -p ${COLCON_WS}/src && \
     git clone -b jazzy https://github.com/ROBOTIS-GIT/dynamixel_hardware_interface.git && \
     git clone -b jazzy https://github.com/ROBOTIS-GIT/dynamixel_interfaces.git && \
     git clone -b jazzy https://github.com/ROBOTIS-GIT/DynamixelSDK.git && \
-    git clone -b jazzy https://github.com/ROBOTIS-GIT/robotis_hand.git && \
-    git clone -b jazzy https://github.com/ros2/rmw_zenoh.git
+    git clone -b jazzy https://github.com/ROBOTIS-GIT/robotis_hand.git
 
 RUN cd ${COLCON_WS} && \
     apt-get update && \
