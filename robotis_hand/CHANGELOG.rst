@@ -4,8 +4,9 @@ Changelog for package robotis_hand
 
 0.0.3 (2026-03-18)
 ------------------
-* Updated the Docker image tag
-* Added version notice print function to Docker container
+* Updated Docker image tag
+* Added version print notice to Docker container
+* Removed rmw_zenoh from Dockerfile
 * Contributors: Hyunwoo Nam
 
 0.0.2 (2026-01-14)
