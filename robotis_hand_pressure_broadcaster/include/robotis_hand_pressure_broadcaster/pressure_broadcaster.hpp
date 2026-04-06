@@ -6,9 +6,9 @@
 #include <vector>
 
 #include "controller_interface/controller_interface.hpp"
+#include "robotis_interfaces/msg/hand_pressures.hpp"
 #include "rclcpp_lifecycle/node_interfaces/lifecycle_node_interface.hpp"
 #include "realtime_tools/realtime_publisher.hpp"
-#include "std_msgs/msg/float64_multi_array.hpp"
 
 namespace robotis_hand_pressure_broadcaster
 {
@@ -35,13 +35,15 @@ public:
 
 private:
   bool refresh_parameters();
-  void configure_message_layout();
+  void configure_message();
 
   std::vector<std::string> sensor_names_;
   std::vector<std::string> interface_names_;
+  std::string hand_name_;
+  std::string frame_id_;
   std::string topic_name_;
 
-  std::shared_ptr<realtime_tools::RealtimePublisher<std_msgs::msg::Float64MultiArray>>
+  std::shared_ptr<realtime_tools::RealtimePublisher<robotis_interfaces::msg::HandPressures>>
     publisher_;
 };
 

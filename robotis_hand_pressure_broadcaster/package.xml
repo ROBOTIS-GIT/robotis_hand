@@ -15,7 +15,7 @@
   <depend>rclcpp</depend>
   <depend>rclcpp_lifecycle</depend>
   <depend>realtime_tools</depend>
-  <depend>std_msgs</depend>
+  <depend>robotis_interfaces</depend>
 
   <export>
     <build_type>ament_cmake</build_type>

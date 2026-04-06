@@ -12,7 +12,7 @@ find_package(pluginlib REQUIRED)
 find_package(rclcpp REQUIRED)
 find_package(rclcpp_lifecycle REQUIRED)
 find_package(realtime_tools REQUIRED)
-find_package(std_msgs REQUIRED)
+find_package(robotis_interfaces REQUIRED)
 
 add_library(${PROJECT_NAME} SHARED
   src/pressure_broadcaster.cpp
@@ -33,7 +33,7 @@ ament_target_dependencies(${PROJECT_NAME}
   rclcpp
   rclcpp_lifecycle
   realtime_tools
-  std_msgs
+  robotis_interfaces
 )
 
 pluginlib_export_plugin_description_file(controller_interface pressure_broadcaster_plugins.xml)
@@ -64,7 +64,7 @@ ament_export_dependencies(
   rclcpp
   rclcpp_lifecycle
   realtime_tools
-  std_msgs
+  robotis_interfaces
 )
 
 ament_package()
