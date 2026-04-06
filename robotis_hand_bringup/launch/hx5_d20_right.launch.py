@@ -152,6 +152,7 @@ def generate_launch_description():
             'right_hand_controller',
             'joint_state_broadcaster',
             'right_effort_controller',
+            'right_pressure_broadcaster',
         ],
         output='both',
         parameters=[{'robot_description': urdf_file}],

@@ -14,6 +14,7 @@
   <buildtool_depend>ament_cmake</buildtool_depend>
   <exec_depend>robotis_hand_bringup</exec_depend>
   <exec_depend>robotis_hand_description</exec_depend>
+  <exec_depend>robotis_hand_pressure_broadcaster</exec_depend>
   <exec_depend>robotis_hand_moveit_config</exec_depend>
   <export>
     <build_type>ament_cmake</build_type>

@@ -146,7 +146,7 @@ def generate_launch_description():
     hand_controller_spawner = Node(
         package='controller_manager',
         executable='spawner',
-        arguments=['right_hand_controller'],
+        arguments=['right_hand_controller', 'right_pressure_broadcaster'],
         output='screen',
     )
 
