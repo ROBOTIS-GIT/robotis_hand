@@ -116,13 +116,30 @@ controller_interface::return_type PressureBroadcaster::update(
   }
 
   auto & message = publisher_->msg_;
-  std::transform(
-    state_interfaces_.cbegin(),
-    state_interfaces_.cend(),
-    message.pressures.begin(),
-    [](const auto & state_interface) {
-      return state_interface.get_optional().value_or(0.0);
-    });
+
+  for (size_t i = 0; i < sensor_names_.size(); ++i) {
+    const size_t base = i * interface_names_.size();
+
+    auto get_val = [&](size_t offset) -> float {
+      if (base + offset >= state_interfaces_.size()) {
+        return 0.0f;
+      }
+      return static_cast<float>(
+        state_interfaces_[base + offset].get_optional().value_or(0.0));
+    };
+
+    auto & sensor = message.sensors[i];
+    sensor.pressure_1 = get_val(0);
+    sensor.pressure_2 = get_val(1);
+    sensor.pressure_3 = get_val(2);
+    sensor.pressure_4 = get_val(3);
+    sensor.pressure_5 = get_val(4);
+    sensor.pressure_6 = get_val(5);
+    sensor.pressure_7 = get_val(6);
+    sensor.pressure_8 = get_val(7);
+    sensor.pressure_9 = get_val(8);
+  }
+
   const auto time_ns = time.nanoseconds();
   message.header.stamp.sec = static_cast<int32_t>(time_ns / 1000000000LL);
   message.header.stamp.nanosec = static_cast<uint32_t>(time_ns % 1000000000LL);
@@ -136,9 +153,22 @@ void PressureBroadcaster::configure_message()
   auto & message = publisher_->msg_;
   message.header.frame_id = frame_id_;
   message.hand_name = hand_name_;
-  message.sensor_names = sensor_names_;
-  message.channel_names = interface_names_;
-  message.pressures.assign(sensor_names_.size() * interface_names_.size(), 0.0);
+
+  message.sensors.clear();
+  message.sensors.resize(sensor_names_.size());
+
+  for (size_t i = 0; i < sensor_names_.size(); ++i) {
+    message.sensors[i].sensor_name = sensor_names_[i];
+    message.sensors[i].pressure_1 = 0.0f;
+    message.sensors[i].pressure_2 = 0.0f;
+    message.sensors[i].pressure_3 = 0.0f;
+    message.sensors[i].pressure_4 = 0.0f;
+    message.sensors[i].pressure_5 = 0.0f;
+    message.sensors[i].pressure_6 = 0.0f;
+    message.sensors[i].pressure_7 = 0.0f;
+    message.sensors[i].pressure_8 = 0.0f;
+    message.sensors[i].pressure_9 = 0.0f;
+  }
 }
 
 bool PressureBroadcaster::refresh_parameters()
