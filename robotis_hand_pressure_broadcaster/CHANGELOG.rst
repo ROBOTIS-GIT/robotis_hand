@@ -1,0 +1,8 @@
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Changelog for package robotis_hand_moveit_config
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+1.0.0 (2026-04-08)
+------------------
+* Added tactile sensor topic broadcaster
+* Contributors: Wonho Yun, Howon Kim

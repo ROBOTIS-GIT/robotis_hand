@@ -2,6 +2,11 @@
 Changelog for package robotis_hand
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+1.0.0 (2026-04-08)
+------------------
+* Added tactile sensor topic broadcaster
+* Contributors: Wonho Yun, Howon Kim
+
 0.0.3 (2026-03-18)
 ------------------
 * Updated Docker image tag
