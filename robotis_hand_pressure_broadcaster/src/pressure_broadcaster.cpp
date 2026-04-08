@@ -129,15 +129,9 @@ controller_interface::return_type PressureBroadcaster::update(
     };
 
     auto & sensor = message.sensors[i];
-    sensor.pressure_1 = get_val(0);
-    sensor.pressure_2 = get_val(1);
-    sensor.pressure_3 = get_val(2);
-    sensor.pressure_4 = get_val(3);
-    sensor.pressure_5 = get_val(4);
-    sensor.pressure_6 = get_val(5);
-    sensor.pressure_7 = get_val(6);
-    sensor.pressure_8 = get_val(7);
-    sensor.pressure_9 = get_val(8);
+    for (size_t j = 0; j < sensor.pressure_values.size(); ++j) {
+      sensor.pressure_values[j] = get_val(j);
+    }
   }
 
   const auto time_ns = time.nanoseconds();
@@ -158,16 +152,13 @@ void PressureBroadcaster::configure_message()
   message.sensors.resize(sensor_names_.size());
 
   for (size_t i = 0; i < sensor_names_.size(); ++i) {
-    message.sensors[i].sensor_name = sensor_names_[i];
-    message.sensors[i].pressure_1 = 0.0f;
-    message.sensors[i].pressure_2 = 0.0f;
-    message.sensors[i].pressure_3 = 0.0f;
-    message.sensors[i].pressure_4 = 0.0f;
-    message.sensors[i].pressure_5 = 0.0f;
-    message.sensors[i].pressure_6 = 0.0f;
-    message.sensors[i].pressure_7 = 0.0f;
-    message.sensors[i].pressure_8 = 0.0f;
-    message.sensors[i].pressure_9 = 0.0f;
+    auto & sensor = message.sensors[i];
+    sensor.sensor_name = sensor_names_[i];
+
+    for (size_t j = 0; j < interface_names_.size(); ++j) {
+      sensor.pressure_names[j] = interface_names_[j];
+      sensor.pressure_values[j] = 0;
+    }
   }
 }
 
