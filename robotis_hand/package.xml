@@ -16,6 +16,7 @@
   <exec_depend>robotis_hand_description</exec_depend>
   <exec_depend>robotis_hand_pressure_broadcaster</exec_depend>
   <exec_depend>robotis_hand_moveit_config</exec_depend>
+  <exec_depend>robotis_interfaces</exec_depend>
   <export>
     <build_type>ament_cmake</build_type>
   </export>
