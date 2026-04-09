@@ -134,9 +134,7 @@ controller_interface::return_type PressureBroadcaster::update(
     }
   }
 
-  const auto time_ns = time.nanoseconds();
-  message.header.stamp.sec = static_cast<int32_t>(time_ns / 1000000000LL);
-  message.header.stamp.nanosec = static_cast<uint32_t>(time_ns % 1000000000LL);
+  message.header.stamp = time;
 
   publisher_->unlockAndPublish();
   return controller_interface::return_type::OK;
