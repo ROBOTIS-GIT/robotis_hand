@@ -49,6 +49,13 @@ jobs:
         with:
           required-ros-distributions: ${{ matrix.ros_distribution }}
 
+      - name: Checkout robotis_interfaces
+        uses: actions/checkout@v4
+        with:
+          repository: ROBOTIS-GIT/robotis_interfaces
+          path: ros_ws/src/robotis_interfaces
+          ref: main
+
       - name: Check and Install ROS dependencies
         shell: bash
         run: |
