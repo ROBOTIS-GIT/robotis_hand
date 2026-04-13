@@ -2,9 +2,10 @@
 Changelog for package robotis_hand_description
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-1.0.0 (2026-04-08)
+1.0.0 (2026-04-13)
 ------------------
-* None
+* Adjusted joint2 position limits to better emulate human range of motion
+* Contributors: Hyunwoo Nam
 
 0.0.3 (2026-03-18)
 ------------------

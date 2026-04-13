@@ -2,10 +2,13 @@
 Changelog for package robotis_hand
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-1.0.0 (2026-04-08)
+1.0.0 (2026-04-13)
 ------------------
 * Added tactile sensor topic broadcaster
-* Contributors: Wonho Yun, Howon Kim
+* Updated controller and input topic names for consistency
+* Adjusted joint2 position limits to better emulate human range of motion
+* Added VR support for HX5
+* Contributors: Wonho Yun, Howon Kim, Hyunwoo Nam
 
 0.0.3 (2026-03-18)
 ------------------
