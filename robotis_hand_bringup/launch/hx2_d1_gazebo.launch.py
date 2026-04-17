@@ -27,11 +27,9 @@ from launch.actions import RegisterEventHandler
 from launch.actions import SetEnvironmentVariable
 from launch.event_handlers import OnProcessExit
 from launch.launch_description_sources import PythonLaunchDescriptionSource
-from launch.substitutions import Command
 from launch.substitutions import LaunchConfiguration
-from launch.substitutions import PathJoinSubstitution
 from launch_ros.actions import Node
-from launch_ros.descriptions import ParameterValue
+import xacro
 
 
 def generate_launch_description():
@@ -57,9 +55,6 @@ def generate_launch_description():
         DeclareLaunchArgument(
             'world', default_value='empty_world', description='Gz sim World'
         ),
-        DeclareLaunchArgument(
-            'model', default_value='hx5_d20_rev2', description='Robot model name'
-        ),
     ])
 
     gazebo = IncludeLaunchDescription(
@@ -72,35 +67,24 @@ def generate_launch_description():
         ],
     )
 
-    model = LaunchConfiguration('model')
-
-    xacro_file = PathJoinSubstitution([
+    xacro_file = os.path.join(
         robotis_hand_description_path,
         'urdf',
-        model,
-        'hx5_d20_left.xacro'
-    ])
-
-    robot_desc_command = Command([
-        'xacro',
-        ' ',
-        xacro_file,
-        ' ',
-        'use_sim:=true'
-    ])
-
-    robot_desc_content = ParameterValue(
-        value=robot_desc_command,
-        value_type=str
+        'hx2_d1',
+        'hx2_d1.xacro',
     )
+
+    doc = xacro.process_file(xacro_file, mappings={'use_sim': 'true'})
+
+    robot_desc = doc.toprettyxml(indent='  ')
+
+    params = {'robot_description': robot_desc}
 
     node_robot_state_publisher = Node(
         package='robot_state_publisher',
         executable='robot_state_publisher',
         output='screen',
-        parameters=[
-            {'robot_description': robot_desc_content}
-        ]
+        parameters=[params],
     )
 
     gz_spawn_entity = Node(
@@ -109,7 +93,7 @@ def generate_launch_description():
         output='screen',
         arguments=[
             '-string',
-            robot_desc_command,
+            robot_desc,
             '-x',
             '0.0',
             '-y',
@@ -123,7 +107,7 @@ def generate_launch_description():
             '-Y',
             '0.0',
             '-name',
-            'robotis_hand',
+            'hx2_d1',
             '-allow_renaming',
             'true',
             '-use_sim',
@@ -143,14 +127,11 @@ def generate_launch_description():
         output='screen',
     )
 
-    hand_controller_spawner = Node(
+    gripper_controller_spawner = Node(
         package='controller_manager',
         executable='spawner',
-        arguments=[
-            '--controller-ros-args',
-            '-r /hand_l_controller/joint_trajectory:='
-            '/leader/joint_trajectory_command_broadcaster_left_hand/joint_trajectory',
-            'hand_l_controller'],
+        # arguments=['gripper_controller'],
+        arguments=['hand_controller'],
         output='screen',
     )
 
@@ -183,7 +164,7 @@ def generate_launch_description():
         RegisterEventHandler(
             event_handler=OnProcessExit(
                 target_action=joint_state_broadcaster_spawner,
-                on_exit=[hand_controller_spawner],
+                on_exit=[gripper_controller_spawner],
             )
         ),
         bridge,

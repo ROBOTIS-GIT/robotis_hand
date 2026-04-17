@@ -60,11 +60,11 @@ def generate_launch_description():
     publish_robot_description_semantic = LaunchConfiguration('publish_robot_description_semantic')
 
     # Define the subfolder path
-    robot_path = Path('config') / 'hx5_d20_right'
+    robot_path = Path('config') / 'hx2_d1'
 
     moveit_config = (
-        MoveItConfigsBuilder(robot_name='hx5_d20_right', package_name='robotis_hand_moveit_config')
-        .robot_description_semantic(str(robot_path / 'hx5_d20_right.srdf'))
+        MoveItConfigsBuilder(robot_name='hx2_d1', package_name='robotis_hand_moveit_config')
+        .robot_description_semantic(str(robot_path / 'hx2_d1.srdf'))
         .joint_limits(str(robot_path / 'joint_limits.yaml'))
         .trajectory_execution(str(robot_path / 'moveit_controllers.yaml'))
         .robot_description_kinematics(str(robot_path / 'kinematics.yaml'))

@@ -1,0 +1,33 @@
+/**:
+  controller_manager:
+    ros__parameters:
+      use_sim_time: False
+      update_rate: 100  # Hz
+
+      joint_state_broadcaster:
+        type: joint_state_broadcaster/JointStateBroadcaster
+
+      hand_controller:
+        type: joint_trajectory_controller/JointTrajectoryController
+
+#       gripper_controller:
+#         type: position_controllers/GripperActionController
+
+# /**:
+#   gripper_controller:
+#     ros__parameters:
+#       joint: hx2_d1_r_joint1
+#       allow_stalling: true
+
+/**:
+  hand_controller:
+    ros__parameters:
+      joints:
+        - hx2_d1_r_joint1
+      command_interfaces:
+        - position
+      state_interfaces:
+        - position
+        - velocity
+      allow_nonzero_velocity_at_trajectory_end: true
+      allow_partial_joints_goal: true

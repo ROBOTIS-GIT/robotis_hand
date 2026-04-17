@@ -2,10 +2,11 @@
 Changelog for package robotis_hand_moveit_config
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-1.0.0 (2026-04-13)
+1.0.0 (2026-04-17)
 ------------------
 * Updated controller and input topic names for consistency
 * Adjusted joint2 position limits to better emulate human range of motion
+* Added HX2 model
 * Contributors: Hyunwoo Nam
 
 0.0.3 (2026-03-18)

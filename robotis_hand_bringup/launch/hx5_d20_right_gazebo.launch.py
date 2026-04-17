@@ -150,8 +150,7 @@ def generate_launch_description():
             '--controller-ros-args',
             '-r /hand_r_controller/joint_trajectory:='
             '/leader/joint_trajectory_command_broadcaster_right_hand/joint_trajectory',
-            'hand_r_controller',
-            'pressure_r_broadcaster'],
+            'hand_r_controller'],
         output='screen',
     )
 

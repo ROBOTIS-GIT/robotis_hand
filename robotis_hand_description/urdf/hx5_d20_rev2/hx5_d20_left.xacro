@@ -7,7 +7,7 @@
 
   <xacro:include filename="$(find robotis_hand_description)/urdf/hx5_d20_rev2/hx5_d20_left.urdf.xacro" />
 
-  <xacro:include filename="$(find robotis_hand_description)/gazebo/hx5_d20_left.gazebo.xacro" />
+  <xacro:include filename="$(find robotis_hand_description)/gazebo/hx5_d20/hx5_d20_left.gazebo.xacro" />
 
   <xacro:include filename="$(find robotis_hand_description)/ros2_control/hx5_d20_rev2/hx5_d20_left.ros2_control.xacro" />
 
@@ -29,7 +29,7 @@
 
   <gazebo>
     <plugin filename="gz_ros2_control-system" name="gz_ros2_control::GazeboSimROS2ControlPlugin">
-      <parameters>$(find robotis_hand_bringup)/config/robotis_hand_hardware_controller_manager.yaml</parameters>
+      <parameters>$(find robotis_hand_bringup)/config/hx5_d20/hx5_d20_hardware_controller_manager.yaml</parameters>
     </plugin>
   </gazebo>
 

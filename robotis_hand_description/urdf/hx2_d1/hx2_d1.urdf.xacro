@@ -1,0 +1,187 @@
+<?xml version="1.0"?>
+<!-- hx2_d1 gripper -->
+
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <xacro:macro name="hx2_d1" params="prefix">
+
+    <xacro:property
+      name="meshes_file_direction"
+      value="package://robotis_hand_description/meshes/hx2_d1"/>
+
+    <!-- base -->
+    <link name="${prefix}hx2_d1_base">
+      <collision>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="${meshes_file_direction}/base.stl" scale="0.001 0.001 0.001"/>
+        </geometry>
+      </collision>
+
+      <visual>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="${meshes_file_direction}/base.stl" scale="0.001 0.001 0.001"/>
+        </geometry>
+                <material name="grey">
+          <color rgba="0.2 0.2 0.2 1"/>
+        </material>
+      </visual>
+
+      <inertial>
+        <origin xyz="0.000 0.000 0.032" rpy="0 0 0"/>
+        <mass value="0.236"/>
+        <inertia ixx="0.000001" ixy="0.0" ixz="0.0" iyy="0.000001" iyz="0.0" izz="0.000001" />
+      </inertial>
+    </link>
+
+    <!-- Joint -->
+    <joint name="${prefix}hx2_d1_r_joint1" type="revolute">
+      <parent link="${prefix}hx2_d1_base"/>
+      <child link="${prefix}hx2_d1_r_link1"/>
+      <origin xyz="0.0 0.008 0.048" rpy="0 0 0"/>
+      <axis xyz="1 0 0"/>
+      <limit velocity="6.5" effort="1000" lower="-0.001" upper="1.101" />
+      <dynamics damping="0.7"/>
+    </joint>
+
+    <!-- hx2_d1_r_link1 -->
+    <link name="${prefix}hx2_d1_r_link1">
+      <collision>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="${meshes_file_direction}/r1.stl" scale="0.001 0.001 0.001"/>
+        </geometry>
+      </collision>
+
+      <visual>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="${meshes_file_direction}/r1.stl" scale="0.001 0.001 0.001"/>
+        </geometry>
+                <material name="grey">
+          <color rgba="0.2 0.2 0.2 1"/>
+        </material>
+      </visual>
+
+      <inertial>
+        <origin xyz="0.000 0.034 0.004" rpy="0 0 0"/>
+        <mass value="0.068"/>
+        <inertia ixx="0.000001" ixy="0.0" ixz="0.0" iyy="0.000001" iyz="0.0" izz="0.000001" />
+      </inertial>
+    </link>
+
+    <!-- Right Joint 2 -->
+    <joint name="${prefix}hx2_d1_r_joint2" type="revolute">
+      <parent link="${prefix}hx2_d1_r_link1"/>
+      <child link="${prefix}hx2_d1_r_link2"/>
+      <origin xyz="0.0 0.0493634 0.0285" rpy="0 0 0"/>
+      <axis xyz="-1 0 0"/>
+      <limit velocity="6.5" effort="1000" lower="-0.001" upper="1.101" />
+      <dynamics damping="0.7"/>
+      <mimic joint="${prefix}hx2_d1_r_joint1" multiplier="1"/>
+    </joint>
+
+    <!-- hx2_d1_r_link2 -->
+    <link name="${prefix}hx2_d1_r_link2">
+      <collision>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="${meshes_file_direction}/r2.stl" scale="0.001 0.001 0.001"/>
+        </geometry>
+      </collision>
+
+      <visual>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="${meshes_file_direction}/r2.stl" scale="0.001 0.001 0.001"/>
+        </geometry>
+                <material name="grey">
+          <color rgba="0.2 0.2 0.2 1"/>
+        </material>
+      </visual>
+
+      <inertial>
+        <origin xyz="0.000 0.006 0.011" rpy="0 0 0"/>
+        <mass value="0.022"/>
+        <inertia ixx="0.000001" ixy="0.0" ixz="0.0" iyy="0.000001" iyz="0.0" izz="0.000001" />
+      </inertial>
+    </link>
+
+    <!-- Left Joint 1 -->
+    <joint name="${prefix}hx2_d1_l_joint1" type="revolute">
+      <parent link="${prefix}hx2_d1_base"/>
+      <child link="${prefix}hx2_d1_l_link1"/>
+      <origin xyz="0.0 -0.008 0.048" rpy="0 0 0"/>
+      <axis xyz="-1 0 0"/>
+      <limit velocity="6.5" effort="1000" lower="-0.001" upper="1.101" />
+      <dynamics damping="0.7"/>
+      <mimic joint="${prefix}hx2_d1_r_joint1" multiplier="1"/>
+    </joint>
+
+    <!-- hx2_d1_l_link1 -->
+    <link name="${prefix}hx2_d1_l_link1">
+      <collision>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="${meshes_file_direction}/l1.stl" scale="0.001 0.001 0.001"/>
+        </geometry>
+      </collision>
+
+      <visual>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="${meshes_file_direction}/l1.stl" scale="0.001 0.001 0.001"/>
+        </geometry>
+                <material name="grey">
+          <color rgba="0.2 0.2 0.2 1"/>
+        </material>
+      </visual>
+
+      <inertial>
+        <origin xyz="0.000 -0.034 0.004" rpy="0 0 0"/>
+        <mass value="0.068"/>
+        <inertia ixx="0.000001" ixy="0.0" ixz="0.0" iyy="0.000001" iyz="0.0" izz="0.000001" />
+      </inertial>
+    </link>
+
+    <!-- Left Joint 2 -->
+    <joint name="${prefix}hx2_d1_l_joint2" type="revolute">
+      <parent link="${prefix}hx2_d1_l_link1"/>
+      <child link="${prefix}hx2_d1_l_link2"/>
+      <origin xyz="0.0 -0.0493634 0.0285" rpy="0 0 0"/>
+      <axis xyz="1 0 0"/>
+      <limit velocity="6.5" effort="1000" lower="-0.001" upper="1.101" />
+      <dynamics damping="0.7"/>
+      <mimic joint="${prefix}hx2_d1_r_joint1" multiplier="1"/>
+    </joint>
+
+    <!-- hx2_d1_l_link2 -->
+    <link name="${prefix}hx2_d1_l_link2">
+      <collision>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="${meshes_file_direction}/l2.stl" scale="0.001 0.001 0.001"/>
+        </geometry>
+      </collision>
+
+      <visual>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="${meshes_file_direction}/l2.stl" scale="0.001 0.001 0.001"/>
+        </geometry>
+                <material name="grey">
+          <color rgba="0.2 0.2 0.2 1"/>
+        </material>
+      </visual>
+
+      <inertial>
+        <origin xyz="0.000 -0.006 0.011" rpy="0 0 0"/>
+        <mass value="0.022"/>
+        <inertia ixx="0.000001" ixy="0.0" ixz="0.0" iyy="0.000001" iyz="0.0" izz="0.000001" />
+      </inertial>
+    </link>
+
+  </xacro:macro>
+
+</robot>

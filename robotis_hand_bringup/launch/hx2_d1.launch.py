@@ -18,7 +18,6 @@
 
 from launch import LaunchDescription
 from launch.actions import DeclareLaunchArgument
-from launch.actions import ExecuteProcess
 from launch.actions import RegisterEventHandler
 from launch.conditions import IfCondition
 from launch.conditions import UnlessCondition
@@ -62,21 +61,6 @@ def generate_launch_description():
             default_value='/dev/ttyUSB0',
             description='Port name for hardware connection.',
         ),
-        DeclareLaunchArgument(
-            'init_position',
-            default_value='true',
-            description='Whether to launch the init_position node',
-        ),
-        DeclareLaunchArgument(
-            'init_position_file',
-            default_value='hx5_d20_left_initial_positions.yaml',
-            description='Path to the initial position file',
-        ),
-        DeclareLaunchArgument(
-            'model',
-            default_value='hx5_d20_rev2',
-            description='Robot model name'
-        ),
     ]
 
     # Launch configurations
@@ -86,9 +70,6 @@ def generate_launch_description():
     use_mock_hardware = LaunchConfiguration('use_mock_hardware')
     mock_sensor_commands = LaunchConfiguration('mock_sensor_commands')
     port_name = LaunchConfiguration('port_name')
-    init_position = LaunchConfiguration('init_position')
-    init_position_file = LaunchConfiguration('init_position_file')
-    model = LaunchConfiguration('model')
 
     # Generate URDF file using xacro
     urdf_file = Command([
@@ -97,8 +78,8 @@ def generate_launch_description():
         PathJoinSubstitution([
             FindPackageShare('robotis_hand_description'),
             'urdf',
-            model,
-            'hx5_d20_left.xacro',
+            'hx2_d1',
+            'hx2_d1.xacro',
         ]),
         ' ',
         'prefix:=',
@@ -121,21 +102,14 @@ def generate_launch_description():
     controller_manager_config = PathJoinSubstitution([
         FindPackageShare('robotis_hand_bringup'),
         'config',
-        'hx5_d20',
-        'hx5_d20_hardware_controller_manager.yaml',
+        'hx2_d1',
+        'hx2_d1_hardware_controller_manager.yaml',
     ])
 
     rviz_config_file = PathJoinSubstitution([
         FindPackageShare('robotis_hand_description'),
         'rviz',
         'robotis_hand.rviz',
-    ])
-
-    trajectory_params_file = PathJoinSubstitution([
-        FindPackageShare('robotis_hand_bringup'),
-        'config',
-        'hx5_d20',
-        init_position_file,
     ])
 
     # Define nodes
@@ -151,13 +125,9 @@ def generate_launch_description():
         package='controller_manager',
         executable='spawner',
         arguments=[
-            '--controller-ros-args',
-            '-r /hand_l_controller/joint_trajectory:='
-            '/leader/joint_trajectory_command_broadcaster_left_hand/joint_trajectory',
-            'hand_l_controller',
+            # 'gripper_controller',
+            'hand_controller',
             'joint_state_broadcaster',
-            'effort_l_controller',
-            'pressure_l_broadcaster',
         ],
         output='both',
         parameters=[{'robot_description': urdf_file}],
@@ -168,14 +138,6 @@ def generate_launch_description():
         executable='robot_state_publisher',
         parameters=[{'robot_description': urdf_file, 'use_sim_time': use_sim}],
         output='both',
-    )
-
-    joint_trajectory_executor = Node(
-        package='robotis_hand_bringup',
-        executable='joint_trajectory_executor',
-        parameters=[trajectory_params_file],
-        output='both',
-        condition=IfCondition(init_position),
     )
 
     rviz_node = Node(
@@ -193,37 +155,6 @@ def generate_launch_description():
         )
     )
 
-    delay_joint_trajectory_executor_after_controllers = RegisterEventHandler(
-        event_handler=OnProcessExit(
-            target_action=robot_controller_spawner,
-            on_exit=[joint_trajectory_executor],
-        )
-    )
-
-    current_command_process = ExecuteProcess(
-        name='current_command_process',
-        cmd=[
-            'ros2', 'topic', 'pub',
-            '-r', '50',
-            '-t', '50',
-            '-p', '50',
-            '/effort_l_controller/commands',
-            'std_msgs/msg/Float64MultiArray',
-            'data: [300.0, 300.0, 300.0, 300.0,'
-                    '300.0, 300.0, 300.0, 300.0,'
-                    '300.0, 300.0, 300.0, 300.0,'
-                    '300.0, 300.0, 300.0, 300.0,'
-                    '300.0, 300.0, 300.0, 300.0]',
-        ],
-    )
-
-    delay_current_command_process_after_controllers = RegisterEventHandler(
-        event_handler=OnProcessExit(
-            target_action=robot_controller_spawner,
-            on_exit=[current_command_process],
-        )
-    )
-
     return LaunchDescription(
         declared_arguments
         + [
@@ -231,7 +162,5 @@ def generate_launch_description():
             robot_controller_spawner,
             robot_state_publisher_node,
             delay_rviz_after_joint_state_broadcaster_spawner,
-            delay_current_command_process_after_controllers,
-            delay_joint_trajectory_executor_after_controllers,
         ]
     )

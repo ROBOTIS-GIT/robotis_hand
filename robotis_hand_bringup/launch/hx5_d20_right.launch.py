@@ -121,7 +121,8 @@ def generate_launch_description():
     controller_manager_config = PathJoinSubstitution([
         FindPackageShare('robotis_hand_bringup'),
         'config',
-        'robotis_hand_hardware_controller_manager.yaml',
+        'hx5_d20',
+        'hx5_d20_hardware_controller_manager.yaml',
     ])
 
     rviz_config_file = PathJoinSubstitution([
@@ -133,6 +134,7 @@ def generate_launch_description():
     trajectory_params_file = PathJoinSubstitution([
         FindPackageShare('robotis_hand_bringup'),
         'config',
+        'hx5_d20',
         init_position_file,
     ])
 
