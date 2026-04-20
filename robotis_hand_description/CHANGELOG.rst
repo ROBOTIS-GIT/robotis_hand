@@ -4,7 +4,7 @@ Changelog for package robotis_hand_description
 
 1.0.0 (2026-04-17)
 ------------------
-* Adjusted joint2 position limits to better emulate human range of motion
+* Adjusted HX5 joint2 position limits
 * Added HX2 model
 * Contributors: Hyunwoo Nam
 
