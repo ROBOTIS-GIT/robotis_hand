@@ -121,7 +121,8 @@ def generate_launch_description():
     controller_manager_config = PathJoinSubstitution([
         FindPackageShare('robotis_hand_bringup'),
         'config',
-        'robotis_hand_hardware_controller_manager.yaml',
+        'hx5_d20',
+        'hx5_d20_hardware_controller_manager.yaml',
     ])
 
     rviz_config_file = PathJoinSubstitution([
@@ -133,6 +134,7 @@ def generate_launch_description():
     trajectory_params_file = PathJoinSubstitution([
         FindPackageShare('robotis_hand_bringup'),
         'config',
+        'hx5_d20',
         init_position_file,
     ])
 
@@ -149,10 +151,13 @@ def generate_launch_description():
         package='controller_manager',
         executable='spawner',
         arguments=[
-            'left_hand_controller',
+            '--controller-ros-args',
+            '-r /hand_l_controller/joint_trajectory:='
+            '/leader/joint_trajectory_command_broadcaster_left_hand/joint_trajectory',
+            'hand_l_controller',
             'joint_state_broadcaster',
-            'left_effort_controller',
-            'left_pressure_broadcaster',
+            'effort_l_controller',
+            'pressure_l_broadcaster',
         ],
         output='both',
         parameters=[{'robot_description': urdf_file}],
@@ -202,13 +207,13 @@ def generate_launch_description():
             '-r', '50',
             '-t', '50',
             '-p', '50',
-            '/left_effort_controller/commands',
+            '/effort_l_controller/commands',
             'std_msgs/msg/Float64MultiArray',
-            'data: [200.0, 200.0, 200.0, 200.0,'
-                    '200.0, 200.0, 200.0, 200.0,'
-                    '200.0, 200.0, 200.0, 200.0,'
-                    '200.0, 200.0, 200.0, 200.0,'
-                    '200.0, 200.0, 200.0, 200.0]',
+            'data: [300.0, 300.0, 300.0, 300.0,'
+                    '300.0, 300.0, 300.0, 300.0,'
+                    '300.0, 300.0, 300.0, 300.0,'
+                    '300.0, 300.0, 300.0, 300.0,'
+                    '300.0, 300.0, 300.0, 300.0]',
         ],
     )
 
