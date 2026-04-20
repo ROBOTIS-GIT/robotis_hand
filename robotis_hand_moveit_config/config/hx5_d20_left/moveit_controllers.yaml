@@ -4,9 +4,9 @@ moveit_controller_manager: moveit_simple_controller_manager/MoveItSimpleControll
 
 moveit_simple_controller_manager:
   controller_names:
-    - hand_l_controller
+    - left_hand_controller
 
-  hand_l_controller:
+  left_hand_controller:
     type: FollowJointTrajectory
     action_ns: follow_joint_trajectory
     joints:

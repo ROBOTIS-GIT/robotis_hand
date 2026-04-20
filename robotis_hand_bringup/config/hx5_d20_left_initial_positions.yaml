@@ -29,5 +29,5 @@ joint_trajectory_executor:
           0.0, 0.0, 0.0, 0.0]
     duration: 2.0
     epsilon: 0.2
-    action_topic: '/hand_l_controller/follow_joint_trajectory'
+    action_topic: '/left_hand_controller/follow_joint_trajectory'
     joint_states_topic: '/joint_states'

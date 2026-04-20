@@ -7,26 +7,26 @@
       joint_state_broadcaster:
         type: joint_state_broadcaster/JointStateBroadcaster
 
-      hand_l_controller:
+      left_hand_controller:
         type: joint_trajectory_controller/JointTrajectoryController
 
-      hand_r_controller:
+      right_hand_controller:
         type: joint_trajectory_controller/JointTrajectoryController
 
-      effort_l_controller:
+      left_effort_controller:
         type: effort_controllers/JointGroupEffortController
 
-      effort_r_controller:
+      right_effort_controller:
         type: effort_controllers/JointGroupEffortController
 
-      pressure_l_broadcaster:
+      left_pressure_broadcaster:
         type: robotis_hand_pressure_broadcaster/PressureBroadcaster
 
-      pressure_r_broadcaster:
+      right_pressure_broadcaster:
         type: robotis_hand_pressure_broadcaster/PressureBroadcaster
 
 /**:
-  hand_l_controller:
+  left_hand_controller:
     ros__parameters:
       joints:
         - finger_l_joint1
@@ -58,7 +58,7 @@
       allow_partial_joints_goal: true
 
 /**:
-  hand_r_controller:
+  right_hand_controller:
     ros__parameters:
       joints:
         - finger_r_joint1
@@ -90,7 +90,7 @@
       allow_partial_joints_goal: true
 
 /**:
-  effort_l_controller:
+  left_effort_controller:
     ros__parameters:
       joints:
         - finger_l_joint1
@@ -115,32 +115,7 @@
         - finger_l_joint20
 
 /**:
-  effort_r_controller:
-    ros__parameters:
-      joints:
-        - finger_r_joint1
-        - finger_r_joint2
-        - finger_r_joint3
-        - finger_r_joint4
-        - finger_r_joint5
-        - finger_r_joint6
-        - finger_r_joint7
-        - finger_r_joint8
-        - finger_r_joint9
-        - finger_r_joint10
-        - finger_r_joint11
-        - finger_r_joint12
-        - finger_r_joint13
-        - finger_r_joint14
-        - finger_r_joint15
-        - finger_r_joint16
-        - finger_r_joint17
-        - finger_r_joint18
-        - finger_r_joint19
-        - finger_r_joint20
-
-/**:
-  pressure_l_broadcaster:
+  left_pressure_broadcaster:
     ros__parameters:
       topic_name: /left_hand/finger_pressures
       sensor_names:
@@ -161,7 +136,32 @@
         - Present Pressure 9
 
 /**:
-  pressure_r_broadcaster:
+  right_effort_controller:
+    ros__parameters:
+      joints:
+        - finger_r_joint1
+        - finger_r_joint2
+        - finger_r_joint3
+        - finger_r_joint4
+        - finger_r_joint5
+        - finger_r_joint6
+        - finger_r_joint7
+        - finger_r_joint8
+        - finger_r_joint9
+        - finger_r_joint10
+        - finger_r_joint11
+        - finger_r_joint12
+        - finger_r_joint13
+        - finger_r_joint14
+        - finger_r_joint15
+        - finger_r_joint16
+        - finger_r_joint17
+        - finger_r_joint18
+        - finger_r_joint19
+        - finger_r_joint20
+
+/**:
+  right_pressure_broadcaster:
     ros__parameters:
       topic_name: /right_hand/finger_pressures
       sensor_names:

@@ -59,15 +59,13 @@ def generate_launch_description():
     warehouse_sqlite_path = LaunchConfiguration('warehouse_sqlite_path')
     publish_robot_description_semantic = LaunchConfiguration('publish_robot_description_semantic')
 
-    # Define the subfolder path
-    robot_path = Path('config') / 'hx5_d20_left'
-
     moveit_config = (
         MoveItConfigsBuilder(robot_name='hx5_d20_left', package_name='robotis_hand_moveit_config')
-        .robot_description_semantic(str(robot_path / 'hx5_d20_left.srdf'))
-        .joint_limits(str(robot_path / 'joint_limits.yaml'))
-        .trajectory_execution(str(robot_path / 'moveit_controllers.yaml'))
-        .robot_description_kinematics(str(robot_path / 'kinematics.yaml'))
+        .robot_description_semantic(
+            str(Path('config') / 'hx5_d20_left' / 'hx5_d20_left.srdf'))
+        .joint_limits(str(Path('config') / 'hx5_d20_left' / 'joint_limits.yaml'))
+        .trajectory_execution(
+            str(Path('config') / 'hx5_d20_left' / 'moveit_controllers.yaml'))
         .to_moveit_configs()
     )
 
