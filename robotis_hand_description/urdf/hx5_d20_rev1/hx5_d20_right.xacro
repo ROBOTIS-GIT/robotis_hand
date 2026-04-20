@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<robot name="rh_5_right" xmlns:xacro="http://www.ros.org/wiki/xacro">
+<robot name="hx5_d20_right" xmlns:xacro="http://www.ros.org/wiki/xacro">
   <xacro:arg name="prefix" default="" />
   <xacro:arg name="use_sim" default="false" />
   <xacro:arg name="use_mock_hardware" default="false" />
@@ -7,7 +7,7 @@
 
   <xacro:include filename="$(find robotis_hand_description)/urdf/hx5_d20_rev1/hx5_d20_right.urdf.xacro" />
 
-  <xacro:include filename="$(find robotis_hand_description)/gazebo/hx5_d20_right.gazebo.xacro" />
+  <xacro:include filename="$(find robotis_hand_description)/gazebo/hx5_d20/hx5_d20_right.gazebo.xacro" />
 
   <xacro:include filename="$(find robotis_hand_description)/ros2_control/hx5_d20_rev1/hx5_d20_right.ros2_control.xacro" />
 
@@ -29,7 +29,7 @@
 
   <gazebo>
     <plugin filename="gz_ros2_control-system" name="gz_ros2_control::GazeboSimROS2ControlPlugin">
-      <parameters>$(find robotis_hand_bringup)/config/robotis_hand_hardware_controller_manager.yaml</parameters>
+      <parameters>$(find robotis_hand_bringup)/config/hx5_d20/hx5_d20_hardware_controller_manager.yaml</parameters>
     </plugin>
   </gazebo>
 
