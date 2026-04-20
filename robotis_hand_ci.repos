@@ -1,0 +1,5 @@
+repositories:
+  robotis_interfaces:
+    type: git
+    url: https://github.com/ROBOTIS-GIT/robotis_interfaces.git
+    version: main

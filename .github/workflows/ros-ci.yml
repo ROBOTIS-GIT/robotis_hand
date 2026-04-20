@@ -49,6 +49,13 @@ jobs:
         with:
           required-ros-distributions: ${{ matrix.ros_distribution }}
 
+      - name: Checkout robotis_interfaces
+        uses: actions/checkout@v4
+        with:
+          repository: ROBOTIS-GIT/robotis_interfaces
+          path: ros_ws/src/robotis_interfaces
+          ref: main
+
       - name: Check and Install ROS dependencies
         shell: bash
         run: |
@@ -70,7 +77,7 @@ jobs:
         uses: ros-tooling/action-ros-ci@v0.3
         with:
           target-ros2-distro: ${{ matrix.ros_distribution }}
-          vcs-repo-file-url: ""
+          vcs-repo-file-url: "https://raw.githubusercontent.com/ROBOTIS-GIT/robotis_hand/${{ github.event_name == 'pull_request' && github.head_ref || github.ref_name }}/robotis_hand_ci.repos"
           package-name: |
             robotis_hand
             robotis_hand_bringup
