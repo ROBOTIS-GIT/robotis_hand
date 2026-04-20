@@ -2,6 +2,13 @@
 Changelog for package robotis_hand
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+0.1.0 (2026-04-20)
+------------------
+* Added tactile sensor topic broadcaster
+* Updated controller and input topic names for consistency
+* Adjusted HX5 joint2 position limits
+* Contributors: Wonho Yun, Howon Kim, Hyunwoo Nam
+
 0.0.3 (2026-03-18)
 ------------------
 * Updated Docker image tag

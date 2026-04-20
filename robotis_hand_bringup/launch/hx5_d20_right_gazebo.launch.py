@@ -146,7 +146,11 @@ def generate_launch_description():
     hand_controller_spawner = Node(
         package='controller_manager',
         executable='spawner',
-        arguments=['right_hand_controller'],
+        arguments=[
+            '--controller-ros-args',
+            '-r /hand_r_controller/joint_trajectory:='
+            '/leader/joint_trajectory_command_broadcaster_right_hand/joint_trajectory',
+            'hand_r_controller'],
         output='screen',
     )
 
