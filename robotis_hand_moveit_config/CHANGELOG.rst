@@ -2,6 +2,12 @@
 Changelog for package robotis_hand_moveit_config
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+0.1.0 (2026-04-20)
+------------------
+* Updated controller and input topic names for consistency
+* Adjusted HX5 joint2 position limits
+* Contributors: Hyunwoo Nam
+
 0.0.3 (2026-03-18)
 ------------------
 * None
