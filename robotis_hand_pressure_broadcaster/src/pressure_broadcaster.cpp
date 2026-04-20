@@ -1,3 +1,19 @@
+// Copyright 2026 ROBOTIS CO., LTD.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+//
+// Author: Wonho Yun
+
 #include "robotis_hand_pressure_broadcaster/pressure_broadcaster.hpp"
 
 #include <algorithm>
@@ -116,16 +132,25 @@ controller_interface::return_type PressureBroadcaster::update(
   }
 
   auto & message = publisher_->msg_;
-  std::transform(
-    state_interfaces_.cbegin(),
-    state_interfaces_.cend(),
-    message.pressures.begin(),
-    [](const auto & state_interface) {
-      return state_interface.get_optional().value_or(0.0);
-    });
-  const auto time_ns = time.nanoseconds();
-  message.header.stamp.sec = static_cast<int32_t>(time_ns / 1000000000LL);
-  message.header.stamp.nanosec = static_cast<uint32_t>(time_ns % 1000000000LL);
+
+  for (size_t i = 0; i < sensor_names_.size(); ++i) {
+    const size_t base = i * interface_names_.size();
+
+    auto get_val = [&](size_t offset) -> float {
+      if (base + offset >= state_interfaces_.size()) {
+        return 0.0f;
+      }
+      return static_cast<float>(
+        state_interfaces_[base + offset].get_optional().value_or(0.0));
+    };
+
+    auto & sensor = message.sensors[i];
+    for (size_t j = 0; j < sensor.pressure_values.size(); ++j) {
+      sensor.pressure_values[j] = get_val(j);
+    }
+  }
+
+  message.header.stamp = time;
 
   publisher_->unlockAndPublish();
   return controller_interface::return_type::OK;
@@ -136,9 +161,19 @@ void PressureBroadcaster::configure_message()
   auto & message = publisher_->msg_;
   message.header.frame_id = frame_id_;
   message.hand_name = hand_name_;
-  message.sensor_names = sensor_names_;
-  message.channel_names = interface_names_;
-  message.pressures.assign(sensor_names_.size() * interface_names_.size(), 0.0);
+
+  message.sensors.clear();
+  message.sensors.resize(sensor_names_.size());
+
+  for (size_t i = 0; i < sensor_names_.size(); ++i) {
+    auto & sensor = message.sensors[i];
+    sensor.sensor_name = sensor_names_[i];
+
+    for (size_t j = 0; j < interface_names_.size(); ++j) {
+      sensor.pressure_names[j] = interface_names_[j];
+      sensor.pressure_values[j] = 0;
+    }
+  }
 }
 
 bool PressureBroadcaster::refresh_parameters()
