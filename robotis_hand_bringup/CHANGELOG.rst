@@ -2,11 +2,15 @@
 Changelog for package robotis_hand_bringup
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-1.0.0 (2026-04-17)
+1.0.0 (2026-04-21)
+------------------
+* Added HX2 model
+* Contributors: Hyunwoo Nam
+
+0.1.0 (2026-04-20)
 ------------------
 * Added tactile sensor topic broadcaster
 * Updated controller and input topic names for consistency
-* Added HX2 model
 * Contributors: Wonho Yun, Howon Kim, Hyunwoo Nam
 
 0.0.3 (2026-03-18)
