@@ -20,10 +20,10 @@
   </joint>
 
   <xacro:hx5_d20_right prefix="$(arg prefix)" />
-  <xacro:robotis_hand_gazebo prefix="$(arg prefix)" />
+  <xacro:robotis_hand_right_gazebo prefix="$(arg prefix)" />
 
-  <xacro:robotis_hand_system
-    name="RobotisHandSystem" prefix="$(arg prefix)" use_sim="$(arg use_sim)"
+  <xacro:hx5_right_system
+    name="HX5RightSystem" prefix="$(arg prefix)" use_sim="$(arg use_sim)"
     use_mock_hardware="$(arg use_mock_hardware)"
     mock_sensor_commands="$(arg mock_sensor_commands)"/>
 
