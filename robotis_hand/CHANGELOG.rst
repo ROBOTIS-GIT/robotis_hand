@@ -2,6 +2,12 @@
 Changelog for package robotis_hand
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+0.1.1 (2026-04-28)
+------------------
+* Added VR support for HX5
+* Update macro names
+* Contributors: Hyunwoo Nam
+
 0.1.0 (2026-04-20)
 ------------------
 * Added tactile sensor topic broadcaster
