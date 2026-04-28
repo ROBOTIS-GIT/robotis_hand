@@ -2,6 +2,11 @@
 Changelog for package robotis_hand_description
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+0.1.1 (2026-04-28)
+------------------
+* Update macro names
+* Contributors: Hyunwoo Nam
+
 0.1.0 (2026-04-20)
 ------------------
 * Adjusted HX5 joint2 position limits
