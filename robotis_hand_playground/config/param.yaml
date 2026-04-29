@@ -5,7 +5,7 @@
     close_step: 0.01 # (Double) [rad] Joint closing increment per control step
     contact_threshold: 30.0 # (Double) Tactile force threshold for contact detection
     thumb_contact_ratio: 2.0 # (Double) Contact threshold multiplier for thumb
-    hand_side: "left" # (String) Hand side, [right, left]
+    hand_side: "right" # (String) Hand side, [right, left]
     un_use_finger: [0] # (Int Array) Unused fingers, [All_use: 0, thumb: 1, index: 2, middle: 3, ring: 4, little: 5]
 
     x_center: 0.3 # (Double) CoP x-axis dead zone threshold for LEFT/RIGHT correction
@@ -20,3 +20,4 @@
     # Optimization-Based Grasping
     feedback_max_delta: 0.01 # (Double) [rad] Maximum joint delta for optimization feedback correction
     regrasp_force: 1.5 # (Double) Regrasping target force scale used by optimization grasping controller
+    link_lengths: [0.0235, 0.0355, 0.0355] # (Double Array) [m] Planar IK link lengths

@@ -48,8 +48,7 @@ void TactileGraspController::configure_hand(const std::string & hand_side)
       fingers_[finger_idx].joint_max[2],
       fingers_[finger_idx].joint_max[3]};
 
-    // Link length
-    ik_models[i].link_lengths = {0.0235, 0.0355, 0.0355};
+    ik_models[i].link_lengths = param.link_lengths;
   }
   finger_planar_ik_ = std::make_unique<FingerPlanarIk>(ik_models);
   correction_planner_ = std::make_unique<CorrectionPlanner>(*this);

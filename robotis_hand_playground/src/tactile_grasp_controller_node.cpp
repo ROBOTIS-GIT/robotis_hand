@@ -79,8 +79,6 @@ void TactileGraspControllerNode::on_pressure(const HandPressuresPtr msg)
 void TactileGraspControllerNode::on_joint_state(const JointStatePtr msg)
 {
   std::lock_guard<std::mutex> lock(mutex_);
-  curr_joint_.clear();
-
   // Store current joint positions by joint name.
   const size_t n = std::min(msg->name.size(), msg->position.size());
   for (size_t i = 0; i < n; ++i) {

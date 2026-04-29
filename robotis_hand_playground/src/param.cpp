@@ -43,6 +43,8 @@ void declare_params(rclcpp::Node * node)
   // Optimization grasping controller parameters
   node->declare_parameter<double>("feedback_max_delta", 0.01);
   node->declare_parameter<double>("regrasp_force", 3.0);
+  node->declare_parameter<std::vector<double>>(
+    "link_lengths", std::vector<double>{0.0235, 0.0355, 0.0355});
 }
 
 Params load_params(rclcpp::Node * node)
@@ -83,6 +85,15 @@ Params load_params(rclcpp::Node * node)
   // Optimization grasping controller parameters
   node->get_parameter("feedback_max_delta", p.feedback_max_delta);
   node->get_parameter("regrasp_force", p.regrasp_force);
+  std::vector<double> link_lengths_tmp{};
+  node->get_parameter("link_lengths", link_lengths_tmp);
+  if (link_lengths_tmp.size() == p.link_lengths.size()) {
+    p.link_lengths = {link_lengths_tmp[0], link_lengths_tmp[1], link_lengths_tmp[2]};
+  } else {
+    RCLCPP_WARN(
+      node->get_logger(),
+      "link_lengths must contain 3 values. Using default link lengths.");
+  }
 
   return p;
 }

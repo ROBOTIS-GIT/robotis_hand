@@ -90,7 +90,6 @@ void TactileHoldController::pressure_callback(
 
 void TactileHoldController::joint_state_callback(const sensor_msgs::msg::JointState::SharedPtr msg)
 {
-  curr_joint_.clear();
   // Store current joint positions by joint name.
   const size_t n = std::min(msg->name.size(), msg->position.size());
   for (size_t i = 0; i < n; ++i) {

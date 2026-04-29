@@ -60,7 +60,7 @@ public:
   /**
    * @brief Check whether the correction motion can move within joint limits.
    */
-  bool is_at_joint_limit(int finger_idx, CorrectionType type) const;
+  bool can_move_for_correction(int finger_idx, CorrectionType type) const;
 
   /**
    * @brief Check whether the correction type belongs to y-direction correction.

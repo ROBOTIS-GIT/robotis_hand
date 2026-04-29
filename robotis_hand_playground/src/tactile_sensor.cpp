@@ -215,8 +215,9 @@ CopInfo TactileSensor::calc_cop(int finger_idx, const PressureArray & pressure) 
   info.cop_y_ratio = clamp(info.cop_y / std::max(half_y, 1e-9), -1.0, 1.0);
 
   // Apply wider dead zone for thumb.
-  const double x_center = param.x_center + ((finger_idx == 0) ? 0.45 : 0.0);
-  const double y_center = param.y_center + ((finger_idx == 0) ? 0.45 : 0.0);
+  const double thumb_ = 0.45;
+  const double x_center = param.x_center + ((finger_idx == 0) ? thumb_ : 0.0);
+  const double y_center = param.y_center + ((finger_idx == 0) ? thumb_ : 0.0);
 
   // Calculate left/right correction cost from x-axis CoP.
   const double abs_x_ratio = std::fabs(info.cop_x_ratio);

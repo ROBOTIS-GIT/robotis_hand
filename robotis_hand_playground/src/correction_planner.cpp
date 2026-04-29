@@ -44,8 +44,8 @@ void CorrectionPlanner::start_correction(int finger_idx)
     return;
   }
 
-  // Skip correction if the required joint is already at the limit.
-  if (!is_at_joint_limit(finger_idx, maybe_decision->type)) {
+  // Skip correction if the required motion is blocked by joint limits.
+  if (!can_move_for_correction(finger_idx, maybe_decision->type)) {
     return;
   }
 
@@ -161,37 +161,41 @@ bool CorrectionPlanner::run_y_correction(
   return !moved || plan.ticks_remaining <= 0;
 }
 
-bool CorrectionPlanner::is_at_joint_limit(int finger_idx, CorrectionType type) const
+bool CorrectionPlanner::can_move_for_correction(int finger_idx, CorrectionType type) const
 {
   const auto & finger = controller_.fingers_[finger_idx];
   const double eps = 1e-6;
-  const bool is_thumb = (finger_idx == 0);
 
-  auto max_limit = [&](int joint_idx) {
-      return finger.current_joint_targets[joint_idx] < finger.joint_max[joint_idx] - eps;
-    };
-
-  auto min_limit = [&](int joint_idx) {
-      return finger.current_joint_targets[joint_idx] > finger.joint_min[joint_idx] + eps;
+  auto can_apply_delta = [&](int joint_idx, double delta) {
+      if (delta > eps) {
+        return finger.current_joint_targets[joint_idx] < finger.joint_max[joint_idx] - eps;
+      }
+      if (delta < -eps) {
+        return finger.current_joint_targets[joint_idx] > finger.joint_min[joint_idx] + eps;
+      }
+      return false;
     };
 
   switch (type) {
     case CorrectionType::X_LEFT:
-      if (is_thumb) {
-        return max_limit(0) || max_limit(1);
+      if (finger_idx == 0) {
+        const double delta = robotis_hand_playground::thumb_joint_sign(controller_.param.hand_side) *
+          controller_.shift_step_ * 0.1;
+        return can_apply_delta(0, delta) || can_apply_delta(1, delta);
       }
-      return min_limit(0);
+      return can_apply_delta(0, -controller_.shift_step_);
 
     case CorrectionType::X_RIGHT:
-      if (is_thumb) {
-        return min_limit(0) || min_limit(1);
+      if (finger_idx == 0) {
+        const double delta = -robotis_hand_playground::thumb_joint_sign(controller_.param.hand_side) *
+          controller_.shift_step_ * 0.1;
+        return can_apply_delta(0, delta) || can_apply_delta(1, delta);
       }
-      return max_limit(0);
+      return can_apply_delta(0, controller_.shift_step_);
 
     case CorrectionType::Y_TOP:
     case CorrectionType::Y_BOT:
-      return (min_limit(1) && max_limit(1)) || (min_limit(2) && max_limit(2)) ||
-             (min_limit(3) && max_limit(3));
+      return true;
 
     default:
       return false;
@@ -221,7 +225,7 @@ bool CorrectionPlanner::correction_blocked(HoldCorrectionStage stage) const
     if (stage == HoldCorrectionStage::Y_SECOND && !is_y_correction(maybe_decision->type)) {
       continue;
     }
-    if (is_at_joint_limit(i, maybe_decision->type)) {
+    if (can_move_for_correction(i, maybe_decision->type)) {
       return false;
     }
   }

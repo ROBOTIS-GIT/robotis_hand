@@ -16,6 +16,7 @@
 
 #pragma once
 
+#include <array>
 #include <string>
 #include <vector>
 
@@ -49,6 +50,7 @@ struct Params
   // Optimization grasping parameters
   double feedback_max_delta = 0.01;
   double regrasp_force = 3.0;
+  std::array<double, 3> link_lengths = {0.0235, 0.0355, 0.0355};
 };
 
 /**
