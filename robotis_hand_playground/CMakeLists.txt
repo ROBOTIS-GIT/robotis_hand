@@ -35,36 +35,21 @@ ament_target_dependencies(tactile_rviz ${ROS2_PACKAGES})
 install(TARGETS tactile_rviz
         DESTINATION lib/${PROJECT_NAME})
 
-add_executable(tactile_grasp_controller_node
-              src/tactile_grasp_controller_node.cpp
-              src/tactile_grasp_controller.cpp
-              src/tactile_sensor.cpp
-              src/correction_planner.cpp
-              src/hx5d20_init.cpp
-              src/finger_ik_solver.cpp
-              src/param.cpp)
-target_include_directories(tactile_grasp_controller_node PUBLIC
-  $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
-  $<INSTALL_INTERFACE:include>)
-ament_target_dependencies(tactile_grasp_controller_node ${ROS2_PACKAGES})
-install(TARGETS tactile_grasp_controller_node
-        DESTINATION lib/${PROJECT_NAME})
-
-add_executable(tactile_hold_controller
-              src/tactile_hold_controller.cpp
+add_executable(tactile_force_controller
+              src/tactile_force_controller.cpp
               src/tactile_sensor.cpp
               src/hx5d20_init.cpp
               src/param.cpp)
-target_include_directories(tactile_hold_controller PUBLIC
+target_include_directories(tactile_force_controller PUBLIC
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
   $<INSTALL_INTERFACE:include>)
-ament_target_dependencies(tactile_hold_controller ${ROS2_PACKAGES})
-install(TARGETS tactile_hold_controller
+ament_target_dependencies(tactile_force_controller ${ROS2_PACKAGES})
+install(TARGETS tactile_force_controller
         DESTINATION lib/${PROJECT_NAME})
 
 install(PROGRAMS
-  scripts/grasp_start_keyboard.py
-  scripts/visualize_tactile.py
+  scripts/grasp_start_publisher.py
+  scripts/matplot_visualize_tactile.py
   DESTINATION lib/${PROJECT_NAME}
 )
 

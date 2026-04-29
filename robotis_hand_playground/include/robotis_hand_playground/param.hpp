@@ -16,7 +16,6 @@
 
 #pragma once
 
-#include <array>
 #include <string>
 #include <vector>
 
@@ -25,7 +24,7 @@
 namespace robotis_hand_playground
 {
 
-// Parameters used by tactile grasp controllers.
+// Parameters used by tactile force controller.
 struct Params
 {
   // Common control parameters
@@ -37,20 +36,9 @@ struct Params
   std::string hand_side = "right";
   std::vector<int> un_use_finger;
 
-  // Tactile CoP correction parameters
-  double y_center = 0.5;
-  double x_center = 0.2;
-  double min_force_correction = 10.0;
-  double cost_thres = 0.1;
-
   // Force maintenance parameters
   double reactive_force = 1.2;
   std::string state = "IDLE";
-
-  // Optimization grasping parameters
-  double feedback_max_delta = 0.01;
-  double regrasp_force = 3.0;
-  std::array<double, 3> link_lengths = {0.0235, 0.0355, 0.0355};
 };
 
 /**

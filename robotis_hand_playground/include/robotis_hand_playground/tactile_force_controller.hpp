@@ -24,6 +24,7 @@
 #include <vector>
 
 #include "robotis_hand_playground/hx5d20_struct.hpp"
+#include "robotis_hand_playground/param.hpp"
 #include "rclcpp/rclcpp.hpp"
 #include "robotis_interfaces/msg/hand_pressures.hpp"
 #include "sensor_msgs/msg/joint_state.hpp"
@@ -32,7 +33,7 @@
 #include "trajectory_msgs/msg/joint_trajectory.hpp"
 #include "trajectory_msgs/msg/joint_trajectory_point.hpp"
 
-namespace robotis_hand_playground_hold
+namespace robotis_hand_playground_force
 {
 
 typedef robotis_interfaces::msg::HandPressures HandPressuresMsg;
@@ -47,7 +48,7 @@ typedef robotis_hand_playground::FingerArray FingerArrayMsg;
 /**
  * @brief Force maintenance grasp controller using tactile feedback.
  */
-class TactileHoldController : public rclcpp::Node {
+class TactileForceController : public rclcpp::Node {
 public:
   static constexpr int fingers_num = robotis_hand_playground::fingers_num;
 
@@ -58,7 +59,7 @@ public:
     HOLD
   };
 
-  TactileHoldController();
+  TactileForceController();
 
 private:
   /**
@@ -205,4 +206,4 @@ private:
   double reactive_step_ = 0.02;
 };
 
-}  // namespace robotis_hand_playground_hold
+}  // namespace robotis_hand_playground_force

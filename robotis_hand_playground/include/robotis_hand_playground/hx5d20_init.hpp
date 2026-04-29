@@ -25,9 +25,9 @@ namespace robotis_hand_playground
 {
 
 /**
- * @brief Normalize a hand side string to "left" or "right".
+ * @brief Check a hand side string to "left" or "right".
  */
-std::string normalize_hand_side(const std::string & hand_side);
+std::string check_hand_side(const std::string & hand_side);
 
 /**
  * @brief Return the joint name suffix for the selected hand side.
@@ -43,11 +43,6 @@ std::string hand_namespace(const std::string & hand_side);
  * @brief Return the joint trajectory controller topic for the selected hand side.
  */
 std::string hand_controller_topic(const std::string & hand_side);
-
-/**
- * @brief Return the tactile sensor frame prefix for the selected hand side.
- */
-std::string tactile_sensor_prefix(const std::string & hand_side);
 
 /**
  * @brief Return thumb joint direction sign for the selected hand side.

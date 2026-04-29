@@ -30,69 +30,6 @@ constexpr int joints_per_finger = 4;
 typedef std::array<double, tactiles_num> PressureArray;
 
 /**
- * @brief Tactile correction direction selected from CoP error.
- */
-enum class CorrectionType
-{
-  NONE,
-  Y_TOP,
-  Y_BOT,
-  X_LEFT,
-  X_RIGHT
-};
-
-/**
- * @brief Correction stage used in HOLD state.
- */
-enum class HoldCorrectionStage
-{
-  X_FIRST,
-  Y_SECOND
-};
-
-/**
- * @brief CoP-based correction decision.
- */
-struct CorrectionDecision
-{
-  CorrectionType type{CorrectionType::NONE};
-  double cost = 0.0;
-};
-
-/**
- * @brief Multi-step correction plan for one finger.
- */
-struct CorrectionPlan
-{
-  bool active = false;
-  CorrectionType type{CorrectionType::NONE};
-  int phase = 0;
-  int ticks_remaining = 0;
-  double cost = 0.0;
-};
-typedef std::array<CorrectionPlan, fingers_num> CorrectionPlanArray;
-
-/**
- * @brief Tactile center-of-pressure information.
- */
-struct CopInfo
-{
-  std::array<double, tactiles_num> pressure{};
-  double total_force = 0.0;
-
-  double cop_y = 0.0;
-  double cop_x = 0.0;
-
-  double cop_y_ratio = 0.0;
-  double cop_x_ratio = 0.0;
-
-  double x_left_cost = 0.0;
-  double x_right_cost = 0.0;
-  double y_top_cost = 0.0;
-  double y_bot_cost = 0.0;
-};
-
-/**
  * @brief Per-finger joint and tactile state.
  */
 struct FingerData
@@ -112,7 +49,6 @@ struct FingerData
   int baseline_samples = 0;
 
   double filtered_force = 0.0;
-  CopInfo cop{};
 };
 typedef std::array<FingerData, fingers_num> FingerArray;
 

@@ -30,21 +30,9 @@ void declare_params(rclcpp::Node * node)
   node->declare_parameter<std::string>("hand_side", "right");
   node->declare_parameter<std::vector<int64_t>>("un_use_finger", std::vector<int64_t>{});
 
-  // Tactile correction parameters
-  node->declare_parameter<double>("y_center", 0.5);
-  node->declare_parameter<double>("x_center", 0.2);
-  node->declare_parameter<double>("min_force_correction", 10.0);
-  node->declare_parameter<double>("cost_thres", 0.1);
-
   // Force maintenance controller parameters
   node->declare_parameter<double>("reactive_force", 1.2);
   node->declare_parameter<std::string>("state", "IDLE");
-
-  // Optimization grasping controller parameters
-  node->declare_parameter<double>("feedback_max_delta", 0.01);
-  node->declare_parameter<double>("regrasp_force", 3.0);
-  node->declare_parameter<std::vector<double>>(
-    "link_lengths", std::vector<double>{0.0235, 0.0355, 0.0355});
 }
 
 Params load_params(rclcpp::Node * node)
@@ -72,28 +60,9 @@ Params load_params(rclcpp::Node * node)
     }
   }
 
-  // Tactile correction parameters
-  node->get_parameter("y_center", p.y_center);
-  node->get_parameter("x_center", p.x_center);
-  node->get_parameter("min_force_correction", p.min_force_correction);
-  node->get_parameter("cost_thres", p.cost_thres);
-
   // Force maintenance controller parameters
   node->get_parameter("reactive_force", p.reactive_force);
   node->get_parameter("state", p.state);
-
-  // Optimization grasping controller parameters
-  node->get_parameter("feedback_max_delta", p.feedback_max_delta);
-  node->get_parameter("regrasp_force", p.regrasp_force);
-  std::vector<double> link_lengths_tmp{};
-  node->get_parameter("link_lengths", link_lengths_tmp);
-  if (link_lengths_tmp.size() == p.link_lengths.size()) {
-    p.link_lengths = {link_lengths_tmp[0], link_lengths_tmp[1], link_lengths_tmp[2]};
-  } else {
-    RCLCPP_WARN(
-      node->get_logger(),
-      "link_lengths must contain 3 values. Using default link lengths.");
-  }
 
   return p;
 }

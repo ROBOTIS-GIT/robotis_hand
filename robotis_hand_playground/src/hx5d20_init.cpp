@@ -19,7 +19,7 @@
 namespace robotis_hand_playground
 {
 
-std::string normalize_hand_side(const std::string & hand_side)
+std::string check_hand_side(const std::string & hand_side)
 {
   if (hand_side == "left" || hand_side == "l") {
     return "left";
@@ -29,35 +29,30 @@ std::string normalize_hand_side(const std::string & hand_side)
 
 std::string hand_suffix(const std::string & hand_side)
 {
-  return normalize_hand_side(hand_side) == "left" ? "l" : "r";
+  return check_hand_side(hand_side) == "left" ? "l" : "r";
 }
 
 std::string hand_namespace(const std::string & hand_side)
 {
-  return "/" + normalize_hand_side(hand_side) + "_hand";
+  return "/" + check_hand_side(hand_side) + "_hand";
 }
 
 std::string hand_controller_topic(const std::string & hand_side)
 {
-  return "/leader/joint_trajectory_command_broadcaster_" + normalize_hand_side(hand_side) +
+  return "/leader/joint_trajectory_command_broadcaster_" + check_hand_side(hand_side) +
          "_hand/joint_trajectory";
-}
-
-std::string tactile_sensor_prefix(const std::string & hand_side)
-{
-  return "finger_" + hand_suffix(hand_side) + "_sensor";
 }
 
 double thumb_joint_sign(const std::string & hand_side)
 {
-  return normalize_hand_side(hand_side) == "left" ? -1.0 : 1.0;
+  return check_hand_side(hand_side) == "left" ? -1.0 : 1.0;
 }
 
 FingerArray init_fingers(const std::string & hand_side)
 {
   FingerArray fingers{};
   const auto suffix = hand_suffix(hand_side);
-  const bool is_left = normalize_hand_side(hand_side) == "left";
+  const bool is_left = check_hand_side(hand_side) == "left";
 
   // Thumb
   fingers[0].name = "thumb";
@@ -143,6 +138,7 @@ std::vector<double> init_r_positions()
 {
   return {
     0.297, -1.792, 0.0, 0.0,
+    // 0.12, -1.68, 0.0, 0.0,     // pinch
     0.0, 0.8, 0.0, 0.0,
     0.0, 0.8, 0.0, 0.0,
     0.0, 0.8, 0.0, 0.0,
@@ -154,6 +150,7 @@ std::vector<double> init_l_positions()
 {
   return {
     -0.15, 1.792, 0.0, 0.0,
+    // -0.12, 1.68, 0.0, 0.0,     // pinch
     0.0, 0.8, 0.0, 0.0,
     0.0, 0.8, 0.0, 0.0,
     0.0, 0.8, 0.0, 0.0,
@@ -163,7 +160,7 @@ std::vector<double> init_l_positions()
 
 std::vector<double> init_positions(const std::string & hand_side)
 {
-  if (normalize_hand_side(hand_side) == "left") {
+  if (check_hand_side(hand_side) == "left") {
     return init_l_positions();
   }
   return init_r_positions();
