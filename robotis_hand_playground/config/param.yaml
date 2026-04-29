@@ -1,0 +1,22 @@
+/**:
+  ros__parameters:
+    control_hz: 20.0 # (Double) [Hz] Main control loop frequency
+    trajectory_dt: 0.05 # (Double) [sec] JointTrajectory point time interval
+    close_step: 0.01 # (Double) [rad] Joint closing increment per control step
+    contact_threshold: 30.0 # (Double) Tactile force threshold for contact detection
+    thumb_contact_ratio: 2.0 # (Double) Contact threshold multiplier for thumb
+    hand_side: "left" # (String) Hand side, [right, left]
+    un_use_finger: [0] # (Int Array) Unused fingers, [All_use: 0, thumb: 1, index: 2, middle: 3, ring: 4, little: 5]
+
+    x_center: 0.3 # (Double) CoP x-axis dead zone threshold for LEFT/RIGHT correction
+    y_center: 0.5 # (Double) CoP y-axis dead zone threshold for TOP/BOT correction
+    min_force_correction: 10.0 # (Double) Minimum total tactile force required for CoP correction
+    cost_thres: 0.1 # (Double) Minimum CoP cost required for CoP correction
+
+    # Force-Based Grasping
+    reactive_force: 1.2 # (Double) Reactive target force scale used by force maintenance controller
+    state : "HOLD" # (String) Contact completion behavior, [IDLE: stop immediately, HOLD: maintain contact force]
+
+    # Optimization-Based Grasping
+    feedback_max_delta: 0.01 # (Double) [rad] Maximum joint delta for optimization feedback correction
+    regrasp_force: 1.5 # (Double) Regrasping target force scale used by optimization grasping controller

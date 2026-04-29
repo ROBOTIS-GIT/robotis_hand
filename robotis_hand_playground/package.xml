@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<package format="3">
+  <name>robotis_hand_playground</name>
+  <version>0.1.0</version>
+  <description>Tactile sensor based Grasping for ROBOTIS HX5-D20 hand</description>
+
+  <maintainer email="pyo@robotis.com">Pyo</maintainer>
+  <license>Apache License 2.0</license>
+
+  <author email="rlaghdnjs17@naver.com">Howon Kim</author>
+
+  <buildtool_depend>ament_cmake</buildtool_depend>
+
+  <depend>rclcpp</depend>
+  <depend>std_msgs</depend>
+  <depend>geometry_msgs</depend>
+  <depend>visualization_msgs</depend>
+  <depend>control_msgs</depend>
+  <depend>sensor_msgs</depend>
+  <depend>trajectory_msgs</depend>
+  <depend>robotis_interfaces</depend>
+
+  <exec_depend>rclpy</exec_depend>
+  <exec_depend>python3-numpy</exec_depend>
+  <exec_depend>python3-matplotlib</exec_depend>
+
+  <test_depend>ament_lint_auto</test_depend>
+  <test_depend>ament_lint_common</test_depend>
+
+  <export>
+    <build_type>ament_cmake</build_type>
+  </export>
+</package>
