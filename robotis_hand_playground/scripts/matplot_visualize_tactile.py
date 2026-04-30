@@ -39,6 +39,7 @@ from robotis_interfaces.msg import HandPressures
 matplotlib.use('TkAgg')
 matplotlib.rcParams['toolbar'] = 'None'
 
+
 @dataclass(frozen=True)
 class VizConfig:
     hand_side: str
@@ -74,6 +75,7 @@ def _make_qos(best_effort: bool) -> QoSProfile:
         depth=10,
         durability=DurabilityPolicy.VOLATILE,
     )
+
 
 class PressureViz(Node):
 
