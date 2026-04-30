@@ -14,12 +14,14 @@
 //
 // Author: Howon Kim
 
-#pragma once
+#ifndef ROBOTIS_HAND_PLAYGROUND__HX5D20_INIT_HPP_
+#define ROBOTIS_HAND_PLAYGROUND__HX5D20_INIT_HPP_
 
 #include <string>
 #include <vector>
 
 #include "robotis_hand_playground/hx5d20_struct.hpp"
+
 
 namespace robotis_hand_playground
 {
@@ -75,3 +77,5 @@ std::vector<double> init_l_positions();
 std::vector<double> init_positions(const std::string & hand_side = "right");
 
 }  // namespace robotis_hand_playground
+
+#endif  // ROBOTIS_HAND_PLAYGROUND__HX5D20_INIT_HPP_

@@ -14,12 +14,14 @@
 //
 // Author: Howon Kim
 
-#pragma once
+#ifndef ROBOTIS_HAND_PLAYGROUND__PARAM_HPP_
+#define ROBOTIS_HAND_PLAYGROUND__PARAM_HPP_
 
 #include <string>
 #include <vector>
 
-#include "rclcpp/rclcpp.hpp"
+#include <rclcpp/rclcpp.hpp>
+
 
 namespace robotis_hand_playground
 {
@@ -51,3 +53,5 @@ void declare_params(rclcpp::Node * node);
 Params load_params(rclcpp::Node * node);
 
 }  // namespace robotis_hand_playground
+
+#endif  // ROBOTIS_HAND_PLAYGROUND__PARAM_HPP_

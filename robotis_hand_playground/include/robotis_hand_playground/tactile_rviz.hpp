@@ -14,7 +14,8 @@
 //
 // Author: Howon Kim
 
-#pragma once
+#ifndef ROBOTIS_HAND_PLAYGROUND__TACTILE_RVIZ_HPP_
+#define ROBOTIS_HAND_PLAYGROUND__TACTILE_RVIZ_HPP_
 
 #include <algorithm>
 #include <array>
@@ -29,13 +30,13 @@
 
 #include <geometry_msgs/msg/point.hpp>
 #include <rclcpp/rclcpp.hpp>
+#include <robotis_interfaces/msg/hand_pressures.hpp>
+#include <robotis_interfaces/msg/tactile_sensor.hpp>
 #include <std_msgs/msg/float32.hpp>
 #include <std_msgs/msg/float32_multi_array.hpp>
 #include <visualization_msgs/msg/marker.hpp>
 #include <visualization_msgs/msg/marker_array.hpp>
 
-#include "robotis_interfaces/msg/hand_pressures.hpp"
-#include "robotis_interfaces/msg/tactile_sensor.hpp"
 
 /**
  * @brief RViz marker publisher for tactile force and CoP visualization.
@@ -221,3 +222,5 @@ private:
   rclcpp::Publisher<std_msgs::msg::Float32>::SharedPtr hand_total_pub_;
   rclcpp::TimerBase::SharedPtr timer_;
 };
+
+#endif  // ROBOTIS_HAND_PLAYGROUND__TACTILE_RVIZ_HPP_

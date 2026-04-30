@@ -14,12 +14,19 @@
 //
 // Author: Howon Kim
 
-#include "robotis_hand_playground/tactile_force_controller.hpp"
-
+#include <algorithm>
+#include <array>
 #include <chrono>
+#include <functional>
+#include <memory>
+#include <mutex>
 #include <sstream>
 
+#include <trajectory_msgs/msg/joint_trajectory_point.hpp>
+
 #include "robotis_hand_playground/hx5d20_init.hpp"
+#include "robotis_hand_playground/tactile_force_controller.hpp"
+
 
 using namespace std::chrono_literals;
 

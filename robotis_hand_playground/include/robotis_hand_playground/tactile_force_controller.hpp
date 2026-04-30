@@ -14,7 +14,8 @@
 //
 // Author: Howon Kim
 
-#pragma once
+#ifndef ROBOTIS_HAND_PLAYGROUND__TACTILE_FORCE_CONTROLLER_HPP_
+#define ROBOTIS_HAND_PLAYGROUND__TACTILE_FORCE_CONTROLLER_HPP_
 
 #include <array>
 #include <map>
@@ -23,15 +24,16 @@
 #include <string>
 #include <vector>
 
+#include <rclcpp/rclcpp.hpp>
+#include <robotis_interfaces/msg/hand_pressures.hpp>
+#include <sensor_msgs/msg/joint_state.hpp>
+#include <std_msgs/msg/bool.hpp>
+#include <trajectory_msgs/msg/joint_trajectory.hpp>
+
 #include "robotis_hand_playground/hx5d20_struct.hpp"
 #include "robotis_hand_playground/param.hpp"
-#include "rclcpp/rclcpp.hpp"
-#include "robotis_interfaces/msg/hand_pressures.hpp"
-#include "sensor_msgs/msg/joint_state.hpp"
-#include "std_msgs/msg/bool.hpp"
 #include "robotis_hand_playground/tactile_sensor.hpp"
-#include "trajectory_msgs/msg/joint_trajectory.hpp"
-#include "trajectory_msgs/msg/joint_trajectory_point.hpp"
+
 
 namespace robotis_hand_playground_force
 {
@@ -207,3 +209,5 @@ private:
 };
 
 }  // namespace robotis_hand_playground_force
+
+#endif  // ROBOTIS_HAND_PLAYGROUND__TACTILE_FORCE_CONTROLLER_HPP_

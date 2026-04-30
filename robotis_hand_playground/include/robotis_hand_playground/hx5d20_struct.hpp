@@ -14,11 +14,13 @@
 //
 // Author: Howon Kim
 
-#pragma once
+#ifndef ROBOTIS_HAND_PLAYGROUND__HX5D20_STRUCT_HPP_
+#define ROBOTIS_HAND_PLAYGROUND__HX5D20_STRUCT_HPP_
 
 #include <array>
 #include <string>
 #include <vector>
+
 
 namespace robotis_hand_playground
 {
@@ -64,3 +66,5 @@ struct Hx5d20SensorData
 typedef std::array<Hx5d20SensorData, fingers_num> SensorArray;
 
 }  // namespace robotis_hand_playground
+
+#endif  // ROBOTIS_HAND_PLAYGROUND__HX5D20_STRUCT_HPP_

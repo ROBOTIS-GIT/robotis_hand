@@ -14,11 +14,14 @@
 //
 // Author: Howon Kim
 
-#pragma once
+#ifndef ROBOTIS_HAND_PLAYGROUND__TACTILE_SENSOR_HPP_
+#define ROBOTIS_HAND_PLAYGROUND__TACTILE_SENSOR_HPP_
+
+#include <rclcpp/rclcpp.hpp>
+#include <robotis_interfaces/msg/hand_pressures.hpp>
 
 #include "robotis_hand_playground/hx5d20_struct.hpp"
-#include "rclcpp/rclcpp.hpp"
-#include "robotis_interfaces/msg/hand_pressures.hpp"
+
 
 namespace robotis_hand_playground
 {
@@ -80,3 +83,5 @@ private:
 };
 
 }  // namespace robotis_hand_playground
+
+#endif  // ROBOTIS_HAND_PLAYGROUND__TACTILE_SENSOR_HPP_
