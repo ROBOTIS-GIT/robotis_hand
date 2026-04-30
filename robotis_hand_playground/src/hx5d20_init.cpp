@@ -107,7 +107,7 @@ FingerArray init_fingers(const std::string & hand_side)
     "finger_" + suffix + "_joint19",
     "finger_" + suffix + "_joint20"};
   fingers[4].joint_min = {-0.6, -1.5, -1.5, -1.5};
-  fingers[4].joint_max = {0.6, 1.5, 1.5, 1.5};  // 범위 넓혀 놓음 = urdf 랑 joint 5, 17 매칭 필요
+  fingers[4].joint_max = {0.6, 1.5, 1.5, 1.5};
 
   for (auto & finger : fingers) {
     finger.current_joint_targets = {0.0, 0.0, 0.0, 0.0};
@@ -138,7 +138,6 @@ std::vector<double> init_r_positions()
 {
   return {
     0.297, -1.792, 0.0, 0.0,
-    // 0.12, -1.68, 0.0, 0.0,     // pinch
     0.0, 0.8, 0.0, 0.0,
     0.0, 0.8, 0.0, 0.0,
     0.0, 0.8, 0.0, 0.0,
@@ -150,7 +149,6 @@ std::vector<double> init_l_positions()
 {
   return {
     -0.15, 1.792, 0.0, 0.0,
-    // -0.12, 1.68, 0.0, 0.0,     // pinch
     0.0, 0.8, 0.0, 0.0,
     0.0, 0.8, 0.0, 0.0,
     0.0, 0.8, 0.0, 0.0,
