@@ -9,7 +9,7 @@ Panels:
         - /RobotModel1
         - /TF1
       Splitter Ratio: 0.5
-    Tree Height: 555
+    Tree Height: 720
   - Class: rviz_common/Selection
     Name: Selection
   - Class: rviz_common/Tool Properties
@@ -67,132 +67,132 @@ Visualization Manager:
         Expand Link Details: false
         Expand Tree: false
         Link Tree Style: Links in Alphabetic Order
-        finger_end_l_link1:
+        finger_end_r_link1:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        finger_end_l_link2:
+        finger_end_r_link2:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        finger_end_l_link3:
+        finger_end_r_link3:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        finger_end_l_link4:
+        finger_end_r_link4:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        finger_end_l_link5:
+        finger_end_r_link5:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        finger_l_link1:
+        finger_r_link1:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        finger_l_link10:
+        finger_r_link10:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        finger_l_link11:
+        finger_r_link11:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        finger_l_link12:
+        finger_r_link12:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        finger_l_link13:
+        finger_r_link13:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        finger_l_link14:
+        finger_r_link14:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        finger_l_link15:
+        finger_r_link15:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        finger_l_link16:
+        finger_r_link16:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        finger_l_link17:
+        finger_r_link17:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        finger_l_link18:
+        finger_r_link18:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        finger_l_link19:
+        finger_r_link19:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        finger_l_link2:
+        finger_r_link2:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        finger_l_link20:
+        finger_r_link20:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        finger_l_link3:
+        finger_r_link3:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        finger_l_link4:
+        finger_r_link4:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        finger_l_link5:
+        finger_r_link5:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        finger_l_link6:
+        finger_r_link6:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        finger_l_link7:
+        finger_r_link7:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        finger_l_link8:
+        finger_r_link8:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        finger_l_link9:
+        finger_r_link9:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        hx5_d20_left_base:
+        hx5_d20_right_base:
           Alpha: 1
           Show Axes: false
           Show Trail: false
@@ -216,57 +216,57 @@ Visualization Manager:
       Frame Timeout: 15
       Frames:
         All Enabled: true
-        finger_end_l_link1:
+        finger_end_r_link1:
           Value: true
-        finger_end_l_link2:
+        finger_end_r_link2:
           Value: true
-        finger_end_l_link3:
+        finger_end_r_link3:
           Value: true
-        finger_end_l_link4:
+        finger_end_r_link4:
           Value: true
-        finger_end_l_link5:
+        finger_end_r_link5:
           Value: true
-        finger_l_link1:
+        finger_r_link1:
           Value: true
-        finger_l_link10:
+        finger_r_link10:
           Value: true
-        finger_l_link11:
+        finger_r_link11:
           Value: true
-        finger_l_link12:
+        finger_r_link12:
           Value: true
-        finger_l_link13:
+        finger_r_link13:
           Value: true
-        finger_l_link14:
+        finger_r_link14:
           Value: true
-        finger_l_link15:
+        finger_r_link15:
           Value: true
-        finger_l_link16:
+        finger_r_link16:
           Value: true
-        finger_l_link17:
+        finger_r_link17:
           Value: true
-        finger_l_link18:
+        finger_r_link18:
           Value: true
-        finger_l_link19:
+        finger_r_link19:
           Value: true
-        finger_l_link2:
+        finger_r_link2:
           Value: true
-        finger_l_link20:
+        finger_r_link20:
           Value: true
-        finger_l_link3:
+        finger_r_link3:
           Value: true
-        finger_l_link4:
+        finger_r_link4:
           Value: true
-        finger_l_link5:
+        finger_r_link5:
           Value: true
-        finger_l_link6:
+        finger_r_link6:
           Value: true
-        finger_l_link7:
+        finger_r_link7:
           Value: true
-        finger_l_link8:
+        finger_r_link8:
           Value: true
-        finger_l_link9:
+        finger_r_link9:
           Value: true
-        hx5_d20_left_base:
+        hx5_d20_right_base:
           Value: true
         world:
           Value: true
@@ -277,36 +277,36 @@ Visualization Manager:
       Show Names: false
       Tree:
         world:
-          hx5_d20_left_base:
-            finger_l_link1:
-              finger_l_link2:
-                finger_l_link3:
-                  finger_l_link4:
-                    finger_end_l_link1:
+          hx5_d20_right_base:
+            finger_r_link1:
+              finger_r_link2:
+                finger_r_link3:
+                  finger_r_link4:
+                    finger_end_r_link1:
                       {}
-            finger_l_link13:
-              finger_l_link14:
-                finger_l_link15:
-                  finger_l_link16:
-                    finger_end_l_link4:
+            finger_r_link13:
+              finger_r_link14:
+                finger_r_link15:
+                  finger_r_link16:
+                    finger_end_r_link4:
                       {}
-            finger_l_link17:
-              finger_l_link18:
-                finger_l_link19:
-                  finger_l_link20:
-                    finger_end_l_link5:
+            finger_r_link17:
+              finger_r_link18:
+                finger_r_link19:
+                  finger_r_link20:
+                    finger_end_r_link5:
                       {}
-            finger_l_link5:
-              finger_l_link6:
-                finger_l_link7:
-                  finger_l_link8:
-                    finger_end_l_link2:
+            finger_r_link5:
+              finger_r_link6:
+                finger_r_link7:
+                  finger_r_link8:
+                    finger_end_r_link2:
                       {}
-            finger_l_link9:
-              finger_l_link10:
-                finger_l_link11:
-                  finger_l_link12:
-                    finger_end_l_link3:
+            finger_r_link9:
+              finger_r_link10:
+                finger_r_link11:
+                  finger_r_link12:
+                    finger_end_r_link3:
                       {}
       Update Interval: 0
       Value: true
@@ -369,33 +369,33 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz_default_plugins/Orbit
-      Distance: 0.4000000059604645
+      Distance: 0.33215853571891785
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.05999999865889549
         Stereo Focal Distance: 1
         Swap Stereo Eyes: false
         Value: false
       Focal Point:
-        X: 0.05000000074505806
-        Y: -0.029999999329447746
-        Z: 0.10000000149011612
+        X: 0.052005376666784286
+        Y: 0.002847757190465927
+        Z: 0.13402815163135529
       Focal Shape Fixed Size: true
       Focal Shape Size: 0.05000000074505806
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.009999999776482582
-      Pitch: 0.4000000059604645
+      Pitch: 0.11000014841556549
       Target Frame: <Fixed Frame>
       Value: Orbit (rviz)
-      Yaw: 5.699999809265137
+      Yaw: 6.280004501342773
     Saved: ~
 Window Geometry:
   Displays:
     collapsed: false
-  Height: 846
+  Height: 1011
   Hide Left Dock: false
   Hide Right Dock: false
-  QMainWindow State: 000000ff00000000fd000000040000000000000156000002b4fc0200000008fb0000001200530065006c0065006300740069006f006e00000001e10000009b0000005c00fffffffb0000001e0054006f006f006c002000500072006f007000650072007400690065007302000001ed000001df00000185000000a3fb000000120056006900650077007300200054006f006f02000001df000002110000018500000122fb000000200054006f006f006c002000500072006f0070006500720074006900650073003203000002880000011d000002210000017afb000000100044006900730070006c006100790073010000003b000002b4000000c700fffffffb0000002000730065006c0065006300740069006f006e00200062007500660066006500720200000138000000aa0000023a00000294fb00000014005700690064006500530074006500720065006f02000000e6000000d2000003ee0000030bfb0000000c004b0069006e0065006300740200000186000001060000030c00000261000000010000010f000002b4fc0200000003fb0000001e0054006f006f006c002000500072006f00700065007200740069006500730100000041000000780000000000000000fb0000000a00560069006500770073010000003b000002b4000000a000fffffffb0000001200530065006c0065006300740069006f006e010000025a000000b200000000000000000000000200000490000000a9fc0100000001fb0000000a00560069006500770073030000004e00000080000002e10000019700000003000004b00000003efc0100000002fb0000000800540069006d00650100000000000004b00000025300fffffffb0000000800540069006d006501000000000000045000000000000000000000023f000002b400000004000000040000000800000008fc0000000100000002000000010000000a0054006f006f006c00730100000000ffffffff0000000000000000
+  QMainWindow State: 000000ff00000000fd00000004000000000000015600000359fc0200000008fb0000001200530065006c0065006300740069006f006e00000001e10000009b0000005c00fffffffb0000001e0054006f006f006c002000500072006f007000650072007400690065007302000001ed000001df00000185000000a3fb000000120056006900650077007300200054006f006f02000001df000002110000018500000122fb000000200054006f006f006c002000500072006f0070006500720074006900650073003203000002880000011d000002210000017afb000000100044006900730070006c006100790073010000003b00000359000000c700fffffffb0000002000730065006c0065006300740069006f006e00200062007500660066006500720200000138000000aa0000023a00000294fb00000014005700690064006500530074006500720065006f02000000e6000000d2000003ee0000030bfb0000000c004b0069006e0065006300740200000186000001060000030c00000261000000010000010f00000359fc0200000003fb0000001e0054006f006f006c002000500072006f00700065007200740069006500730100000041000000780000000000000000fb0000000a00560069006500770073010000003b00000359000000a000fffffffb0000001200530065006c0065006300740069006f006e010000025a000000b200000000000000000000000200000490000000a9fc0100000001fb0000000a00560069006500770073030000004e00000080000002e100000197000000030000073e0000003efc0100000002fb0000000800540069006d006501000000000000073e0000025300fffffffb0000000800540069006d00650100000000000004500000000000000000000004cd0000035900000004000000040000000800000008fc0000000100000002000000010000000a0054006f006f006c00730100000000ffffffff0000000000000000
   Selection:
     collapsed: false
   Time:
@@ -404,6 +404,6 @@ Window Geometry:
     collapsed: false
   Views:
     collapsed: false
-  Width: 1200
-  X: 130
-  Y: 411
+  Width: 1854
+  X: 66
+  Y: 32

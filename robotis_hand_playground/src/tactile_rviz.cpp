@@ -422,7 +422,7 @@ visualization_msgs::msg::Marker TactileRviz::make_arrow_marker(
   m.color.a = c[3];
 
   // Hide marker for weak contact.
-  if (info.total_force <= 3.0) {
+  if (info.total_force <= 5.0) {
     m.color.a = 0.0f;
   }
 
@@ -442,7 +442,7 @@ visualization_msgs::msg::Marker TactileRviz::make_cop_marker(
   m.frame_locked = true;
 
   // Hide marker for weak contact.
-  if (info.total_force <= 3.0) {
+  if (info.total_force <= 5.0) {
     m.scale.x = 0.001;
     m.scale.y = 0.001;
     m.scale.z = 0.001;
