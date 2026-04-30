@@ -2,7 +2,7 @@
 <package format="3">
   <name>robotis_hand_playground</name>
   <version>0.1.2</version>
-  <description>Tactile sensor based Grasping for ROBOTIS HX5-D20 hand</description>
+  <description>Tactile sensor based grasp controller example</description>
 
   <maintainer email="pyo@robotis.com">Pyo</maintainer>
   <license>Apache License 2.0</license>
