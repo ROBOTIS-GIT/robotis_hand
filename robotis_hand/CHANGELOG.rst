@@ -2,6 +2,13 @@
 Changelog for package robotis_hand
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+0.1.2 (2026-04-29)
+------------------
+* Added total force-based holding controller
+* Added tactile visualization script
+* Added tactile force arrow markers in RViz
+* Contributors: Howon Kim
+
 0.1.1 (2026-04-28)
 ------------------
 * Added VR support for HX5
