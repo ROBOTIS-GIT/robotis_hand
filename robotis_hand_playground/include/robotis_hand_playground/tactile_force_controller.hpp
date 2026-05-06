@@ -196,7 +196,6 @@ private:
   // Force states
   std::array<double, fingers_num> contact_force_;
   std::array<double, fingers_num> desired_force_;
-  std::array<double, fingers_num> prev_filtered_force_;
 
   // Controller state
   State state_{State::IDLE};
@@ -204,7 +203,7 @@ private:
 
   // Force control
   double force_kp_ = 0.002;  // Force feedback gain
-  double deadband = 5.0;     // Deadband for small force errors
+  double deadband_ = 5.0;    // Deadband for small force errors
   double reactive_step_ = 0.02;
 };
 

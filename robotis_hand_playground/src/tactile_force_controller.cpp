@@ -86,6 +86,8 @@ TactileForceController::TactileForceController()
 void TactileForceController::pressure_callback(
   const robotis_interfaces::msg::HandPressures::SharedPtr msg)
 {
+  std::lock_guard<std::mutex> lock(mutex_);
+
   if (!tactile_sensor_.check_msg(msg)) {
     return;
   }
@@ -96,6 +98,8 @@ void TactileForceController::pressure_callback(
 
 void TactileForceController::joint_state_callback(const sensor_msgs::msg::JointState::SharedPtr msg)
 {
+  std::lock_guard<std::mutex> lock(mutex_);
+
   // Store current joint positions by joint name.
   const size_t n = std::min(msg->name.size(), msg->position.size());
   for (size_t i = 0; i < n; ++i) {
@@ -106,6 +110,8 @@ void TactileForceController::joint_state_callback(const sensor_msgs::msg::JointS
 
 void TactileForceController::grasp_start_callback(const std_msgs::msg::Bool::SharedPtr msg)
 {
+  std::lock_guard<std::mutex> lock(mutex_);
+
   // Start grasping when /grasp_start receives true.
   if (msg->data) {
     if (state_ == State::IDLE) {
@@ -123,6 +129,8 @@ void TactileForceController::grasp_start_callback(const std_msgs::msg::Bool::Sha
 
 void TactileForceController::control_loop()
 {
+  std::lock_guard<std::mutex> lock(mutex_);
+
   // Run state-specific controller logic.
   switch (state_) {
     case State::IDLE:
@@ -136,10 +144,6 @@ void TactileForceController::control_loop()
       break;
     default:
       break;
-  }
-  // Store previous filtered force for force maintenance.
-  for (int i = 0; i < fingers_num; ++i) {
-    prev_filtered_force_[i] = fingers_[i].filtered_force;
   }
 }
 
@@ -286,7 +290,6 @@ void TactileForceController::reset_grasp()
     fingers_[i].contact_detected = false;
     contact_force_[i] = 0.0;
     desired_force_[i] = 0.0;
-    prev_filtered_force_[i] = fingers_[i].filtered_force;
   }
 
   sync_targets();
@@ -387,7 +390,7 @@ double TactileForceController::get_open_pos(const std::string & joint_name) cons
 
 double TactileForceController::apply_deadband(double error) const
 {
-  if (error > -deadband && error < deadband) {
+  if (error > -deadband_ && error < deadband_) {
     return 0.0;
   }
   return error;
