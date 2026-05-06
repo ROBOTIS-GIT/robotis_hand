@@ -31,10 +31,10 @@ def generate_launch_description():
         'param.yaml',
     )
 
-    tactile_hold_controller = Node(
+    tactile_force_controller = Node(
         package='robotis_hand_playground',
-        executable='tactile_hold_controller',
-        name='tactile_hold_controller',
+        executable='tactile_force_controller',
+        name='tactile_force_controller',
         output='screen',
         parameters=[param_file],
     )
@@ -48,6 +48,6 @@ def generate_launch_description():
     )
 
     return LaunchDescription([
-        tactile_hold_controller,
+        tactile_force_controller,
         tactile_rviz_node,
     ])

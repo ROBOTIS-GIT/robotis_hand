@@ -14,7 +14,7 @@
 //
 // Author: Howon Kim
 
-#include "robotis_hand_playground/tactile_hold_controller.hpp"
+#include "robotis_hand_playground/tactile_force_controller.hpp"
 
 #include <chrono>
 #include <sstream>
@@ -23,10 +23,10 @@
 
 using namespace std::chrono_literals;
 
-namespace robotis_hand_playground_hold
+namespace robotis_hand_playground_force
 {
-TactileHoldController::TactileHoldController()
-: Node("tactile_hold_controller"), tactile_sensor_(this->get_logger(), this->get_clock())
+TactileForceController::TactileForceController()
+: Node("tactile_force_controller"), tactile_sensor_(this->get_logger(), this->get_clock())
 {
   // Load parameters.
   robotis_hand_playground::declare_params(this);
@@ -42,15 +42,15 @@ TactileHoldController::TactileHoldController()
   pressure_sub_ = this->create_subscription<robotis_interfaces::msg::HandPressures>(
     robotis_hand_playground::hand_namespace(param.hand_side) + "/finger_pressures",
     10,
-    std::bind(&TactileHoldController::pressure_callback, this, std::placeholders::_1));
+    std::bind(&TactileForceController::pressure_callback, this, std::placeholders::_1));
 
   joint_state_sub_ = this->create_subscription<sensor_msgs::msg::JointState>("/joint_states",
     10,
-    std::bind(&TactileHoldController::joint_state_callback, this, std::placeholders::_1));
+    std::bind(&TactileForceController::joint_state_callback, this, std::placeholders::_1));
 
   grasp_start_sub_ = this->create_subscription<std_msgs::msg::Bool>("/grasp_start",
     10,
-    std::bind(&TactileHoldController::grasp_start_callback, this, std::placeholders::_1));
+    std::bind(&TactileForceController::grasp_start_callback, this, std::placeholders::_1));
 
   traj_pub_ = this->create_publisher<trajectory_msgs::msg::JointTrajectory>(
     robotis_hand_playground::hand_controller_topic(param.hand_side), 10);
@@ -66,7 +66,7 @@ TactileHoldController::TactileHoldController()
   const auto period = std::chrono::duration<double>(1.0 / param.control_hz);
   control_timer_ =
     this->create_wall_timer(std::chrono::duration_cast<std::chrono::milliseconds>(period),
-      std::bind(&TactileHoldController::control_loop, this));
+      std::bind(&TactileForceController::control_loop, this));
 
   // Initialize joint targets with open positions.
   for (auto & finger : fingers_) {
@@ -74,10 +74,10 @@ TactileHoldController::TactileHoldController()
       finger.current_joint_targets[j] = get_open_pos(finger.joint_names[j]);
     }
   }
-  RCLCPP_INFO(this->get_logger(), "TactileHoldController initialized.");
+  RCLCPP_INFO(this->get_logger(), "TactileForceController initialized.");
 }
 
-void TactileHoldController::pressure_callback(
+void TactileForceController::pressure_callback(
   const robotis_interfaces::msg::HandPressures::SharedPtr msg)
 {
   if (!tactile_sensor_.check_msg(msg)) {
@@ -88,7 +88,7 @@ void TactileHoldController::pressure_callback(
   tactile_sensor_.update_pressure(fingers_, baseline_, sensors);
 }
 
-void TactileHoldController::joint_state_callback(const sensor_msgs::msg::JointState::SharedPtr msg)
+void TactileForceController::joint_state_callback(const sensor_msgs::msg::JointState::SharedPtr msg)
 {
   // Store current joint positions by joint name.
   const size_t n = std::min(msg->name.size(), msg->position.size());
@@ -98,7 +98,7 @@ void TactileHoldController::joint_state_callback(const sensor_msgs::msg::JointSt
   joint_state_received_ = true;
 }
 
-void TactileHoldController::grasp_start_callback(const std_msgs::msg::Bool::SharedPtr msg)
+void TactileForceController::grasp_start_callback(const std_msgs::msg::Bool::SharedPtr msg)
 {
   // Start grasping when /grasp_start receives true.
   if (msg->data) {
@@ -115,7 +115,7 @@ void TactileHoldController::grasp_start_callback(const std_msgs::msg::Bool::Shar
   RCLCPP_INFO(this->get_logger(), "grasp_start=false received -> State = IDLE");
 }
 
-void TactileHoldController::control_loop()
+void TactileForceController::control_loop()
 {
   // Run state-specific controller logic.
   switch (state_) {
@@ -137,13 +137,13 @@ void TactileHoldController::control_loop()
   }
 }
 
-bool TactileHoldController::unused_finger(int finger_idx) const
+bool TactileForceController::unused_finger(int finger_idx) const
 {
   return std::find(param.un_use_finger.begin(), param.un_use_finger.end(), finger_idx) !=
          param.un_use_finger.end();
 }
 
-void TactileHoldController::close_unused_finger()
+void TactileForceController::close_unused_finger()
 {
   for (int i = 1; i < fingers_num; ++i) {
     if (!unused_finger(i)) {
@@ -160,12 +160,12 @@ void TactileHoldController::close_unused_finger()
   }
 }
 
-void TactileHoldController::handle_idle()
+void TactileForceController::handle_idle()
 {
   // IDLE
 }
 
-double TactileHoldController::finger_contact_threshold(int finger_idx) const
+double TactileForceController::finger_contact_threshold(int finger_idx) const
 {
   if (finger_idx == 0) {
     return param.contact_threshold * param.thumb_contact_ratio;
@@ -173,7 +173,7 @@ double TactileHoldController::finger_contact_threshold(int finger_idx) const
   return param.contact_threshold;
 }
 
-void TactileHoldController::handle_close()
+void TactileForceController::handle_close()
 {
   for (int i = 0; i < fingers_num; ++i) {
     auto & finger = fingers_[i];
@@ -231,7 +231,7 @@ void TactileHoldController::handle_close()
   }
 }
 
-void TactileHoldController::handle_hold()
+void TactileForceController::handle_hold()
 {
   for (int i = 0; i < fingers_num; ++i) {
     auto & finger = fingers_[i];
@@ -274,7 +274,7 @@ void TactileHoldController::handle_hold()
   publish_traj();
 }
 
-void TactileHoldController::reset_grasp()
+void TactileForceController::reset_grasp()
 {
   for (int i = 0; i < fingers_num; ++i) {
     fingers_[i].contact_detected = false;
@@ -286,7 +286,7 @@ void TactileHoldController::reset_grasp()
   sync_targets();
 }
 
-void TactileHoldController::reset_to_init()
+void TactileForceController::reset_to_init()
 {
   reset_grasp();
   state_ = State::IDLE;
@@ -298,7 +298,7 @@ void TactileHoldController::reset_to_init()
   }
 }
 
-void TactileHoldController::set_desired_force()
+void TactileForceController::set_desired_force()
 {
   for (int i = 0; i < fingers_num; ++i) {
     desired_force_[i] =
@@ -309,7 +309,7 @@ void TactileHoldController::set_desired_force()
   }
 }
 
-void TactileHoldController::publish_traj()
+void TactileForceController::publish_traj()
 {
   trajectory_msgs::msg::JointTrajectory traj_msg;
   trajectory_msgs::msg::JointTrajectoryPoint point;
@@ -332,7 +332,7 @@ void TactileHoldController::publish_traj()
   traj_pub_->publish(traj_msg);
 }
 
-void TactileHoldController::sync_targets()
+void TactileForceController::sync_targets()
 {
   if (!joint_state_received_) {
     return;
@@ -346,7 +346,7 @@ void TactileHoldController::sync_targets()
   }
 }
 
-bool TactileHoldController::all_contacted() const
+bool TactileForceController::all_contacted() const
 {
   for (const auto & finger : fingers_) {
     if (!finger.contact_detected) {
@@ -356,7 +356,7 @@ bool TactileHoldController::all_contacted() const
   return true;
 }
 
-bool TactileHoldController::get_target(const std::string & joint_name, double & target) const
+bool TactileForceController::get_target(const std::string & joint_name, double & target) const
 {
   for (const auto & finger : fingers_) {
     for (size_t j = 0; j < finger.joint_names.size(); ++j) {
@@ -369,7 +369,7 @@ bool TactileHoldController::get_target(const std::string & joint_name, double & 
   return false;
 }
 
-double TactileHoldController::get_open_pos(const std::string & joint_name) const
+double TactileForceController::get_open_pos(const std::string & joint_name) const
 {
   for (size_t i = 0; i < hand_joint_names_.size(); ++i) {
     if (hand_joint_names_[i] == joint_name) {
@@ -379,7 +379,7 @@ double TactileHoldController::get_open_pos(const std::string & joint_name) const
   return 0.0;
 }
 
-double TactileHoldController::apply_deadband(double error) const
+double TactileForceController::apply_deadband(double error) const
 {
   if (error > -deadband && error < deadband) {
     return 0.0;
@@ -387,12 +387,12 @@ double TactileHoldController::apply_deadband(double error) const
   return error;
 }
 
-double TactileHoldController::clamp(double value, double min_v, double max_v) const
+double TactileForceController::clamp(double value, double min_v, double max_v) const
 {
   return std::max(min_v, std::min(value, max_v));
 }
 
-double TactileHoldController::get_joint_pos(const std::string & joint_name) const
+double TactileForceController::get_joint_pos(const std::string & joint_name) const
 {
   auto it = curr_joint_.find(joint_name);
   if (it != curr_joint_.end()) {
@@ -401,12 +401,12 @@ double TactileHoldController::get_joint_pos(const std::string & joint_name) cons
   return 0.0;
 }
 
-}  // namespace robotis_hand_playground_hold
+}  // namespace robotis_hand_playground_force
 
 int main(int argc, char ** argv)
 {
   rclcpp::init(argc, argv);
-  rclcpp::spin(std::make_shared<robotis_hand_playground_hold::TactileHoldController>());
+  rclcpp::spin(std::make_shared<robotis_hand_playground_force::TactileForceController>());
   rclcpp::shutdown();
   return 0;
 }

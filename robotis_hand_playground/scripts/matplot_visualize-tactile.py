@@ -39,10 +39,6 @@ from robotis_interfaces.msg import HandPressures
 matplotlib.use('TkAgg')
 matplotlib.rcParams['toolbar'] = 'None'
 
-# =========================
-# Config
-# =========================
-
 
 @dataclass(frozen=True)
 class VizConfig:
@@ -54,13 +50,13 @@ class VizConfig:
     update_hz: float
     use_best_effort: bool
 
-    # Filtering / baseline
+    # Baseline filter
     baseline_seconds: float
     ema_alpha: float
     deadband: float
     clip_negative: bool
 
-    # Visualization
+    # Display
     viz_gain: float
     color_max: float
 
@@ -81,9 +77,6 @@ def _make_qos(best_effort: bool) -> QoSProfile:
     )
 
 
-# =========================
-# Node
-# =========================
 class PressureViz(Node):
 
     def __init__(self) -> None:
@@ -121,9 +114,6 @@ class PressureViz(Node):
         interval_ms = int(1000.0 / max(self.cfg.update_hz, 1.0))
         self.ani = FuncAnimation(self.fig, self._update_plot, interval=interval_ms)
 
-    # -------------------------
-    # Params
-    # -------------------------
     def _declare_and_read_params(self) -> VizConfig:
         self.declare_parameter('hand_side', 'right')
         self.declare_parameter('hand', '')
@@ -164,9 +154,6 @@ class PressureViz(Node):
             color_max=float(self.get_parameter('color_max').value),
         )
 
-    # -------------------------
-    # Message parsing
-    # -------------------------
     def _finger_index_from_sensor_name(self, sensor_name: str) -> int | None:
         if not sensor_name.startswith(self.cfg.sensor_prefix):
             return None
@@ -188,9 +175,6 @@ class PressureViz(Node):
 
         return values[:self.cfg.num_taxels]
 
-    # -------------------------
-    # ROS callback / processing
-    # -------------------------
     def _cb(self, msg: HandPressures) -> None:
         with self._lock:
             for sensor in msg.sensors:
@@ -234,11 +218,7 @@ class PressureViz(Node):
         self._pressure.fill(0.0)
         self.get_logger().info('Baseline calibrated. Visualizing baseline-subtracted pressure.')
 
-    # -------------------------
-    # Plotting
-    # -------------------------
     def _setup_figure(self) -> None:
-        # self.fig, self.axes = plt.subplots(1, self.cfg.num_fingers, figsize=(6, 1.8))
         self.fig, self.axes = plt.subplots(self.cfg.num_fingers, 1, figsize=(2, 7.5))
         if self.cfg.num_fingers == 1:
             self.axes = [self.axes]
@@ -253,13 +233,12 @@ class PressureViz(Node):
             fontsize=9,
             fontweight='bold')
 
-        # thumb, index, middle, ring, little
         base_colors = [
-            '#ff3b30',  # red
-            '#ff9500',  # orange
-            '#ffd60a',  # yellow
-            '#34c759',  # green
-            '#007aff',  # blue
+            '#ff3b30',  # thumb:  red
+            '#ff9500',  # index:  orange
+            '#ffd60a',  # middle: yellow
+            '#34c759',  # ring:   green
+            '#007aff',  # little: blue
         ]
 
         finger_labels = ['thumb', 'index', 'middle', 'ring', 'little']

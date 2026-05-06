@@ -26,10 +26,10 @@ from rclpy.node import Node
 from std_msgs.msg import Bool
 
 
-class GraspStartKeyboard(Node):
+class GraspStartPublisher(Node):
 
     def __init__(self):
-        super().__init__('grasp_start_keyboard')
+        super().__init__('grasp_start_publisher')
         self.publisher_ = self.create_publisher(Bool, '/grasp_start', 10)
 
     def publish_grasp_start(self, value: bool):
@@ -48,7 +48,7 @@ def read_key(timeout_sec: float = 0.1) -> str:
 
 def main():
     rclpy.init()
-    node = GraspStartKeyboard()
+    node = GraspStartPublisher()
     settings = termios.tcgetattr(sys.stdin)
 
     print('Press z: true, x: false, q: quit')
