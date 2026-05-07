@@ -95,6 +95,19 @@ Visualization Manager:
       Show Names: false
       Update Interval: 0
       Value: true
+    - Class: rviz_default_plugins/MarkerArray
+      Enabled: true
+      Name: MarkerArray
+      Namespaces:
+        tactile_force: true
+        tactile_force_cop: true
+      Topic:
+        Depth: 5
+        Durability Policy: Volatile
+        History Policy: Keep Last
+        Reliability Policy: Reliable
+        Value: /tactile_force_markers
+      Value: true
   Enabled: true
   Global Options:
     Background Color: 48; 48; 48
