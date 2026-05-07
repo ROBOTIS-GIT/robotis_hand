@@ -1,4 +1,20 @@
 #!/usr/bin/env python3
+#
+# Copyright 2026 ROBOTIS CO., LTD.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+# Author: Howon Kim
 
 import select
 import sys
@@ -28,6 +44,8 @@ r / f : finger4 close / open
 2 : finger2 left / right
 3 : finger3 left / right
 4 : finger4 left / right
+5 : thumb joint1 + / -
+6 : thumb joint2 + / -
 
 TAB : toggle left/right (+ / -)
 
@@ -39,16 +57,18 @@ ESC : quit
 ===========================================================
 """
 
+
 class KeyboardController(Node):
     def __init__(self):
         super().__init__('KeyboardController')
 
         self.fixed_indices = {0, 4, 8, 12, 16}
+        self.reverse_indices = set()
 
         # Publisher for Hand joint control
         self.hand_publisher = self.create_publisher(
             JointTrajectory,
-            '/right_hand_controller/joint_trajectory',
+            '/leader/joint_trajectory_command_broadcaster_right_hand/joint_trajectory',
             10
         )
 
@@ -68,25 +88,32 @@ class KeyboardController(Node):
             'finger_r_joint17', 'finger_r_joint18', 'finger_r_joint19', 'finger_r_joint20',
         ]
 
-        # For Release
-        self.initial_positions = [
-            1.57, -1.57, 0.0, 0.0,# 1~4
-            0.0, 0.0, 0.0, 0.0,   # 5~8
-            0.0, 0.0, 0.0, 0.0,   # 9~12
-            0.0, 0.0, 0.0, 0.0,   # 13~16
-            0.0, 0.0, 0.0, 0.0,   # 17~20
+        self.joint_limits = [
+            (-1.57, 1.57), (-2.57, 0.0), (-0.5, 1.57), (-0.5, 1.57),
+            (-0.6, 0.6), (0.0, 2.0), (0.0, 1.57), (0.0, 1.57),
+            (-0.6, 0.6), (0.0, 2.0), (0.0, 1.57), (0.0, 1.57),
+            (-0.6, 0.6), (0.0, 2.0), (0.0, 1.57), (0.0, 1.57),
+            (-0.6, 0.6), (0.0, 2.0), (0.0, 1.57), (0.0, 1.57),
         ]
 
-        # For 0 joint each finger
-        self.number_joint_map = {
+        self.initial_positions = [
+            1.57, -1.57, 0.0, 0.0,
+            0.0, 0.0, 0.0, 0.0,
+            0.0, 0.0, 0.0, 0.0,
+            0.0, 0.0, 0.0, 0.0,
+            0.0, 0.0, 0.0, 0.0,
+        ]
+
+        self.shift_joint_map = {
             '1': 4,
             '2': 8,
             '3': 12,
             '4': 16,
+            '5': 0,     # thumb joint 1
+            '6': 1,     # thumb joint 2
         }
-        self.single_joint_mode = +1.0
+        self.single_joint_direction = +1.0
 
-        # 0, 4, 8, 12, 16 except for collison
         self.finger_groups = {
             'v': ([2, 3], +1.0),  
             'c': ([2, 3], -1.0),  
@@ -108,8 +135,6 @@ class KeyboardController(Node):
         self.target_positions = [0.0] * len(self.joint_names)
 
         self.step = 0.08
-        self.min_limit = -1.5
-        self.max_limit = 1.5
         self.duration = 0.3
 
         self.running = False
@@ -117,31 +142,26 @@ class KeyboardController(Node):
         self.get_logger().info('Waiting for /joint_states ...')
         self.rate = self.create_rate(10)
 
-    def enforce_fixed_joints(self):
-        # Force a specific joint angle when starting
+    # Reset thumb shift joints to their home pose
+    def reset_thumb_shift_joints(self):
         idx1 = self.joint_names.index('finger_r_joint1')
         idx2 = self.joint_names.index('finger_r_joint2')
 
-        self.target_positions[idx1] = math.pi / 2.0
-        self.target_positions[idx2] = -1 * math.pi / 2.0
+        self.target_positions[idx1] = self.clamp(math.pi / 2.0, idx1)
+        self.target_positions[idx2] = self.clamp(-1.0 * math.pi / 2.0, idx2)
     
     def toggle_joint_direction(self):
-        self.single_joint_mode *= -1.0
-        mode_str = '+' if self.single_joint_mode > 0 else '-'
-        self.get_logger().info(f'Single joint mode changed to: {mode_str}')
+        self.single_joint_direction *= -1.0
+        direction_str = '+' if self.single_joint_direction > 0 else '-'
+        self.get_logger().info(f'Single joint direction changed to: {direction_str}')
 
-    def update_single_joint(self, joint_idx):
+    def update_shift_joint(self, joint_idx):
         self.target_positions[joint_idx] = self.clamp(
-            self.target_positions[joint_idx] + self.single_joint_mode * self.step
+            self.target_positions[joint_idx] + self.single_joint_direction * self.step,
+            joint_idx
         )
 
         self.publish_trajectory()
-        # self.print_targets()
-
-        mode_str = '+' if self.single_joint_mode > 0 else '-'
-        self.get_logger().info(
-            f'Joint [{joint_idx}] {self.joint_names[joint_idx]} moved in {mode_str} mode'
-        )
 
     def joint_state_callback(self, msg: JointState):
         name_to_idx = {name: i for i, name in enumerate(msg.name)}
@@ -155,17 +175,24 @@ class KeyboardController(Node):
         if not self.running:
             self.target_positions = self.current_positions.copy()
 
-            # Fix joint1 and joint2 at 90 degrees
-            self.enforce_fixed_joints()
+            self.reset_thumb_shift_joints()
+            self.clamp_targets()
 
             self.running = True
             self.get_logger().info('Initial joint states received.')
             self.print_targets()
 
-    def clamp(self, x):
-        return max(self.min_limit, min(self.max_limit, x))
+    def clamp(self, x, joint_idx):
+        lower, upper = self.joint_limits[joint_idx]
+        return max(lower, min(upper, x))
+
+    def clamp_targets(self):
+        for i, target in enumerate(self.target_positions):
+            self.target_positions[i] = self.clamp(target, i)
 
     def publish_trajectory(self):
+        self.clamp_targets()
+
         msg = JointTrajectory()
         msg.joint_names = self.joint_names
 
@@ -190,11 +217,11 @@ class KeyboardController(Node):
 
         for idx, direction in zip(joint_indices, directions):
             self.target_positions[idx] = self.clamp(
-                self.target_positions[idx] + direction * self.step
+                self.target_positions[idx] + direction * self.step,
+                idx
             )
 
         self.publish_trajectory()
-        # self.print_targets()
 
     def open_all(self):
         self.target_positions = self.initial_positions.copy()
@@ -206,10 +233,12 @@ class KeyboardController(Node):
         for i in range(len(self.joint_names)):
             if i in self.fixed_indices:
                 continue
+            elif i in self.reverse_indices:
+                self.target_positions[i] = self.joint_limits[i][0]
             else:
-                self.target_positions[i] = self.max_limit
+                self.target_positions[i] = self.joint_limits[i][1]
 
-        self.enforce_fixed_joints()
+        self.reset_thumb_shift_joints()
         self.publish_trajectory()
         self.get_logger().info('Close all')
 
@@ -244,18 +273,18 @@ class KeyboardController(Node):
             if key is None:
                 continue
 
-            if key == '\x1b':  # ESC
+            if key == '\x1b':   # ESC
                 break
-            elif key == '\t':  # TAB
+            elif key == '\t':   # TAB
                 self.toggle_joint_direction()
-            elif key == 'z':
+            elif key == 'z':    # Release Hand
                 self.open_all()
-            elif key == 'x':
+            elif key == 'x':    # Close Hand
                 self.close_all()
-            elif key == 'b':
+            elif key == 'b':    # Print current joint_states
                 self.print_targets()
-            elif key in self.number_joint_map:
-                self.update_single_joint(self.number_joint_map[key])
+            elif key in self.shift_joint_map:
+                self.update_shift_joint(self.shift_joint_map[key])
             elif key in self.finger_groups:
                 joints, direction = self.finger_groups[key]
                 self.update_finger(joints, direction)
@@ -271,7 +300,6 @@ def main(args=None):
     try:
         while thread.is_alive():
             time.sleep(0.1)
-        # node.run()
     except KeyboardInterrupt:
         print('\nCtrl+C detected. Shutting down...')
         node.running = False
