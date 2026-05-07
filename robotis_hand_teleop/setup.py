@@ -8,7 +8,7 @@ package_name = 'robotis_hand_teleop'
 
 setup(
     name=package_name,
-    version='0.0.1',
+    version='0.2.0',
     packages=find_packages(exclude=['test']),
     data_files=[
         ('share/ament_index/resource_index/packages',
@@ -19,9 +19,9 @@ setup(
     zip_safe=True,
     maintainer='Pyo',
     maintainer_email='pyo@robotis.com',
-    author='Sungho Woo, Wonho Yun',
-    author_email='wsh@robotis.com, ywh@robotis.com',
-    description='Keyboard teleop for ROBOTIS HX5-D20 right hand',
+    author='Howon Kim',
+    author_email='rlaghdnjs17@naver.com',
+    description='Robotis Hand keyboard teleoperation package',
     license='Apache License 2.0',
     tests_require=['pytest'],
     entry_points={

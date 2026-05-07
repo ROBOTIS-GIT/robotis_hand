@@ -1,25 +1,21 @@
 <?xml version="1.0"?>
-<?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
 <package format="3">
-  <name>robotis_hand_teleop</name>
-  <version>0.0.1</version>
-  <description>Keyboard teleop for ROBOTIS HX5-D20 right hand</description>
+  <name>robotis_hand_playground</name>
+  <version>0.2.0</version>
+  <description>Robotis Hand keyboard teleoperation package</description>
   <maintainer email="pyo@robotis.com">Pyo</maintainer>
   <license>Apache License 2.0</license>
-  <author email="wsh@robotis.com">Sungho Woo</author>
-  <author email="ywh@robotis.com">Wonho Yun</author>
-
+  <url type="repository">https://github.com/ROBOTIS-GIT/robotis_hand</url>
+  <url type="bugtracker">https://github.com/ROBOTIS-GIT/robotis_hand/issues</url>
+  <author email="rlaghdnjs17@naver.com">Howon Kim</author>
   <buildtool_depend>ament_python</buildtool_depend>
-
   <depend>rclpy</depend>
   <depend>std_msgs</depend>
   <depend>sensor_msgs</depend>
   <depend>trajectory_msgs</depend>
   <depend>control_msgs</depend>
-
   <test_depend>ament_lint_auto</test_depend>
   <test_depend>ament_lint_common</test_depend>
-  
   <export>
     <build_type>ament_python</build_type>
   </export>
