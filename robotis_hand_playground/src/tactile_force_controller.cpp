@@ -38,15 +38,16 @@ TactileForceController::TactileForceController()
   // Load parameters.
   declare_params(this);
   param = load_params(this);
+  const auto hand_side = check_hand_side(param.hand_side);
 
   // Initialize hand model.
-  fingers_ = init_fingers(param.hand_side);
-  hand_joint_names_ = init_joint_names(param.hand_side);
-  init_positions_ = init_positions(param.hand_side);
+  fingers_ = init_fingers(hand_side);
+  hand_joint_names_ = init_joint_names(hand_side);
+  init_positions_ = hand_side == "left" ? init_l_positions() : init_r_positions();
 
   // Initialize ROS interfaces.
   pressure_sub_ = this->create_subscription<robotis_interfaces::msg::HandPressures>(
-    hand_namespace(param.hand_side) + "/finger_pressures",
+    "/" + hand_side + "_hand/finger_pressures",
     10,
     std::bind(&TactileForceController::pressure_callback, this, std::placeholders::_1));
 
@@ -59,7 +60,7 @@ TactileForceController::TactileForceController()
     std::bind(&TactileForceController::grasp_start_callback, this, std::placeholders::_1));
 
   traj_pub_ = this->create_publisher<trajectory_msgs::msg::JointTrajectory>(
-    hand_controller_topic(param.hand_side), 10);
+    "/leader/joint_trajectory_command_broadcaster_" + hand_side + "_hand/joint_trajectory", 10);
 
   // Move unused fingers independently.
   unused_finger_timer_ = this->create_wall_timer(std::chrono::milliseconds(50), [this]() {
@@ -142,22 +143,6 @@ std::string check_hand_side(const std::string & hand_side)
 std::string hand_suffix(const std::string & hand_side)
 {
   return check_hand_side(hand_side) == "left" ? "l" : "r";
-}
-
-std::string hand_namespace(const std::string & hand_side)
-{
-  return "/" + check_hand_side(hand_side) + "_hand";
-}
-
-std::string hand_controller_topic(const std::string & hand_side)
-{
-  return "/leader/joint_trajectory_command_broadcaster_" + check_hand_side(hand_side) +
-         "_hand/joint_trajectory";
-}
-
-double thumb_joint_sign(const std::string & hand_side)
-{
-  return check_hand_side(hand_side) == "left" ? -1.0 : 1.0;
 }
 
 robotis_hand_playground::FingerArray init_fingers(const std::string & hand_side)
@@ -265,14 +250,6 @@ std::vector<double> init_l_positions()
     0.0, 0.8, 0.0, 0.0,
     0.0, 0.8, 0.0, 0.0
   };
-}
-
-std::vector<double> init_positions(const std::string & hand_side)
-{
-  if (check_hand_side(hand_side) == "left") {
-    return init_l_positions();
-  }
-  return init_r_positions();
 }
 
 void TactileForceController::pressure_callback(
@@ -390,7 +367,7 @@ void TactileForceController::handle_close()
       if (i == 0) {
         // Thumb closes using joint3 and joint4.
         const std::array<double, 4> weights = {0.5, 0.5, 0.5, 0.5};
-        const double direction = thumb_joint_sign(param.hand_side);
+        const double direction = check_hand_side(param.hand_side) == "left" ? -1.0 : 1.0;
 
         for (int j = 2; j <= 3; ++j) {
           finger.current_joint_targets[j] += direction * param.close_step * weights[j];
@@ -451,7 +428,7 @@ void TactileForceController::handle_hold()
       // Thumb force regulation using joint3 and joint4.
       const std::array<int, 2> joints = {2, 3};
       const std::array<double, 2> weights = {0.7, 0.3};
-      const double direction = thumb_joint_sign(param.hand_side);
+      const double direction = check_hand_side(param.hand_side) == "left" ? -1.0 : 1.0;
 
       for (int k = 0; k < 2; ++k) {
         const int j = joints[k];

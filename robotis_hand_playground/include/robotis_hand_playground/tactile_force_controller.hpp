@@ -84,21 +84,6 @@ std::string check_hand_side(const std::string & hand_side);
 std::string hand_suffix(const std::string & hand_side);
 
 /**
- * @brief Return the ROS namespace for the selected hand side.
- */
-std::string hand_namespace(const std::string & hand_side);
-
-/**
- * @brief Return the joint trajectory controller topic for the selected hand side.
- */
-std::string hand_controller_topic(const std::string & hand_side);
-
-/**
- * @brief Return thumb joint direction sign for the selected hand side.
- */
-double thumb_joint_sign(const std::string & hand_side);
-
-/**
  * @brief Initialize HX5-D20 finger joint configuration for the selected hand side.
  */
 robotis_hand_playground::FingerArray init_fingers(const std::string & hand_side = "right");
@@ -117,11 +102,6 @@ std::vector<double> init_r_positions();
  * @brief Initialize ordered HX5-D20 open joint positions for the left hand.
  */
 std::vector<double> init_l_positions();
-
-/**
- * @brief Select ordered HX5-D20 open joint positions for the selected hand side.
- */
-std::vector<double> init_positions(const std::string & hand_side = "right");
 
 /**
  * @brief Force maintenance grasp controller using tactile feedback.
