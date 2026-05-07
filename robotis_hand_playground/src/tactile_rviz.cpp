@@ -14,6 +14,8 @@
 //
 // Author: Howon Kim
 
+#include "robotis_hand_playground/tactile_rviz.hpp"
+
 #include <algorithm>
 #include <array>
 #include <cctype>
@@ -26,8 +28,6 @@
 #include <numeric>
 #include <string>
 #include <vector>
-
-#include "robotis_hand_playground/tactile_rviz.hpp"
 
 
 namespace

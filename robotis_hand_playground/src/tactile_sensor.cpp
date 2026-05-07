@@ -14,11 +14,11 @@
 //
 // Author: Howon Kim
 
+#include "robotis_hand_playground/tactile_sensor.hpp"
+
 #include <algorithm>
 #include <cstddef>
 #include <numeric>
-
-#include "robotis_hand_playground/tactile_sensor.hpp"
 
 
 namespace robotis_hand_playground

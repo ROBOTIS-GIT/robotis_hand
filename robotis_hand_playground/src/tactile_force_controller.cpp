@@ -14,6 +14,8 @@
 //
 // Author: Howon Kim
 
+#include "robotis_hand_playground/tactile_force_controller.hpp"
+
 #include <algorithm>
 #include <array>
 #include <chrono>
@@ -23,8 +25,6 @@
 #include <sstream>
 
 #include <trajectory_msgs/msg/joint_trajectory_point.hpp>
-
-#include "robotis_hand_playground/tactile_force_controller.hpp"
 
 
 using namespace std::chrono_literals;

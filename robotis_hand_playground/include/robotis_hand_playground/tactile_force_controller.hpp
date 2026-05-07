@@ -46,7 +46,9 @@ typedef std_msgs::msg::Bool::SharedPtr BoolPtr;
 typedef trajectory_msgs::msg::JointTrajectory JointTrajectoryMsg;
 typedef robotis_hand_playground::FingerArray FingerArrayMsg;
 
-// Parameters used by tactile force controller.
+/**
+ * @brief ROS 2 parameters loaded from config/param.yaml for tactile force control.
+ */
 struct Params
 {
   // Common control parameters
