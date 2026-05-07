@@ -1,4 +1,4 @@
-/**:
+tactile_force_controller:
   ros__parameters:
     control_hz: 20.0 # (Double) [Hz] Main control loop frequency
     trajectory_dt: 0.05 # (Double) [sec] JointTrajectory point time interval
@@ -10,4 +10,4 @@
 
     # Force-Based Holding
     reactive_force: 1.2 # (Double) Reactive target force scale used by force maintenance controller
-    state : "HOLD" # (String) Contact completion behavior, [IDLE: stop immediately, HOLD: maintain contact force]
+    state: "HOLD" # (String) Contact completion behavior, [IDLE: stop immediately, HOLD: maintain contact force]

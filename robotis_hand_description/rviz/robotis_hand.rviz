@@ -67,6 +67,136 @@ Visualization Manager:
         Expand Link Details: false
         Expand Tree: false
         Link Tree Style: Links in Alphabetic Order
+        finger_end_r_link1:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        finger_end_r_link2:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        finger_end_r_link3:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        finger_end_r_link4:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        finger_end_r_link5:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        finger_r_link1:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        finger_r_link10:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        finger_r_link11:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        finger_r_link12:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        finger_r_link13:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        finger_r_link14:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        finger_r_link15:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        finger_r_link16:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        finger_r_link17:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        finger_r_link18:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        finger_r_link19:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        finger_r_link2:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        finger_r_link20:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        finger_r_link3:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        finger_r_link4:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        finger_r_link5:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        finger_r_link6:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        finger_r_link7:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        finger_r_link8:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        finger_r_link9:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        hx5_d20_right_base:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
         world:
           Alpha: 1
           Show Axes: false
@@ -86,14 +216,112 @@ Visualization Manager:
       Frame Timeout: 15
       Frames:
         All Enabled: true
+        finger_end_r_link1:
+          Value: true
+        finger_end_r_link2:
+          Value: true
+        finger_end_r_link3:
+          Value: true
+        finger_end_r_link4:
+          Value: true
+        finger_end_r_link5:
+          Value: true
+        finger_r_link1:
+          Value: true
+        finger_r_link10:
+          Value: true
+        finger_r_link11:
+          Value: true
+        finger_r_link12:
+          Value: true
+        finger_r_link13:
+          Value: true
+        finger_r_link14:
+          Value: true
+        finger_r_link15:
+          Value: true
+        finger_r_link16:
+          Value: true
+        finger_r_link17:
+          Value: true
+        finger_r_link18:
+          Value: true
+        finger_r_link19:
+          Value: true
+        finger_r_link2:
+          Value: true
+        finger_r_link20:
+          Value: true
+        finger_r_link3:
+          Value: true
+        finger_r_link4:
+          Value: true
+        finger_r_link5:
+          Value: true
+        finger_r_link6:
+          Value: true
+        finger_r_link7:
+          Value: true
+        finger_r_link8:
+          Value: true
+        finger_r_link9:
+          Value: true
+        hx5_d20_right_base:
+          Value: true
         world:
           Value: true
-      Marker Scale: 0.1
+      Marker Scale: 0.10000000149011612
       Name: TF
       Show Arrows: false
       Show Axes: true
       Show Names: false
+      Tree:
+        world:
+          hx5_d20_right_base:
+            finger_r_link1:
+              finger_r_link2:
+                finger_r_link3:
+                  finger_r_link4:
+                    finger_end_r_link1:
+                      {}
+            finger_r_link13:
+              finger_r_link14:
+                finger_r_link15:
+                  finger_r_link16:
+                    finger_end_r_link4:
+                      {}
+            finger_r_link17:
+              finger_r_link18:
+                finger_r_link19:
+                  finger_r_link20:
+                    finger_end_r_link5:
+                      {}
+            finger_r_link5:
+              finger_r_link6:
+                finger_r_link7:
+                  finger_r_link8:
+                    finger_end_r_link2:
+                      {}
+            finger_r_link9:
+              finger_r_link10:
+                finger_r_link11:
+                  finger_r_link12:
+                    finger_end_r_link3:
+                      {}
       Update Interval: 0
+      Value: true
+    - Class: rviz_default_plugins/MarkerArray
+      Enabled: true
+      Name: MarkerArray
+      Namespaces:
+        tactile_force: true
+        tactile_force_cop: true
+      Topic:
+        Depth: 5
+        Durability Policy: Volatile
+        History Policy: Keep Last
+        Reliability Policy: Reliable
+        Value: /tactile_force_markers
       Value: true
   Enabled: true
   Global Options:
@@ -141,25 +369,25 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz_default_plugins/Orbit
-      Distance: 0.4
+      Distance: 0.4000000059604645
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.05999999865889549
         Stereo Focal Distance: 1
         Swap Stereo Eyes: false
         Value: false
       Focal Point:
-        X: 0.05
-        Y: -0.03
-        Z: 0.1
+        X: 0.05000000074505806
+        Y: -0.029999999329447746
+        Z: 0.10000000149011612
       Focal Shape Fixed Size: true
       Focal Shape Size: 0.05000000074505806
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.009999999776482582
-      Pitch: 0.4
+      Pitch: 0.4000000059604645
       Target Frame: <Fixed Frame>
       Value: Orbit (rviz)
-      Yaw: 5.7
+      Yaw: 5.699999809265137
     Saved: ~
 Window Geometry:
   Displays:

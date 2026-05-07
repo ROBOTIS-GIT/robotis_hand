@@ -31,11 +31,10 @@
 #include <trajectory_msgs/msg/joint_trajectory.hpp>
 
 #include "robotis_hand_playground/hx5d20_struct.hpp"
-#include "robotis_hand_playground/param.hpp"
 #include "robotis_hand_playground/tactile_sensor.hpp"
 
 
-namespace robotis_hand_playground_force
+namespace robotis_hand_tactile_force
 {
 
 typedef robotis_interfaces::msg::HandPressures HandPressuresMsg;
@@ -46,6 +45,83 @@ typedef std_msgs::msg::Bool BoolMsg;
 typedef std_msgs::msg::Bool::SharedPtr BoolPtr;
 typedef trajectory_msgs::msg::JointTrajectory JointTrajectoryMsg;
 typedef robotis_hand_playground::FingerArray FingerArrayMsg;
+
+// Parameters used by tactile force controller.
+struct Params
+{
+  // Common control parameters
+  double control_hz = 20.0;
+  double trajectory_dt = 0.05;
+  double close_step = 0.01;
+  double contact_threshold = 30.0;
+  double thumb_contact_ratio = 2.0;
+  std::string hand_side = "right";
+  std::vector<int> un_use_finger;
+
+  // Force maintenance parameters
+  double reactive_force = 1.2;
+  std::string state = "IDLE";
+};
+
+/**
+ * @brief Declare ROS 2 parameters.
+ */
+void declare_params(rclcpp::Node * node);
+
+/**
+ * @brief Load ROS 2 parameters.
+ */
+Params load_params(rclcpp::Node * node);
+
+/**
+ * @brief Check a hand side string to "left" or "right".
+ */
+std::string check_hand_side(const std::string & hand_side);
+
+/**
+ * @brief Return the joint name suffix for the selected hand side.
+ */
+std::string hand_suffix(const std::string & hand_side);
+
+/**
+ * @brief Return the ROS namespace for the selected hand side.
+ */
+std::string hand_namespace(const std::string & hand_side);
+
+/**
+ * @brief Return the joint trajectory controller topic for the selected hand side.
+ */
+std::string hand_controller_topic(const std::string & hand_side);
+
+/**
+ * @brief Return thumb joint direction sign for the selected hand side.
+ */
+double thumb_joint_sign(const std::string & hand_side);
+
+/**
+ * @brief Initialize HX5-D20 finger joint configuration for the selected hand side.
+ */
+robotis_hand_playground::FingerArray init_fingers(const std::string & hand_side = "right");
+
+/**
+ * @brief Initialize ordered HX5-D20 joint names for the selected hand side.
+ */
+std::vector<std::string> init_joint_names(const std::string & hand_side = "right");
+
+/**
+ * @brief Initialize ordered HX5-D20 open joint positions for the right hand.
+ */
+std::vector<double> init_r_positions();
+
+/**
+ * @brief Initialize ordered HX5-D20 open joint positions for the left hand.
+ */
+std::vector<double> init_l_positions();
+
+/**
+ * @brief Select ordered HX5-D20 open joint positions for the selected hand side.
+ */
+std::vector<double> init_positions(const std::string & hand_side = "right");
 
 /**
  * @brief Force maintenance grasp controller using tactile feedback.
@@ -178,7 +254,7 @@ private:
   rclcpp::TimerBase::SharedPtr unused_finger_timer_;
 
   // Parameters
-  robotis_hand_playground::Params param;
+  Params param;
 
   // Tactile processing
   robotis_hand_playground::TactileSensor tactile_sensor_;
@@ -207,6 +283,6 @@ private:
   double reactive_step_ = 0.02;
 };
 
-}  // namespace robotis_hand_playground_force
+}  // namespace robotis_hand_tactile_force
 
 #endif  // ROBOTIS_HAND_PLAYGROUND__TACTILE_FORCE_CONTROLLER_HPP_

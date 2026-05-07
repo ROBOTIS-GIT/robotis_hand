@@ -30,6 +30,9 @@ def generate_launch_description():
         'config',
         'param.yaml',
     )
+    with open(param_file, 'r', encoding='utf-8') as yaml_file:
+        hand_side = next(line for line in yaml_file if 'hand_side:' in line)
+        hand_side = hand_side.split(':', 1)[1].split('#', 1)[0].strip().strip('"\'')
 
     tactile_force_controller = Node(
         package='robotis_hand_playground',
@@ -44,7 +47,9 @@ def generate_launch_description():
         executable='tactile_rviz',
         name='tactile_rviz',
         output='screen',
-        parameters=[param_file],
+        parameters=[{
+            'hand_side': hand_side,
+        }],
     )
 
     return LaunchDescription([

@@ -35,9 +35,7 @@ install(TARGETS tactile_rviz
 
 add_executable(tactile_force_controller
               src/tactile_force_controller.cpp
-              src/tactile_sensor.cpp
-              src/hx5d20_init.cpp
-              src/param.cpp)
+              src/tactile_sensor.cpp)
 target_include_directories(tactile_force_controller PUBLIC
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
   $<INSTALL_INTERFACE:include>)
