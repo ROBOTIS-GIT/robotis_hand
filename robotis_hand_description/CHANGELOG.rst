@@ -2,7 +2,7 @@
 Changelog for package robotis_hand_description
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-0.1.2 (2026-05-06)
+0.2.0 (2026-05-06)
 ------------------
 * Added tactile force arrow markers in RViz
 * Contributors: Howon Kim
