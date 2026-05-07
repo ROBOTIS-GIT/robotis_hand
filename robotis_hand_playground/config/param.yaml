@@ -1,0 +1,13 @@
+tactile_force_controller:
+  ros__parameters:
+    control_hz: 20.0 # (Double) [Hz] Main control loop frequency
+    trajectory_dt: 0.05 # (Double) [sec] JointTrajectory point time interval
+    close_step: 0.03 # (Double) [rad] Joint closing increment per control step
+    contact_threshold: 10.0 # (Double) Tactile force threshold for contact detection
+    thumb_contact_ratio: 2.0 # (Double) Contact threshold multiplier for thumb
+    hand_side: "right" # (String) Hand side, [right, left]
+    un_use_finger: [0] # (Int Array) Unused fingers, [All_use: 0, thumb: 1, index: 2, middle: 3, ring: 4, little: 5]
+
+    # Force-Based Holding
+    reactive_force: 1.2 # (Double) Reactive target force scale used by force maintenance controller
+    state: "HOLD" # (String) Contact completion behavior, [IDLE: stop immediately, HOLD: maintain contact force]
