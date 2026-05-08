@@ -59,7 +59,7 @@ ESC : quit
 class KeyboardController(Node):
     
     def __init__(self):
-        super().__init__('KeyboardController')
+        super().__init__('keyboard_controller')
 
         self.fixed_indices = {0, 4, 8, 12, 16}
         self.reverse_indices = set()

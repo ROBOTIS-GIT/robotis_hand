@@ -46,8 +46,8 @@ install(TARGETS tactile_force_controller
 install(PROGRAMS
   scripts/grasp_start_publisher.py
   scripts/matplot_visualize_tactile.py
-  scripts/loop_control_right.py
-  scripts/loop_control_left.py
+  scripts/hx5_d20_example_motion_right.py
+  scripts/hx5_d20_example_motion_left.py
   DESTINATION lib/${PROJECT_NAME}
 )
 

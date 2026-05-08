@@ -23,9 +23,9 @@ from rclpy.qos import HistoryPolicy, QoSProfile, ReliabilityPolicy
 from trajectory_msgs.msg import JointTrajectory, JointTrajectoryPoint
 
 
-class HandTrajLoop(Node):
+class Hx5D20ExampleMotionRight(Node):
     def __init__(self):
-        super().__init__('hand_traj_loop')
+        super().__init__('hx5_d20_example_motion_right')
 
         self.joint_names = [
             "finger_r_joint1", "finger_r_joint2", "finger_r_joint3", "finger_r_joint4",
@@ -253,7 +253,7 @@ class HandTrajLoop(Node):
 
 def main(args=None):
     rclpy.init(args=args)
-    node = HandTrajLoop()
+    node = Hx5D20ExampleMotionRight()
     try:
         rclpy.spin(node)
     except KeyboardInterrupt:

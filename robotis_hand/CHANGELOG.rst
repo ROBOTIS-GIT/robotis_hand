@@ -2,6 +2,12 @@
 Changelog for package robotis_hand
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+0.2.1 (2026-05-08)
+------------------
+* Added example hx5d20 hand motion
+* Support HX5-D20 Keyboard Teleop
+* Contributors: Howon Kim
+
 0.2.0 (2026-05-06)
 ------------------
 * Added total force-based holding controller
