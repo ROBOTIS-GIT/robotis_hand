@@ -63,17 +63,8 @@ class Hx5D20ExampleMotionLeft(Node):
         self.timer = None
 
         # Avoid ignored startup commands.
-        self.dummy_publish_count = 0
-        self.max_dummy_publish_count = 3
-        self.dummy_publish_period = 0.5
         self.publish_dummy_trajectory()
-        self.dummy_publish_count += 1
-        self.dummy_timer = self.create_timer(
-            self.dummy_publish_period,
-            self.dummy_timer_callback
-        )
-
-        self.get_logger().info('Dummy trajectory warmup started.')
+        self.start_timer = self.create_timer(0.5, self.start_after_dummy)
 
     def base_positions_dict(self, default_rad=0.0):
         base = {}
@@ -195,27 +186,16 @@ class Hx5D20ExampleMotionLeft(Node):
         msg.points.append(point)
 
         self.cmd_pub.publish(msg)
-        self.get_logger().info(
-            f'Published dummy trajectory: {self.dummy_publish_count + 1}/{self.max_dummy_publish_count}'
-        )
+        self.get_logger().info('Published dummy trajectory.')
 
     def start_trajectory_loop(self):
         self.next_cycle_time = self.get_clock().now()
         self.timer = self.create_timer(self.check_period, self.timer_callback)
         self.get_logger().info('Trajectory repeat mode started.')
 
-    def dummy_timer_callback(self):
-        if self.dummy_publish_count >= self.max_dummy_publish_count:
-            self.dummy_timer.cancel()
-            self.start_trajectory_loop()
-            return
-
-        self.publish_dummy_trajectory()
-        self.dummy_publish_count += 1
-
-        if self.dummy_publish_count >= self.max_dummy_publish_count:
-            self.dummy_timer.cancel()
-            self.start_trajectory_loop()
+    def start_after_dummy(self):
+        self.start_timer.cancel()
+        self.start_trajectory_loop()
 
     def timer_callback(self):
         now = self.get_clock().now()
