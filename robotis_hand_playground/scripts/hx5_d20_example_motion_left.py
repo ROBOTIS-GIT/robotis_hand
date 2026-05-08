@@ -24,6 +24,7 @@ from trajectory_msgs.msg import JointTrajectory, JointTrajectoryPoint
 
 
 class Hx5D20ExampleMotionLeft(Node):
+
     def __init__(self):
         super().__init__('hx5_d20_example_motion_left')
 
