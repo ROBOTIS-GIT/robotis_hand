@@ -19,8 +19,6 @@
 import select
 import sys
 import termios
-import threading
-import time
 import tty
 
 import rclpy
@@ -38,7 +36,7 @@ w / s : finger2 close / open
 e / d : finger3 close / open
 r / f : finger4 close / open
 
-1 : finger1 left / right 
+1 : finger1 left / right
 2 : finger2 left / right
 3 : finger3 left / right
 4 : finger4 left / right
@@ -57,12 +55,12 @@ ESC : quit
 
 
 class KeyboardController(Node):
-    
+
     def __init__(self):
         super().__init__('keyboard_controller')
 
         self.fixed_indices = {0, 4, 8, 12, 16}
-        self.reverse_indices = set()
+        self.reverse_indices = {2, 3}
 
         # Publisher for Hand joint control
         self.hand_publisher = self.create_publisher(
@@ -88,7 +86,7 @@ class KeyboardController(Node):
         ]
 
         self.joint_limits = [
-            (-1.57, 2.57), (-2.57, 0.0), (-0.5, 1.57), (-0.5, 1.57),
+            (-1.57, 1.57), (-1.57, 0.0), (-0.5, 1.57), (-0.5, 1.57),
             (-0.6, 0.6), (0.0, 2.0), (0.0, 1.57), (0.0, 1.57),
             (-0.6, 0.6), (0.0, 2.0), (0.0, 1.57), (0.0, 1.57),
             (-0.6, 0.6), (0.0, 2.0), (0.0, 1.57), (0.0, 1.57),
@@ -110,8 +108,8 @@ class KeyboardController(Node):
         self.single_joint_direction = +1.0
 
         self.finger_groups = {
-            'v': ([2, 3], +1.0),  
-            'c': ([2, 3], -1.0),  
+            'v': ([2, 3], +1.0),
+            'c': ([2, 3], -1.0),
 
             'q': ([5, 6, 7], +1.0),
             'a': ([5, 6, 7], -1.0),
@@ -132,10 +130,10 @@ class KeyboardController(Node):
         self.step = 0.08
         self.duration = 0.3
 
-        self.running = False
+        self.running = True
+        self.joint_received = False
 
         self.get_logger().info('Waiting for /joint_states ...')
-        self.rate = self.create_rate(10)
 
     def joint_state_callback(self, msg: JointState):
         name_to_idx = {name: i for i, name in enumerate(msg.name)}
@@ -146,13 +144,13 @@ class KeyboardController(Node):
         for i, name in enumerate(self.joint_names):
             self.current_positions[i] = msg.position[name_to_idx[name]]
 
-        if not self.running:
+        if not self.joint_received:
             self.target_positions = self.current_positions.copy()
 
             self.reset_thumb_shift_joints()
             self.clamp_targets()
 
-            self.running = True
+            self.joint_received = True
             self.get_logger().info('Initial joint states received.')
             self.print_targets()
 
@@ -205,7 +203,8 @@ class KeyboardController(Node):
 
         if len(joint_indices) != len(directions):
             self.get_logger().error(
-                f'Length mismatch: joint_indices={len(joint_indices)}, directions={len(directions)}'
+                f'Length mismatch: joint_indices={len(joint_indices)}, '
+                f'directions={len(directions)}'
             )
             return
 
@@ -236,10 +235,10 @@ class KeyboardController(Node):
         self.get_logger().info('Close all')
 
     def print_targets(self):
-        print("\nCurrent target positions")
+        print('\nCurrent target positions')
         for i, (name, val) in enumerate(zip(self.joint_names, self.target_positions)):
-            print(f"[{i:02d}] {name:18s}: {val:+.3f}")
-        print("")
+            print(f'[{i:02d}] {name:18s}: {val:+.3f}')
+        print('')
 
     def get_key(self, timeout=0.01):
         fd = sys.stdin.fileno()
@@ -254,12 +253,14 @@ class KeyboardController(Node):
             termios.tcsetattr(fd, termios.TCSADRAIN, old_settings)
 
     def run(self):
-        while rclpy.ok() and not self.running:
-            rclpy.spin_once(self, timeout_sec=0.1)
+        while not self.joint_received and rclpy.ok() and self.running:
+            self.get_logger().info('Waiting for initial joint states...')
+            rclpy.spin_once(self, timeout_sec=1.0)
 
+        self.get_logger().info('Ready to receive keyboard input!')
         print(HELP_MSG)
 
-        while rclpy.ok():
+        while rclpy.ok() and self.running:
             rclpy.spin_once(self, timeout_sec=0.0)
             key = self.get_key()
 
@@ -284,22 +285,16 @@ class KeyboardController(Node):
 
 
 def main(args=None):
-    rclpy.init()
+    rclpy.init(args=args)
     node = KeyboardController()
 
-    thread = threading.Thread(target=node.run)
-    thread.start()
-
     try:
-        while thread.is_alive():
-            time.sleep(0.1)
+        node.run()
     except KeyboardInterrupt:
-        print('\nCtrl+C detected. Shutting down...')
-        node.running = False
-        thread.join()
-
-    node.destroy_node()
-    rclpy.shutdown()
+        pass
+    finally:
+        node.destroy_node()
+        rclpy.shutdown()
 
 
 if __name__ == '__main__':

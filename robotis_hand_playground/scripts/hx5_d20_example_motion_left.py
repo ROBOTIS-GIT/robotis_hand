@@ -19,7 +19,7 @@
 import rclpy
 from rclpy.duration import Duration
 from rclpy.node import Node
-from rclpy.qos import HistoryPolicy, QoSProfile, ReliabilityPolicy
+from rclpy.qos import HistoryPolicy, QoSProfile
 from trajectory_msgs.msg import JointTrajectory, JointTrajectoryPoint
 
 
@@ -28,15 +28,14 @@ class Hx5D20ExampleMotionLeft(Node):
         super().__init__('hx5_d20_example_motion_left')
 
         self.joint_names = [
-            "finger_l_joint1", "finger_l_joint2", "finger_l_joint3", "finger_l_joint4",
-            "finger_l_joint5", "finger_l_joint6", "finger_l_joint7", "finger_l_joint8",
-            "finger_l_joint9", "finger_l_joint10", "finger_l_joint11", "finger_l_joint12",
-            "finger_l_joint13", "finger_l_joint14", "finger_l_joint15", "finger_l_joint16",
-            "finger_l_joint17", "finger_l_joint18", "finger_l_joint19", "finger_l_joint20",
+            'finger_l_joint1', 'finger_l_joint2', 'finger_l_joint3', 'finger_l_joint4',
+            'finger_l_joint5', 'finger_l_joint6', 'finger_l_joint7', 'finger_l_joint8',
+            'finger_l_joint9', 'finger_l_joint10', 'finger_l_joint11', 'finger_l_joint12',
+            'finger_l_joint13', 'finger_l_joint14', 'finger_l_joint15', 'finger_l_joint16',
+            'finger_l_joint17', 'finger_l_joint18', 'finger_l_joint19', 'finger_l_joint20',
         ]
 
-        self.vr_stream_qos = QoSProfile(
-            reliability=ReliabilityPolicy.BEST_EFFORT,
+        self.cmd_qos = QoSProfile(
             history=HistoryPolicy.KEEP_LAST,
             depth=1,
         )
@@ -44,7 +43,7 @@ class Hx5D20ExampleMotionLeft(Node):
         self.cmd_pub = self.create_publisher(
             JointTrajectory,
             '/leader/joint_trajectory_command_broadcaster_left_hand/joint_trajectory',
-            self.vr_stream_qos
+            self.cmd_qos
         )
 
         # Cycle pause
@@ -53,7 +52,9 @@ class Hx5D20ExampleMotionLeft(Node):
         # Timer
         self.check_period = 0.1
 
-        self.fast_steps, self.slow_steps, self.fast_durations, self.slow_durations = self.build_traj_steps()
+        self.fast_steps, self.slow_steps, self.fast_durations, self.slow_durations = (
+            self.build_traj_steps()
+        )
 
         self.current_cycle_is_fast = False
         self.current_pose = self.slow_steps[0].copy()
@@ -89,20 +90,20 @@ class Hx5D20ExampleMotionLeft(Node):
         home_pose.update(self.finger_pose(17, [-0.36, 0.62, 0.46, 0.67]))
 
         home_pose_setup = self.base_positions_dict(0.0)
-        home_pose_setup["finger_l_joint5"] = 0.42
-        home_pose_setup["finger_l_joint9"] = 0.05
-        home_pose_setup["finger_l_joint13"] = -0.22
-        home_pose_setup["finger_l_joint17"] = -0.36
+        home_pose_setup['finger_l_joint5'] = 0.42
+        home_pose_setup['finger_l_joint9'] = 0.05
+        home_pose_setup['finger_l_joint13'] = -0.22
+        home_pose_setup['finger_l_joint17'] = -0.36
 
         release_pose = self.base_positions_dict(0.0)
         release_pose.update(self.finger_pose(1,  [-0.11, -0.04, -0.72, -0.72]))
 
         grisp = self.base_positions_dict(1.57)
         grisp.update(self.finger_pose(1,  [-0.11, -0.04, -0.72, -0.72]))
-        grisp["finger_l_joint5"] = 0.0
-        grisp["finger_l_joint9"] = 0.0
-        grisp["finger_l_joint13"] = 0.0
-        grisp["finger_l_joint17"] = 0.0
+        grisp['finger_l_joint5'] = 0.0
+        grisp['finger_l_joint9'] = 0.0
+        grisp['finger_l_joint13'] = 0.0
+        grisp['finger_l_joint17'] = 0.0
 
         pinch_index = home_pose.copy()
         pinch_index.update(self.finger_pose(1,  [-0.58, 1.03, -0.40, -0.37]))
@@ -121,10 +122,15 @@ class Hx5D20ExampleMotionLeft(Node):
         pinch_little.update(self.finger_pose(17, [-0.31, 1.09, 1.25, 0.94]))
 
         # Step sequence
-        fast_steps = [home_pose_setup, home_pose, pinch_index, pinch_middle, pinch_ring, pinch_little,
-                      pinch_ring, pinch_middle, pinch_index, home_pose, release_pose]
-        slow_steps = [release_pose, home_pose_setup, home_pose, pinch_index, pinch_middle, pinch_ring,
-                      pinch_little, pinch_ring, pinch_middle, pinch_index, release_pose, grisp, grisp, release_pose]
+        fast_steps = [
+            home_pose_setup, home_pose, pinch_index, pinch_middle, pinch_ring, pinch_little,
+            pinch_ring, pinch_middle, pinch_index, home_pose, release_pose,
+        ]
+        slow_steps = [
+            release_pose, home_pose_setup, home_pose, pinch_index, pinch_middle, pinch_ring,
+            pinch_little, pinch_ring, pinch_middle, pinch_index, release_pose, grisp, grisp,
+            release_pose,
+        ]
 
         # Step duration
         fast_durations = [0.2] * len(fast_steps)
@@ -207,11 +213,11 @@ class Hx5D20ExampleMotionLeft(Node):
         if self.current_cycle_is_fast:
             steps = self.fast_steps
             durations = self.fast_durations
-            cycle_name = "fast"
+            cycle_name = 'fast'
         else:
             steps = self.slow_steps
             durations = self.slow_durations
-            cycle_name = "slow"
+            cycle_name = 'slow'
 
         msg, cycle_duration, final_pose = self.make_cycle_trajectory(
             self.current_pose,
@@ -221,7 +227,8 @@ class Hx5D20ExampleMotionLeft(Node):
         self.cmd_pub.publish(msg)
 
         self.get_logger().info(
-            f'Published {cycle_name} cycle: steps={len(steps)}, duration={cycle_duration:.2f}s, points={len(msg.points)}'
+            f'Published {cycle_name} cycle: steps={len(steps)}, '
+            f'duration={cycle_duration:.2f}s, points={len(msg.points)}'
         )
 
         self.current_pose = final_pose
