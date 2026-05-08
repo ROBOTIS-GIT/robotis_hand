@@ -8,14 +8,11 @@
   <url type="repository">https://github.com/ROBOTIS-GIT/robotis_hand</url>
   <url type="bugtracker">https://github.com/ROBOTIS-GIT/robotis_hand/issues</url>
   <author email="rlaghdnjs17@naver.com">Howon Kim</author>
-  <buildtool_depend>ament_python</buildtool_depend>
   <depend>rclpy</depend>
   <depend>std_msgs</depend>
   <depend>sensor_msgs</depend>
   <depend>trajectory_msgs</depend>
   <depend>control_msgs</depend>
-  <test_depend>ament_lint_auto</test_depend>
-  <test_depend>ament_lint_common</test_depend>
   <export>
     <build_type>ament_python</build_type>
   </export>
