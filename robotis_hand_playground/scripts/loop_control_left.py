@@ -17,10 +17,10 @@
 # Author: Howon Kim
 
 import rclpy
-from rclpy.node import Node
-from trajectory_msgs.msg import JointTrajectory, JointTrajectoryPoint
-from rclpy.qos import HistoryPolicy, QoSProfile, ReliabilityPolicy
 from rclpy.duration import Duration
+from rclpy.node import Node
+from rclpy.qos import HistoryPolicy, QoSProfile, ReliabilityPolicy
+from trajectory_msgs.msg import JointTrajectory, JointTrajectoryPoint
 
 
 class HandTrajLoop(Node):
@@ -199,6 +199,11 @@ class HandTrajLoop(Node):
             f'Published dummy trajectory: {self.dummy_publish_count + 1}/{self.max_dummy_publish_count}'
         )
 
+    def start_trajectory_loop(self):
+        self.next_cycle_time = self.get_clock().now()
+        self.timer = self.create_timer(self.check_period, self.timer_callback)
+        self.get_logger().info('Trajectory repeat mode started.')
+
     def dummy_timer_callback(self):
         if self.dummy_publish_count >= self.max_dummy_publish_count:
             self.dummy_timer.cancel()
@@ -211,11 +216,6 @@ class HandTrajLoop(Node):
         if self.dummy_publish_count >= self.max_dummy_publish_count:
             self.dummy_timer.cancel()
             self.start_trajectory_loop()
-
-    def start_trajectory_loop(self):
-        self.next_cycle_time = self.get_clock().now()
-        self.timer = self.create_timer(self.check_period, self.timer_callback)
-        self.get_logger().info('Trajectory repeat mode started.')
 
     def timer_callback(self):
         now = self.get_clock().now()

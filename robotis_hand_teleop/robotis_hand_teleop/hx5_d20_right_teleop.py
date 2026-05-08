@@ -19,14 +19,12 @@
 import select
 import sys
 import termios
-import tty
-import math
 import threading
 import time
+import tty
 
 import rclpy
 from rclpy.node import Node
-
 from sensor_msgs.msg import JointState
 from trajectory_msgs.msg import JointTrajectory, JointTrajectoryPoint
 
@@ -59,6 +57,7 @@ ESC : quit
 
 
 class KeyboardController(Node):
+    
     def __init__(self):
         super().__init__('KeyboardController')
 
@@ -89,20 +88,16 @@ class KeyboardController(Node):
         ]
 
         self.joint_limits = [
-            (-1.57, 1.57), (-2.57, 0.0), (-0.5, 1.57), (-0.5, 1.57),
+            (-1.57, 2.57), (-2.57, 0.0), (-0.5, 1.57), (-0.5, 1.57),
             (-0.6, 0.6), (0.0, 2.0), (0.0, 1.57), (0.0, 1.57),
             (-0.6, 0.6), (0.0, 2.0), (0.0, 1.57), (0.0, 1.57),
             (-0.6, 0.6), (0.0, 2.0), (0.0, 1.57), (0.0, 1.57),
             (-0.6, 0.6), (0.0, 2.0), (0.0, 1.57), (0.0, 1.57),
         ]
 
-        self.initial_positions = [
-            1.57, -1.57, 0.0, 0.0,
-            0.0, 0.0, 0.0, 0.0,
-            0.0, 0.0, 0.0, 0.0,
-            0.0, 0.0, 0.0, 0.0,
-            0.0, 0.0, 0.0, 0.0,
-        ]
+        self.initial_positions = [0.0] * len(self.joint_names)
+        self.initial_positions[0] = 1.57
+        self.initial_positions[1] = -1.57
 
         self.shift_joint_map = {
             '1': 4,
@@ -142,27 +137,6 @@ class KeyboardController(Node):
         self.get_logger().info('Waiting for /joint_states ...')
         self.rate = self.create_rate(10)
 
-    # Reset thumb shift joints to their home pose
-    def reset_thumb_shift_joints(self):
-        idx1 = self.joint_names.index('finger_r_joint1')
-        idx2 = self.joint_names.index('finger_r_joint2')
-
-        self.target_positions[idx1] = self.clamp(math.pi / 2.0, idx1)
-        self.target_positions[idx2] = self.clamp(-1.0 * math.pi / 2.0, idx2)
-    
-    def toggle_joint_direction(self):
-        self.single_joint_direction *= -1.0
-        direction_str = '+' if self.single_joint_direction > 0 else '-'
-        self.get_logger().info(f'Single joint direction changed to: {direction_str}')
-
-    def update_shift_joint(self, joint_idx):
-        self.target_positions[joint_idx] = self.clamp(
-            self.target_positions[joint_idx] + self.single_joint_direction * self.step,
-            joint_idx
-        )
-
-        self.publish_trajectory()
-
     def joint_state_callback(self, msg: JointState):
         name_to_idx = {name: i for i, name in enumerate(msg.name)}
 
@@ -181,6 +155,14 @@ class KeyboardController(Node):
             self.running = True
             self.get_logger().info('Initial joint states received.')
             self.print_targets()
+
+    # Reset thumb shift joints to their home pose
+    def reset_thumb_shift_joints(self):
+        idx1 = self.joint_names.index('finger_r_joint1')
+        idx2 = self.joint_names.index('finger_r_joint2')
+
+        self.target_positions[idx1] = self.clamp(1.57, idx1)
+        self.target_positions[idx2] = self.clamp(-1.57, idx2)
 
     def clamp(self, x, joint_idx):
         lower, upper = self.joint_limits[joint_idx]
@@ -204,8 +186,20 @@ class KeyboardController(Node):
         msg.points.append(pt)
         self.hand_publisher.publish(msg)
 
-    def update_finger(self, joint_indices, directions):
+    def toggle_shift_joint_direction(self):
+        self.single_joint_direction *= -1.0
+        direction_str = '+' if self.single_joint_direction > 0 else '-'
+        self.get_logger().info(f'Shift joint direction changed to: {direction_str}')
 
+    def update_shift_joint(self, joint_idx):
+        self.target_positions[joint_idx] = self.clamp(
+            self.target_positions[joint_idx] + self.single_joint_direction * self.step,
+            joint_idx
+        )
+
+        self.publish_trajectory()
+
+    def update_finger(self, joint_indices, directions):
         if isinstance(directions, (int, float)):
             directions = [float(directions)] * len(joint_indices)
 
@@ -227,7 +221,6 @@ class KeyboardController(Node):
         self.target_positions = self.initial_positions.copy()
         self.publish_trajectory()
         self.get_logger().info('Return to fixed initial pose')
-
 
     def close_all(self):
         for i in range(len(self.joint_names)):
@@ -276,7 +269,7 @@ class KeyboardController(Node):
             if key == '\x1b':   # ESC
                 break
             elif key == '\t':   # TAB
-                self.toggle_joint_direction()
+                self.toggle_shift_joint_direction()
             elif key == 'z':    # Release Hand
                 self.open_all()
             elif key == 'x':    # Close Hand
