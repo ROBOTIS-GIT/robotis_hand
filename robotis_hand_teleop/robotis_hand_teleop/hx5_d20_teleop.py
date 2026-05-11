@@ -16,6 +16,7 @@
 #
 # Author: Howon Kim
 
+import argparse
 import select
 import sys
 import termios
@@ -28,7 +29,7 @@ from trajectory_msgs.msg import JointTrajectory, JointTrajectoryPoint
 
 
 HELP_MSG = """
-================ HX5-D20 Right Hand Teleop ================
+================ HX5-D20 {hand_side} Hand Teleop ================
 
 v / c : finger0 close / open
 q / a : finger1 close / open
@@ -56,8 +57,16 @@ ESC : quit
 
 class KeyboardController(Node):
 
-    def __init__(self):
+    def __init__(self, default_hand_side='right'):
         super().__init__('keyboard_controller')
+
+        self.declare_parameter('hand_side', default_hand_side)
+        self.hand_side = self.get_parameter('hand_side').value.lower()
+        if self.hand_side not in ('right', 'left'):
+            raise ValueError('hand_side must be right or left')
+
+        self.side_sign = 1.0 if self.hand_side == 'right' else -1.0
+        self.joint_prefix = f'finger_{self.hand_side[0]}_joint'
 
         self.fixed_indices = {0, 4, 8, 12, 16}
         self.reverse_indices = {2, 3}
@@ -65,7 +74,7 @@ class KeyboardController(Node):
         # Publisher for Hand joint control
         self.hand_publisher = self.create_publisher(
             JointTrajectory,
-            '/leader/joint_trajectory_command_broadcaster_right_hand/joint_trajectory',
+            f'/leader/joint_trajectory_command_broadcaster_{self.hand_side}_hand/joint_trajectory',
             10
         )
 
@@ -78,11 +87,7 @@ class KeyboardController(Node):
         )
 
         self.joint_names = [
-            'finger_r_joint1', 'finger_r_joint2', 'finger_r_joint3', 'finger_r_joint4',
-            'finger_r_joint5', 'finger_r_joint6', 'finger_r_joint7', 'finger_r_joint8',
-            'finger_r_joint9', 'finger_r_joint10', 'finger_r_joint11', 'finger_r_joint12',
-            'finger_r_joint13', 'finger_r_joint14', 'finger_r_joint15', 'finger_r_joint16',
-            'finger_r_joint17', 'finger_r_joint18', 'finger_r_joint19', 'finger_r_joint20',
+            f'{self.joint_prefix}{joint_num}' for joint_num in range(1, 21)
         ]
 
         self.joint_limits = [
@@ -92,11 +97,17 @@ class KeyboardController(Node):
             (-0.6, 0.6), (0.0, 2.0), (0.0, 1.57), (0.0, 1.57),
             (-0.6, 0.6), (0.0, 2.0), (0.0, 1.57), (0.0, 1.57),
         ]
+        if self.hand_side == 'left':
+            # Left hand uses different thumb joint limits.
+            self.joint_limits[0:4] = [
+                (-1.57, 1.57), (0.0, 1.57), (-1.57, 0.5), (-1.57, 0.5)
+            ]
 
         self.initial_positions = [0.0] * len(self.joint_names)
-        self.initial_positions[0] = 1.57
-        self.initial_positions[1] = -1.57
+        self.initial_positions[0] = self.side_sign * 1.57
+        self.initial_positions[1] = self.side_sign * -1.57
 
+        # Shift joints move in opposite directions for left and right hands.
         self.shift_joint_map = {
             '1': 4,
             '2': 8,
@@ -108,8 +119,8 @@ class KeyboardController(Node):
         self.single_joint_direction = +1.0
 
         self.finger_groups = {
-            'v': ([2, 3], +1.0),
-            'c': ([2, 3], -1.0),
+            'v': ([2, 3], self.side_sign),
+            'c': ([2, 3], -self.side_sign),
 
             'q': ([5, 6, 7], +1.0),
             'a': ([5, 6, 7], -1.0),
@@ -156,11 +167,11 @@ class KeyboardController(Node):
 
     # Reset thumb shift joints to their home pose
     def reset_thumb_shift_joints(self):
-        idx1 = self.joint_names.index('finger_r_joint1')
-        idx2 = self.joint_names.index('finger_r_joint2')
+        idx1 = self.joint_names.index(f'{self.joint_prefix}1')
+        idx2 = self.joint_names.index(f'{self.joint_prefix}2')
 
-        self.target_positions[idx1] = self.clamp(1.57, idx1)
-        self.target_positions[idx2] = self.clamp(-1.57, idx2)
+        self.target_positions[idx1] = self.clamp(self.side_sign * 1.57, idx1)
+        self.target_positions[idx2] = self.clamp(self.side_sign * -1.57, idx2)
 
     def clamp(self, x, joint_idx):
         lower, upper = self.joint_limits[joint_idx]
@@ -258,7 +269,7 @@ class KeyboardController(Node):
             rclpy.spin_once(self, timeout_sec=1.0)
 
         self.get_logger().info('Ready to receive keyboard input!')
-        print(HELP_MSG)
+        print(HELP_MSG.format(hand_side=self.hand_side.capitalize()))
 
         while rclpy.ok() and self.running:
             rclpy.spin_once(self, timeout_sec=0.0)
@@ -284,9 +295,18 @@ class KeyboardController(Node):
                 self.update_finger(joints, direction)
 
 
+def parse_args(args=None):
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--hand-side', choices=['right', 'left'], default='right')
+    parsed_args, remaining_args = parser.parse_known_args(args)
+    return parsed_args, remaining_args
+
+
 def main(args=None):
-    rclpy.init(args=args)
-    node = KeyboardController()
+    parsed_args, remaining_args = parse_args(args)
+
+    rclpy.init(args=remaining_args)
+    node = KeyboardController(default_hand_side=parsed_args.hand_side)
 
     try:
         node.run()

@@ -23,8 +23,7 @@ setup(
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
-            'hx5_d20_right_teleop = robotis_hand_teleop.hx5_d20_right_teleop:main',
-            'hx5_d20_left_teleop = robotis_hand_teleop.hx5_d20_left_teleop:main'
+            'hx5_d20_teleop = robotis_hand_teleop.hx5_d20_teleop:main',
         ],
     },
 )

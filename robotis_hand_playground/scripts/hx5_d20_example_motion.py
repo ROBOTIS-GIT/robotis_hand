@@ -16,6 +16,8 @@
 #
 # Author: Howon Kim
 
+import argparse
+
 import rclpy
 from rclpy.duration import Duration
 from rclpy.node import Node
@@ -23,17 +25,24 @@ from rclpy.qos import HistoryPolicy, QoSProfile
 from trajectory_msgs.msg import JointTrajectory, JointTrajectoryPoint
 
 
-class Hx5D20ExampleMotionRight(Node):
+# Thumb joints and each finger's first joint.
+DIFF_JOINT_NUMS = {1, 2, 3, 4, 5, 9, 13, 17}
 
-    def __init__(self):
-        super().__init__('hx5_d20_example_motion_right')
+
+class Hx5D20ExampleMotion(Node):
+
+    def __init__(self, default_hand_side='right'):
+        super().__init__('hx5_d20_example_motion')
+
+        self.declare_parameter('hand_side', default_hand_side)
+        self.hand_side = self.get_parameter('hand_side').value.lower()
+        if self.hand_side not in ('right', 'left'):
+            raise ValueError('hand_side must be right or left')
+
+        self.joint_prefix = f'finger_{self.hand_side[0]}_joint'
 
         self.joint_names = [
-            'finger_r_joint1', 'finger_r_joint2', 'finger_r_joint3', 'finger_r_joint4',
-            'finger_r_joint5', 'finger_r_joint6', 'finger_r_joint7', 'finger_r_joint8',
-            'finger_r_joint9', 'finger_r_joint10', 'finger_r_joint11', 'finger_r_joint12',
-            'finger_r_joint13', 'finger_r_joint14', 'finger_r_joint15', 'finger_r_joint16',
-            'finger_r_joint17', 'finger_r_joint18', 'finger_r_joint19', 'finger_r_joint20',
+            f'{self.joint_prefix}{joint_num}' for joint_num in range(1, 21)
         ]
 
         self.cmd_qos = QoSProfile(
@@ -43,7 +52,7 @@ class Hx5D20ExampleMotionRight(Node):
 
         self.cmd_pub = self.create_publisher(
             JointTrajectory,
-            '/leader/joint_trajectory_command_broadcaster_right_hand/joint_trajectory',
+            f'/leader/joint_trajectory_command_broadcaster_{self.hand_side}_hand/joint_trajectory',
             self.cmd_qos
         )
 
@@ -74,12 +83,19 @@ class Hx5D20ExampleMotionRight(Node):
             base[name] = default_rad
         return base
 
+    def joint_name(self, joint_num):
+        return f'{self.joint_prefix}{joint_num}'
+
+    def joint_value(self, joint_num, value):
+        if self.hand_side == 'left' and joint_num in DIFF_JOINT_NUMS:
+            return -value
+        return value
+
     def finger_pose(self, start_joint_num, values_rad):
         pose = {}
         for i, val in enumerate(values_rad):
             joint_num = start_joint_num + i
-            joint_name = f'finger_r_joint{joint_num}'
-            pose[joint_name] = val
+            pose[self.joint_name(joint_num)] = self.joint_value(joint_num, val)
         return pose
 
     def build_traj_steps(self):
@@ -91,20 +107,20 @@ class Hx5D20ExampleMotionRight(Node):
         home_pose.update(self.finger_pose(17, [0.36, 0.62, 0.46, 0.67]))
 
         home_pose_setup = self.base_positions_dict(0.0)
-        home_pose_setup['finger_r_joint5'] = -0.42
-        home_pose_setup['finger_r_joint9'] = -0.05
-        home_pose_setup['finger_r_joint13'] = 0.22
-        home_pose_setup['finger_r_joint17'] = 0.36
+        home_pose_setup[self.joint_name(5)] = self.joint_value(5, -0.42)
+        home_pose_setup[self.joint_name(9)] = self.joint_value(9, -0.05)
+        home_pose_setup[self.joint_name(13)] = self.joint_value(13, 0.22)
+        home_pose_setup[self.joint_name(17)] = self.joint_value(17, 0.36)
 
         release_pose = self.base_positions_dict(0.0)
         release_pose.update(self.finger_pose(1,  [0.11, 0.04, 0.72, 0.72]))
 
         grisp = self.base_positions_dict(1.57)
         grisp.update(self.finger_pose(1,  [0.11, 0.04, 0.72, 0.72]))
-        grisp['finger_r_joint5'] = 0.0
-        grisp['finger_r_joint9'] = 0.0
-        grisp['finger_r_joint13'] = 0.0
-        grisp['finger_r_joint17'] = 0.0
+        grisp[self.joint_name(5)] = 0.0
+        grisp[self.joint_name(9)] = 0.0
+        grisp[self.joint_name(13)] = 0.0
+        grisp[self.joint_name(17)] = 0.0
 
         pinch_index = home_pose.copy()
         pinch_index.update(self.finger_pose(1,  [0.58, -1.03, 0.45, 0.32]))
@@ -239,9 +255,18 @@ class Hx5D20ExampleMotionRight(Node):
         self.current_cycle_is_fast = not self.current_cycle_is_fast
 
 
+def parse_args(args=None):
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--hand-side', choices=['right', 'left'], default='right')
+    parsed_args, remaining_args = parser.parse_known_args(args)
+    return parsed_args, remaining_args
+
+
 def main(args=None):
-    rclpy.init(args=args)
-    node = Hx5D20ExampleMotionRight()
+    parsed_args, remaining_args = parse_args(args)
+
+    rclpy.init(args=remaining_args)
+    node = Hx5D20ExampleMotion(default_hand_side=parsed_args.hand_side)
     try:
         rclpy.spin(node)
     except KeyboardInterrupt:
