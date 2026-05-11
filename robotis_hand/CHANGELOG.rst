@@ -4,8 +4,8 @@ Changelog for package robotis_hand
 
 0.3.0 (2026-05-08)
 ------------------
-* Added example hx5d20 hand motion
-* Support HX5-D20 Keyboard Teleop
+* Added example motion for HX5-D20
+* Added keyboard teleop support for HX5-D20
 * Contributors: Howon Kim
 
 0.2.0 (2026-05-06)
