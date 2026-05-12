@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <package format="3">
   <name>robotis_hand</name>
-  <version>0.2.0</version>
+  <version>0.3.0</version>
   <description>
     ROS messages packages for the ROBOTIS Hand (meta package)
   </description>
@@ -17,6 +17,8 @@
   <exec_depend>robotis_hand_pressure_broadcaster</exec_depend>
   <exec_depend>robotis_hand_moveit_config</exec_depend>
   <exec_depend>robotis_interfaces</exec_depend>
+  <exec_depend>robotis_hand_playground</exec_depend>
+  <exec_depend>robotis_hand_teleop</exec_depend>
   <export>
     <build_type>ament_cmake</build_type>
   </export>
