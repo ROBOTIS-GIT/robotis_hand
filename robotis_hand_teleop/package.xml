@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<package format="3">
+  <name>robotis_hand_teleop</name>
+  <version>0.3.0</version>
+  <description>ROBOTIS Hand keyboard teleoperation package</description>
+  <maintainer email="pyo@robotis.com">Pyo</maintainer>
+  <license>Apache License 2.0</license>
+  <url type="repository">https://github.com/ROBOTIS-GIT/robotis_hand</url>
+  <url type="bugtracker">https://github.com/ROBOTIS-GIT/robotis_hand/issues</url>
+  <author email="rlaghdnjs17@naver.com">Howon Kim</author>
+  <depend>control_msgs</depend>
+  <depend>rclpy</depend>
+  <depend>sensor_msgs</depend>
+  <depend>std_msgs</depend>
+  <depend>trajectory_msgs</depend>
+  <export>
+    <build_type>ament_python</build_type>
+  </export>
+</package>

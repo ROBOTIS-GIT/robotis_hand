@@ -83,3 +83,4 @@ jobs:
             robotis_hand_bringup
             robotis_hand_description
             robotis_hand_moveit_config
+            robotis_hand_teleop
