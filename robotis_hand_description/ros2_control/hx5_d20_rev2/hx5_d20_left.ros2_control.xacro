@@ -360,6 +360,7 @@
         <param name="SyncTable 5 Write Size 4">4</param>
         <param name="SyncTable 5 Write Size 5">0</param>
       </gpio>
+
       <gpio name="dxl141_init">
         <param name="type">controller</param>
         <param name="ID">141</param>
