@@ -141,7 +141,7 @@ controller_interface::return_type PressureBroadcaster::update(
         return 0.0f;
       }
       return static_cast<float>(
-        state_interfaces_[base + offset].get_optional().value_or(0.0));
+        state_interfaces_[base + offset].get_value());
     };
 
     auto & sensor = message.sensors[i];

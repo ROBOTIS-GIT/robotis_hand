@@ -16,6 +16,7 @@
   <depend>ros_gz_bridge</depend>
   <depend>ros_gz_sim</depend>
   <depend>ros_gz_image</depend>
+  <depend>topic_tools</depend>
   <exec_depend>robot_state_publisher</exec_depend>
   <exec_depend>gz_ros2_control</exec_depend>
   <exec_depend>ros2_control</exec_depend>

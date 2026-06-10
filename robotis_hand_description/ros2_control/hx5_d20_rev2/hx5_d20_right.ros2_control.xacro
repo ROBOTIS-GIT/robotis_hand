@@ -233,7 +233,7 @@
         <param name="ID">110</param>
         <param name="Reboot">1</param>
         <param name="Table Sync Enable">0</param>
-        <param name="Bus Watchdog">100</param>
+        <param name="Bus Watchdog">0</param>
         <param name="SyncTable 1 ID 1">111</param>
         <param name="SyncTable 1 ID 2">112</param>
         <param name="SyncTable 1 ID 3">113</param>
@@ -368,7 +368,7 @@
         <param name="Startup Configuration">2</param>
         <param name="Operating Mode">5</param>
         <param name="Drive Mode">13</param>
-        <param name="Bus Watchdog">100</param>
+        <param name="Bus Watchdog">0</param>
         <param name="Profile Velocity">100</param>
         <param name="Profile Acceleration">50</param>
         <param name="Position P Gain">500</param>
@@ -392,7 +392,7 @@
         <param name="Startup Configuration">2</param>
         <param name="Operating Mode">5</param>
         <param name="Drive Mode">12</param>
-        <param name="Bus Watchdog">100</param>
+        <param name="Bus Watchdog">0</param>
         <param name="Profile Velocity">100</param>
         <param name="Profile Acceleration">50</param>
         <param name="Position P Gain">500</param>
@@ -416,7 +416,7 @@
         <param name="Startup Configuration">2</param>
         <param name="Operating Mode">5</param>
         <param name="Drive Mode">12</param>
-        <param name="Bus Watchdog">100</param>
+        <param name="Bus Watchdog">0</param>
         <param name="Profile Velocity">100</param>
         <param name="Profile Acceleration">50</param>
         <param name="Position P Gain">500</param>
@@ -439,7 +439,7 @@
         <param name="Startup Configuration">2</param>
         <param name="Operating Mode">5</param>
         <param name="Drive Mode">12</param>
-        <param name="Bus Watchdog">100</param>
+        <param name="Bus Watchdog">0</param>
         <param name="Profile Velocity">100</param>
         <param name="Profile Acceleration">50</param>
         <param name="Position P Gain">500</param>
@@ -462,7 +462,7 @@
         <param name="Startup Configuration">2</param>
         <param name="Operating Mode">5</param>
         <param name="Drive Mode">12</param>
-        <param name="Bus Watchdog">100</param>
+        <param name="Bus Watchdog">0</param>
         <param name="Profile Velocity">100</param>
         <param name="Profile Acceleration">50</param>
         <param name="Position P Gain">500</param>
@@ -485,7 +485,7 @@
         <param name="Startup Configuration">2</param>
         <param name="Operating Mode">5</param>
         <param name="Drive Mode">12</param>
-        <param name="Bus Watchdog">100</param>
+        <param name="Bus Watchdog">0</param>
         <param name="Profile Velocity">100</param>
         <param name="Profile Acceleration">50</param>
         <param name="Position P Gain">500</param>
@@ -509,7 +509,7 @@
         <param name="Startup Configuration">2</param>
         <param name="Operating Mode">5</param>
         <param name="Drive Mode">12</param>
-        <param name="Bus Watchdog">100</param>
+        <param name="Bus Watchdog">0</param>
         <param name="Profile Velocity">100</param>
         <param name="Profile Acceleration">50</param>
         <param name="Position P Gain">500</param>
@@ -532,7 +532,7 @@
         <param name="Startup Configuration">2</param>
         <param name="Operating Mode">5</param>
         <param name="Drive Mode">12</param>
-        <param name="Bus Watchdog">100</param>
+        <param name="Bus Watchdog">0</param>
         <param name="Profile Velocity">100</param>
         <param name="Profile Acceleration">50</param>
         <param name="Position P Gain">500</param>
@@ -555,7 +555,7 @@
         <param name="Startup Configuration">2</param>
         <param name="Operating Mode">5</param>
         <param name="Drive Mode">12</param>
-        <param name="Bus Watchdog">100</param>
+        <param name="Bus Watchdog">0</param>
         <param name="Profile Velocity">100</param>
         <param name="Profile Acceleration">50</param>
         <param name="Position P Gain">500</param>
@@ -579,7 +579,7 @@
         <param name="Startup Configuration">2</param>
         <param name="Operating Mode">5</param>
         <param name="Drive Mode">12</param>
-        <param name="Bus Watchdog">100</param>
+        <param name="Bus Watchdog">0</param>
         <param name="Profile Velocity">100</param>
         <param name="Profile Acceleration">50</param>
         <param name="Position P Gain">500</param>
@@ -603,7 +603,7 @@
         <param name="Startup Configuration">2</param>
         <param name="Operating Mode">5</param>
         <param name="Drive Mode">12</param>
-        <param name="Bus Watchdog">100</param>
+        <param name="Bus Watchdog">0</param>
         <param name="Profile Velocity">100</param>
         <param name="Profile Acceleration">50</param>
         <param name="Position P Gain">500</param>
@@ -626,7 +626,7 @@
         <param name="Startup Configuration">2</param>
         <param name="Operating Mode">5</param>
         <param name="Drive Mode">12</param>
-        <param name="Bus Watchdog">100</param>
+        <param name="Bus Watchdog">0</param>
         <param name="Profile Velocity">100</param>
         <param name="Profile Acceleration">50</param>
         <param name="Position P Gain">500</param>
@@ -649,7 +649,7 @@
         <param name="Startup Configuration">2</param>
         <param name="Operating Mode">5</param>
         <param name="Drive Mode">12</param>
-        <param name="Bus Watchdog">100</param>
+        <param name="Bus Watchdog">0</param>
         <param name="Profile Velocity">100</param>
         <param name="Profile Acceleration">50</param>
         <param name="Position P Gain">500</param>
@@ -673,7 +673,7 @@
         <param name="Startup Configuration">2</param>
         <param name="Operating Mode">5</param>
         <param name="Drive Mode">12</param>
-        <param name="Bus Watchdog">100</param>
+        <param name="Bus Watchdog">0</param>
         <param name="Profile Velocity">100</param>
         <param name="Profile Acceleration">50</param>
         <param name="Position P Gain">500</param>
@@ -697,7 +697,7 @@
         <param name="Startup Configuration">2</param>
         <param name="Operating Mode">5</param>
         <param name="Drive Mode">12</param>
-        <param name="Bus Watchdog">100</param>
+        <param name="Bus Watchdog">0</param>
         <param name="Profile Velocity">100</param>
         <param name="Profile Acceleration">50</param>
         <param name="Position P Gain">500</param>
@@ -720,7 +720,7 @@
         <param name="Startup Configuration">2</param>
         <param name="Operating Mode">5</param>
         <param name="Drive Mode">12</param>
-        <param name="Bus Watchdog">100</param>
+        <param name="Bus Watchdog">0</param>
         <param name="Profile Velocity">100</param>
         <param name="Profile Acceleration">50</param>
         <param name="Position P Gain">500</param>
@@ -743,7 +743,7 @@
         <param name="Startup Configuration">2</param>
         <param name="Operating Mode">5</param>
         <param name="Drive Mode">12</param>
-        <param name="Bus Watchdog">100</param>
+        <param name="Bus Watchdog">0</param>
         <param name="Profile Velocity">100</param>
         <param name="Profile Acceleration">50</param>
         <param name="Position P Gain">500</param>
@@ -767,7 +767,7 @@
         <param name="Startup Configuration">2</param>
         <param name="Operating Mode">5</param>
         <param name="Drive Mode">12</param>
-        <param name="Bus Watchdog">100</param>
+        <param name="Bus Watchdog">0</param>
         <param name="Profile Velocity">100</param>
         <param name="Profile Acceleration">50</param>
         <param name="Position P Gain">500</param>
@@ -791,7 +791,7 @@
         <param name="Startup Configuration">2</param>
         <param name="Operating Mode">5</param>
         <param name="Drive Mode">12</param>
-        <param name="Bus Watchdog">100</param>
+        <param name="Bus Watchdog">0</param>
         <param name="Profile Velocity">100</param>
         <param name="Profile Acceleration">50</param>
         <param name="Position P Gain">500</param>
@@ -814,7 +814,7 @@
         <param name="Startup Configuration">2</param>
         <param name="Operating Mode">5</param>
         <param name="Drive Mode">12</param>
-        <param name="Bus Watchdog">100</param>
+        <param name="Bus Watchdog">0</param>
         <param name="Profile Velocity">100</param>
         <param name="Profile Acceleration">50</param>
         <param name="Position P Gain">500</param>

@@ -151,9 +151,6 @@ def generate_launch_description():
         package='controller_manager',
         executable='spawner',
         arguments=[
-            '--controller-ros-args',
-            '-r /hand_l_controller/joint_trajectory:='
-            '/leader/joint_trajectory_command_broadcaster_left_hand/joint_trajectory',
             'hand_l_controller',
             'joint_state_broadcaster',
             'effort_l_controller',
@@ -161,6 +158,18 @@ def generate_launch_description():
         ],
         output='both',
         parameters=[{'robot_description': urdf_file}],
+    )
+
+    trajectory_command_relay = Node(
+        package='topic_tools',
+        executable='relay',
+        name='hand_l_joint_trajectory_relay',
+        parameters=[{
+            'input_topic':
+                '/leader/joint_trajectory_command_broadcaster_left_hand/joint_trajectory',
+            'output_topic': '/hand_l_controller/joint_trajectory',
+        }],
+        output='both',
     )
 
     robot_state_publisher_node = Node(
@@ -229,6 +238,7 @@ def generate_launch_description():
         + [
             control_node,
             robot_controller_spawner,
+            trajectory_command_relay,
             robot_state_publisher_node,
             delay_rviz_after_joint_state_broadcaster_spawner,
             delay_current_command_process_after_controllers,

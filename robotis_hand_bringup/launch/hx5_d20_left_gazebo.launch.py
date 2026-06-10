@@ -147,10 +147,22 @@ def generate_launch_description():
         package='controller_manager',
         executable='spawner',
         arguments=[
-            '--controller-ros-args',
-            '-r /hand_l_controller/joint_trajectory:='
-            '/leader/joint_trajectory_command_broadcaster_left_hand/joint_trajectory',
-            'hand_l_controller'],
+            'hand_l_controller',
+            '--controller-manager',
+            '/controller_manager',
+        ],
+        output='screen',
+    )
+
+    trajectory_command_relay = Node(
+        package='topic_tools',
+        executable='relay',
+        name='hand_l_joint_trajectory_relay',
+        parameters=[{
+            'input_topic':
+                '/leader/joint_trajectory_command_broadcaster_left_hand/joint_trajectory',
+            'output_topic': '/hand_l_controller/joint_trajectory',
+        }],
         output='screen',
     )
 
@@ -192,5 +204,6 @@ def generate_launch_description():
         gazebo,
         node_robot_state_publisher,
         gz_spawn_entity,
+        trajectory_command_relay,
         rviz,
     ])
