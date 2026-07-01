@@ -34,6 +34,10 @@ start_container() {
 
     echo "Starting robotis_hand container..."
 
+    ### rmw_zenoh notice (remove later)
+    print_rmw_zenoh_notice
+    ### rmw_zenoh notice (remove later)
+
     # Notify if an update is available (meta package version vs GitHub latest release)
     CURRENT_VER=$(get_current_version)
     LATEST_VER=$(get_latest_version)
@@ -78,6 +82,10 @@ enter_container() {
         print_update_notice "${CURRENT_VER}" "${GIT_VER}"
     fi
 
+    ### rmw_zenoh notice (remove later)
+    print_rmw_zenoh_notice
+    ### rmw_zenoh notice (remove later)
+
     docker exec -it "$CONTAINER_NAME" bash
 }
 
@@ -118,6 +126,23 @@ print_update_notice() {
     echo "  +${BAR}+"
     echo ""
 }
+
+### rmw_zenoh notice (remove later)
+print_rmw_zenoh_notice() {
+    W=52
+    BAR=$(printf '%*s' $W '' | tr ' ' '=')
+    LINE1="Since v1.0.0, rmw_zenoh_cpp is the default RMW."
+    LINE2="RMW_IMPLEMENTATION is set in ~/.bashrc inside the"
+    LINE3="container."
+    echo ""
+    echo "  +${BAR}+"
+    printf "  |  %-$((W-2))s|\n" "$LINE1"
+    printf "  |  %-$((W-2))s|\n" "$LINE2"
+    printf "  |  %-$((W-2))s|\n" "$LINE3"
+    echo "  +${BAR}+"
+    echo ""
+}
+### rmw_zenoh notice (remove later)
 
 get_current_version() {
     local ver
