@@ -2,6 +2,11 @@
 Changelog for package robotis_hand
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+1.0.0 (2026-07-01)
+------------------
+* Set rmw_zenoh_cpp as the default RMW in Docker images
+* Contributors: Hyunwoo Nam
+
 0.3.0 (2026-05-08)
 ------------------
 * Added example motion for HX5-D20

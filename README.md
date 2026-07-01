@@ -2,7 +2,7 @@
 ROS Packages for Robotis Hand
 
 This repository contains the official ROS 2 packages for the ROBOTIS Hand. These packages provide the necessary interfaces and tools to control the robot, and integrate with its sensors. For detailed usage instructions, please refer to the documentation below.
-  - [Documentation for Hand](https://ai.robotis.com/hands/introduction_hands.html)
+  - [Documentation for Hand](https://docs.robotis.com/docs/systems/hx5_d20/introduction)
 
 To explore our open-source platforms in a simulation environment, visit:
   - [Simulation Models](https://github.com/ROBOTIS-GIT/robotis_mujoco_menagerie)
