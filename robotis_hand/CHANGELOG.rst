@@ -2,6 +2,11 @@
 Changelog for package robotis_hand
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+1.0.1 (2026-07-21)
+------------------
+* Added joints xacro files for HX5-D20
+* Contributors: Hyunwoo Nam
+
 1.0.0 (2026-07-01)
 ------------------
 * Set rmw_zenoh_cpp as the default RMW in Docker images
