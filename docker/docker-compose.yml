@@ -1,7 +1,7 @@
 services:
   robotis_hand:
     container_name: robotis_hand
-    image: robotis/robotis-hand:1.0.0
+    image: robotis/robotis-hand:1.0.1
     tty: true
     restart: always
     cap_add:
