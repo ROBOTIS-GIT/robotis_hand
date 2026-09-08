@@ -1,0 +1,19 @@
+<mujoco model="hx5_d20">
+  <option integrator="implicitfast" cone="elliptic" impratio="10"/>
+  <statistic center="0 0 0.08" extent="0.65"/>
+  <visual>
+    <global azimuth="180" elevation="-25"/>
+  </visual>
+  <asset>
+    <model name="left_hand" file="hx5_d20_left.xml"/>
+    <model name="right_hand" file="hx5_d20_right.xml"/>
+  </asset>
+  <worldbody>
+    <frame pos="0 0.18 0">
+      <attach model="left_hand" body="hx5_d20_left_base" prefix=""/>
+    </frame>
+    <frame pos="0 -0.18 0">
+      <attach model="right_hand" body="hx5_d20_right_base" prefix=""/>
+    </frame>
+  </worldbody>
+</mujoco>

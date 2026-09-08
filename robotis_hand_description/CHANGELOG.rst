@@ -2,6 +2,10 @@
 Changelog for package robotis_hand_description
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* Added reusable HX5-D20 rev2 MuJoCo models and left, right, and dual-hand scenes
+
 1.0.1 (2026-07-21)
 ------------------
 * Added joints xacro files for HX5-D20
