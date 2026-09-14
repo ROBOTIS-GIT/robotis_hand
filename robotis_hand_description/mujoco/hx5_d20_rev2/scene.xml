@@ -1,5 +1,5 @@
 <mujoco model="hx5_d20 scene">
-  <!-- Adapted from robotis_mujoco_menagerie PR #12; updated model reference. See ../README.md. -->
+  <!-- Adapted from robotis_mujoco_menagerie PR #12; updated model reference. -->
   <include file="hx5_d20.xml"/>
   <statistic center="0 0 0.08" extent="0.65"/>
   <visual>

@@ -1,5 +1,5 @@
 <mujoco model="hx5_d20_right">
-  <!-- Adapted from robotis_mujoco_menagerie PR #12; modified for package assets, URDF consistency and attachment. See ../README.md. -->
+  <!-- Adapted from robotis_mujoco_menagerie PR #12; modified for package assets, URDF consistency and attachment. -->
   <compiler angle="radian" meshdir="../../meshes/hx5_d20_rev2"/>
   <option cone="elliptic" impratio="10" integrator="implicitfast"/>
   <statistic center="0 0 0.08" extent="0.35"/>
