@@ -23,8 +23,10 @@
   </default>
   <asset>
     <mesh name="hx5_d20_left_base_unit" file="hx5_d20_left/hx5_d20_base_unit.stl" scale="0.001 0.001 0.001"/>
-    <mesh name="hx5_d20_left_base_collision_00" file="hx5_d20_left/collision/hx5_d20_base_collision_00.stl" scale="0.001 0.001 0.001"/>
-    <mesh name="hx5_d20_left_base_collision_01" file="hx5_d20_left/collision/hx5_d20_base_collision_01.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hx5_d20_left_base_collision_00" file="hx5_d20_left/collision/hx5_d20_base_collision_00.stl"
+      scale="0.001 0.001 0.001"/>
+    <mesh name="hx5_d20_left_base_collision_01" file="hx5_d20_left/collision/hx5_d20_base_collision_01.stl"
+      scale="0.001 0.001 0.001"/>
     <mesh name="hx5_d20_left_thumb_mcp" file="hx5_d20_left/hx5_d20_thumb_mcp.stl" scale="0.001 0.001 0.001"/>
     <mesh name="hx5_d20_left_thumb_mcp2" file="hx5_d20_left/hx5_d20_thumb_mcp2.stl" scale="0.001 0.001 0.001"/>
     <mesh name="hx5_d20_left_thumb_ip" file="hx5_d20_left/hx5_d20_thumb_ip.stl" scale="0.001 0.001 0.001"/>

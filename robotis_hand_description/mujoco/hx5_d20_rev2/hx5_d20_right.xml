@@ -23,8 +23,10 @@
   </default>
   <asset>
     <mesh name="hx5_d20_right_base_unit" file="hx5_d20_right/hx5_d20_base_unit.stl" scale="0.001 0.001 0.001"/>
-    <mesh name="hx5_d20_right_base_collision_00" file="hx5_d20_right/collision/hx5_d20_base_collision_00.stl" scale="0.001 0.001 0.001"/>
-    <mesh name="hx5_d20_right_base_collision_01" file="hx5_d20_right/collision/hx5_d20_base_collision_01.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hx5_d20_right_base_collision_00" file="hx5_d20_right/collision/hx5_d20_base_collision_00.stl"
+      scale="0.001 0.001 0.001"/>
+    <mesh name="hx5_d20_right_base_collision_01" file="hx5_d20_right/collision/hx5_d20_base_collision_01.stl"
+      scale="0.001 0.001 0.001"/>
     <mesh name="hx5_d20_right_thumb_mcp" file="hx5_d20_right/hx5_d20_thumb_mcp.stl" scale="0.001 0.001 0.001"/>
     <mesh name="hx5_d20_right_thumb_mcp2" file="hx5_d20_right/hx5_d20_thumb_mcp2.stl" scale="0.001 0.001 0.001"/>
     <mesh name="hx5_d20_right_thumb_ip" file="hx5_d20_right/hx5_d20_thumb_ip.stl" scale="0.001 0.001 0.001"/>
@@ -40,8 +42,10 @@
         fullinertia="5.4241294e-04 3.8933294e-04 2.1011567e-04 9.2340981e-06 -2.4709097e-06 -1.6746740e-06"/>
       <geom class="hx5_d20_right_visual" mesh="hx5_d20_right_base_unit"/>
       <!-- Convex palm parts preserve clearance around the fingers. -->
-      <geom class="hx5_d20_right_collision" mesh="hx5_d20_right_base_collision_00" name="hx5_d20_right_base_collision_00"/>
-      <geom class="hx5_d20_right_collision" mesh="hx5_d20_right_base_collision_01" name="hx5_d20_right_base_collision_01"/>
+      <geom class="hx5_d20_right_collision" mesh="hx5_d20_right_base_collision_00"
+        name="hx5_d20_right_base_collision_00"/>
+      <geom class="hx5_d20_right_collision" mesh="hx5_d20_right_base_collision_01"
+        name="hx5_d20_right_base_collision_01"/>
       <body name="finger_r_link1" pos="-0.0125 0.03493 0.04475">
         <inertial mass="4.0868482e-02" pos="2.3807543e-02 1.3152378e-03 4.6035452e-04"
           fullinertia="2.8819304e-06 9.4333399e-06 9.6512629e-06 1.1855237e-06 4.4930159e-07 -9.2023407e-08"/>
