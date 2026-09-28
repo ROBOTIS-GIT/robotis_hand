@@ -1,0 +1,245 @@
+<mujoco model="hx5_d20_right">
+  <!-- Adapted from robotis_mujoco_menagerie PR #12; modified for package assets, URDF consistency and attachment. -->
+  <compiler angle="radian" meshdir="../../meshes/hx5_d20_rev2"/>
+  <option cone="elliptic" impratio="10" integrator="implicitfast"/>
+  <statistic center="0 0 0.08" extent="0.35"/>
+  <visual>
+    <global azimuth="180" elevation="-25"/>
+  </visual>
+  <default>
+    <default class="hx5_d20_right">
+      <!-- Simulation gains, damping and current-limited torque approximation; not hardware PID gains or an identified motor model. -->
+      <joint damping="0.05" armature="0" frictionloss="0" actuatorfrcrange="-0.387 0.387"/>
+      <default class="hx5_d20_right_visual">
+        <geom type="mesh" contype="0" conaffinity="0" density="0" group="2" rgba="0.2 0.2 0.2 1"/>
+      </default>
+      <default class="hx5_d20_right_collision">
+        <geom type="mesh" group="3" density="0" rgba="0.45 0.65 0.85 0.35"/>
+      </default>
+      <default class="hx5_d20_right/XM335-T323-T">
+        <position kp="4" dampratio="1" inheritrange="1" forcerange="-0.387 0.387"/>
+      </default>
+    </default>
+  </default>
+  <asset>
+    <mesh name="hx5_d20_right_base_unit" file="hx5_d20_right/hx5_d20_base_unit.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hx5_d20_right_base_collision_00" file="hx5_d20_right/collision/hx5_d20_base_collision_00.stl"
+      scale="0.001 0.001 0.001"/>
+    <mesh name="hx5_d20_right_base_collision_01" file="hx5_d20_right/collision/hx5_d20_base_collision_01.stl"
+      scale="0.001 0.001 0.001"/>
+    <mesh name="hx5_d20_right_thumb_mcp" file="hx5_d20_right/hx5_d20_thumb_mcp.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hx5_d20_right_thumb_mcp2" file="hx5_d20_right/hx5_d20_thumb_mcp2.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hx5_d20_right_thumb_ip" file="hx5_d20_right/hx5_d20_thumb_ip.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hx5_d20_right_thumb_tip" file="hx5_d20_right/hx5_d20_thumb_tip.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hx5_d20_right_finger_mcp" file="hx5_d20_right/hx5_d20_finger_mcp.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hx5_d20_right_finger_pip" file="hx5_d20_right/hx5_d20_finger_pip.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hx5_d20_right_finger_dip" file="hx5_d20_right/hx5_d20_finger_dip.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hx5_d20_right_finger_tip" file="hx5_d20_right/hx5_d20_finger_tip.stl" scale="0.001 0.001 0.001"/>
+  </asset>
+  <worldbody>
+    <body name="hx5_d20_right_base" childclass="hx5_d20_right">
+      <inertial mass="3.0185182e-01" pos="-2.5954623e-03 1.7926275e-03 6.2957652e-02"
+        fullinertia="5.4241294e-04 3.8933294e-04 2.1011567e-04 9.2340981e-06 -2.4709097e-06 -1.6746740e-06"/>
+      <geom class="hx5_d20_right_visual" mesh="hx5_d20_right_base_unit"/>
+      <!-- Convex palm parts preserve clearance around the fingers. -->
+      <geom class="hx5_d20_right_collision" mesh="hx5_d20_right_base_collision_00"
+        name="hx5_d20_right_base_collision_00"/>
+      <geom class="hx5_d20_right_collision" mesh="hx5_d20_right_base_collision_01"
+        name="hx5_d20_right_base_collision_01"/>
+      <body name="finger_r_link1" pos="-0.0125 0.03493 0.04475">
+        <inertial mass="4.0868482e-02" pos="2.3807543e-02 1.3152378e-03 4.6035452e-04"
+          fullinertia="2.8819304e-06 9.4333399e-06 9.6512629e-06 1.1855237e-06 4.4930159e-07 -9.2023407e-08"/>
+        <joint name="finger_r_joint1" range="-1.57 1.57" axis="1 0 0"/>
+        <geom class="hx5_d20_right_visual" mesh="hx5_d20_right_thumb_mcp"/>
+        <geom class="hx5_d20_right_collision" mesh="hx5_d20_right_thumb_mcp"
+          name="finger_r_link1_hx5_d20_thumb_mcp_collision"/>
+        <body name="finger_r_link2" pos="0.039 0 0">
+          <inertial mass="1.1760611e-02" pos="-3.5667920e-04 1.3999343e-02 3.5920711e-04"
+            fullinertia="1.3023455e-06 1.0556381e-06 1.3024709e-06 5.3492870e-08 -1.5067505e-09 5.3427868e-08"/>
+          <joint name="finger_r_joint2" range="-1.57 0" axis="0 0 1"/>
+          <geom class="hx5_d20_right_visual" mesh="hx5_d20_right_thumb_mcp2"/>
+          <geom class="hx5_d20_right_collision" mesh="hx5_d20_right_thumb_mcp2"
+            name="finger_r_link2_hx5_d20_thumb_mcp2_collision"/>
+          <body name="finger_r_link3" pos="0 0.028 0">
+            <inertial mass="3.4689700e-02" pos="-1.0146203e-04 1.1343515e-02 4.0805550e-06"
+              fullinertia="5.0370173e-06 2.2580703e-06 5.4029785e-06 1.1035638e-07 -5.4161055e-10 8.5483839e-10"/>
+            <joint name="finger_r_joint3" range="0 1.57" axis="1 0 0"/>
+            <geom class="hx5_d20_right_visual" mesh="hx5_d20_right_thumb_ip"/>
+            <geom class="hx5_d20_right_collision" mesh="hx5_d20_right_thumb_ip"
+              name="finger_r_link3_hx5_d20_thumb_ip_collision"/>
+            <body name="finger_r_link4" pos="0 0.0355 0">
+              <inertial mass="4.3875236e-02" pos="6.6604979e-05 1.6824458e-02 2.2398502e-04"
+                fullinertia="1.1160744e-05 2.8079428e-06 1.1343106e-05 -8.5593479e-09 -1.7171147e-09 -3.0446511e-07"/>
+              <joint name="finger_r_joint4" range="0 1.57" axis="1 0 0"/>
+              <geom class="hx5_d20_right_visual" mesh="hx5_d20_right_thumb_tip"/>
+              <geom class="hx5_d20_right_collision" mesh="hx5_d20_right_thumb_tip"
+                name="finger_r_link4_hx5_d20_thumb_tip_collision"/>
+            </body>
+          </body>
+        </body>
+      </body>
+      <body name="finger_r_link5" pos="-0.0015 0.03608 0.10275">
+        <inertial mass="3.880441100e-02" pos="5.193401000e-03 -1.816308100e-05 2.111550700e-02"
+          fullinertia="3.524993200e-06 5.792157500e-06 4.712679800e-06 1.364133900e-08 -3.766210300e-07 1.153419900e-09"/>
+        <joint name="finger_r_joint5" range="-0.6 0.6" axis="1 0 0"/>
+        <geom class="hx5_d20_right_visual" mesh="hx5_d20_right_finger_mcp"/>
+        <geom class="hx5_d20_right_collision" mesh="hx5_d20_right_finger_mcp"
+          name="finger_r_link5_hx5_d20_finger_mcp_collision"/>
+        <body name="finger_r_link6" pos="0.0165 0 0.0235">
+          <inertial mass="3.468970000e-02" pos="4.080555000e-06 1.014620300e-04 2.415648500e-02"
+            fullinertia="5.402978500e-06 5.037017300e-06 2.258070300e-06 5.416105500e-10 -8.548383300e-10 1.103563800e-07"/>
+          <joint name="finger_r_joint6" range="0 2" axis="0 1 0"/>
+          <geom class="hx5_d20_right_visual" mesh="hx5_d20_right_finger_pip"/>
+          <geom class="hx5_d20_right_collision" mesh="hx5_d20_right_finger_pip"
+            name="finger_r_link6_hx5_d20_finger_pip_collision"/>
+          <body name="finger_r_link7" pos="0 0 0.0355">
+            <inertial mass="3.468970000e-02" pos="4.080555000e-06 1.014620300e-04 2.415648500e-02"
+              fullinertia="5.402978500e-06 5.037017300e-06 2.258070300e-06 5.416105500e-10 -8.548383900e-10 1.103563800e-07"/>
+            <joint name="finger_r_joint7" range="0 1.57" axis="0 1 0"/>
+            <geom class="hx5_d20_right_visual" mesh="hx5_d20_right_finger_dip"/>
+            <geom class="hx5_d20_right_collision" mesh="hx5_d20_right_finger_dip"
+              name="finger_r_link7_hx5_d20_finger_dip_collision"/>
+            <body name="finger_r_link8" pos="0 0 0.0355">
+              <inertial mass="1.363720100e-02" pos="7.102508500e-04 4.723840800e-04 1.809864000e-02"
+                fullinertia="2.232432600e-06 2.018806500e-06 1.078660600e-06 2.731013800e-09 -1.436237900e-07 8.149987600e-08"/>
+              <joint name="finger_r_joint8" range="0 1.57" axis="0 1 0"/>
+              <geom class="hx5_d20_right_visual" mesh="hx5_d20_right_finger_tip"/>
+              <geom class="hx5_d20_right_collision" mesh="hx5_d20_right_finger_tip"
+                name="finger_r_link8_hx5_d20_finger_tip_collision"/>
+            </body>
+          </body>
+        </body>
+      </body>
+      <body name="finger_r_link9" pos="-0.0015 0.00908 0.11053">
+        <inertial mass="3.880441100e-02" pos="5.193401000e-03 -1.816308100e-05 2.111550700e-02"
+          fullinertia="3.524993200e-06 5.792157500e-06 4.712679800e-06 1.364133900e-08 -3.766210300e-07 1.153419900e-09"/>
+        <joint name="finger_r_joint9" range="-0.6 0.6" axis="1 0 0"/>
+        <geom class="hx5_d20_right_visual" mesh="hx5_d20_right_finger_mcp"/>
+        <geom class="hx5_d20_right_collision" mesh="hx5_d20_right_finger_mcp"
+          name="finger_r_link9_hx5_d20_finger_mcp_collision"/>
+        <body name="finger_r_link10" pos="0.0165 0 0.0235">
+          <inertial mass="3.468970000e-02" pos="4.080555000e-06 1.014620300e-04 2.415648500e-02"
+            fullinertia="5.402978500e-06 5.037017300e-06 2.258070300e-06 5.416105500e-10 -8.548383300e-10 1.103563800e-07"/>
+          <joint name="finger_r_joint10" range="0 2" axis="0 1 0"/>
+          <geom class="hx5_d20_right_visual" mesh="hx5_d20_right_finger_pip"/>
+          <geom class="hx5_d20_right_collision" mesh="hx5_d20_right_finger_pip"
+            name="finger_r_link10_hx5_d20_finger_pip_collision"/>
+          <body name="finger_r_link11" pos="0 0 0.0355">
+            <inertial mass="3.468970000e-02" pos="4.080555000e-06 1.014620300e-04 2.415648500e-02"
+              fullinertia="5.402978500e-06 5.037017300e-06 2.258070300e-06 5.416105500e-10 -8.548383900e-10 1.103563800e-07"/>
+            <joint name="finger_r_joint11" range="0 1.57" axis="0 1 0"/>
+            <geom class="hx5_d20_right_visual" mesh="hx5_d20_right_finger_dip"/>
+            <geom class="hx5_d20_right_collision" mesh="hx5_d20_right_finger_dip"
+              name="finger_r_link11_hx5_d20_finger_dip_collision"/>
+            <body name="finger_r_link12" pos="0 0 0.0355">
+              <inertial mass="1.363720100e-02" pos="7.102508500e-04 4.723840800e-04 1.809864000e-02"
+                fullinertia="2.232432600e-06 2.018806500e-06 1.078660600e-06 2.731013800e-09 -1.436237900e-07 8.149987600e-08"/>
+              <joint name="finger_r_joint12" range="0 1.57" axis="0 1 0"/>
+              <geom class="hx5_d20_right_visual" mesh="hx5_d20_right_finger_tip"/>
+              <geom class="hx5_d20_right_collision" mesh="hx5_d20_right_finger_tip"
+                name="finger_r_link12_hx5_d20_finger_tip_collision"/>
+            </body>
+          </body>
+        </body>
+      </body>
+      <body name="finger_r_link13" pos="-0.0015 -0.01792 0.10475">
+        <inertial mass="3.880441100e-02" pos="5.193401000e-03 -1.816308100e-05 2.111550700e-02"
+          fullinertia="3.524993200e-06 5.792157500e-06 4.712679800e-06 1.364133900e-08 -3.766210300e-07 1.153419900e-09"/>
+        <joint name="finger_r_joint13" range="-0.6 0.6" axis="1 0 0"/>
+        <geom class="hx5_d20_right_visual" mesh="hx5_d20_right_finger_mcp"/>
+        <geom class="hx5_d20_right_collision" mesh="hx5_d20_right_finger_mcp"
+          name="finger_r_link13_hx5_d20_finger_mcp_collision"/>
+        <body name="finger_r_link14" pos="0.0165 0 0.0235">
+          <inertial mass="3.468970000e-02" pos="4.080555000e-06 1.014620300e-04 2.415648500e-02"
+            fullinertia="5.402978500e-06 5.037017300e-06 2.258070300e-06 5.416105500e-10 -8.548383300e-10 1.103563800e-07"/>
+          <joint name="finger_r_joint14" range="0 2" axis="0 1 0"/>
+          <geom class="hx5_d20_right_visual" mesh="hx5_d20_right_finger_pip"/>
+          <geom class="hx5_d20_right_collision" mesh="hx5_d20_right_finger_pip"
+            name="finger_r_link14_hx5_d20_finger_pip_collision"/>
+          <body name="finger_r_link15" pos="0 0 0.0355">
+            <inertial mass="3.468970000e-02" pos="4.080555000e-06 1.014620300e-04 2.415648500e-02"
+              fullinertia="5.402978500e-06 5.037017300e-06 2.258070300e-06 5.416105500e-10 -8.548383900e-10 1.103563800e-07"/>
+            <joint name="finger_r_joint15" range="0 1.57" axis="0 1 0"/>
+            <geom class="hx5_d20_right_visual" mesh="hx5_d20_right_finger_dip"/>
+            <geom class="hx5_d20_right_collision" mesh="hx5_d20_right_finger_dip"
+              name="finger_r_link15_hx5_d20_finger_dip_collision"/>
+            <body name="finger_r_link16" pos="0 0 0.0355">
+              <inertial mass="1.363720100e-02" pos="7.102508500e-04 4.723840800e-04 1.809864000e-02"
+                fullinertia="2.232432600e-06 2.018806500e-06 1.078660600e-06 2.731013800e-09 -1.436237900e-07 8.149987600e-08"/>
+              <joint name="finger_r_joint16" range="0 1.57" axis="0 1 0"/>
+              <geom class="hx5_d20_right_visual" mesh="hx5_d20_right_finger_tip"/>
+              <geom class="hx5_d20_right_collision" mesh="hx5_d20_right_finger_tip"
+                name="finger_r_link16_hx5_d20_finger_tip_collision"/>
+            </body>
+          </body>
+        </body>
+      </body>
+      <body name="finger_r_link17" pos="-0.0015 -0.04492 0.08575">
+        <inertial mass="3.880441100e-02" pos="5.193401000e-03 -1.816308100e-05 2.111550700e-02"
+          fullinertia="3.524993200e-06 5.792157500e-06 4.712679800e-06 1.364133900e-08 -3.766210300e-07 1.153419900e-09"/>
+        <joint name="finger_r_joint17" range="-0.6 0.6" axis="1 0 0"/>
+        <geom class="hx5_d20_right_visual" mesh="hx5_d20_right_finger_mcp"/>
+        <geom class="hx5_d20_right_collision" mesh="hx5_d20_right_finger_mcp"
+          name="finger_r_link17_hx5_d20_finger_mcp_collision"/>
+        <body name="finger_r_link18" pos="0.0165 0 0.0235">
+          <inertial mass="3.468970000e-02" pos="4.080555000e-06 1.014620300e-04 2.415648500e-02"
+            fullinertia="5.402978500e-06 5.037017300e-06 2.258070300e-06 5.416105500e-10 -8.548383300e-10 1.103563800e-07"/>
+          <joint name="finger_r_joint18" range="0 2" axis="0 1 0"/>
+          <geom class="hx5_d20_right_visual" mesh="hx5_d20_right_finger_pip"/>
+          <geom class="hx5_d20_right_collision" mesh="hx5_d20_right_finger_pip"
+            name="finger_r_link18_hx5_d20_finger_pip_collision"/>
+          <body name="finger_r_link19" pos="0 0 0.0355">
+            <inertial mass="3.468970000e-02" pos="4.080555000e-06 1.014620300e-04 2.415648500e-02"
+              fullinertia="5.402978500e-06 5.037017300e-06 2.258070300e-06 5.416105500e-10 -8.548383900e-10 1.103563800e-07"/>
+            <joint name="finger_r_joint19" range="0 1.57" axis="0 1 0"/>
+            <geom class="hx5_d20_right_visual" mesh="hx5_d20_right_finger_dip"/>
+            <geom class="hx5_d20_right_collision" mesh="hx5_d20_right_finger_dip"
+              name="finger_r_link19_hx5_d20_finger_dip_collision"/>
+            <body name="finger_r_link20" pos="0 0 0.0355">
+              <inertial mass="1.363720100e-02" pos="7.102508500e-04 4.723840800e-04 1.809864000e-02"
+                fullinertia="2.232432600e-06 2.018806500e-06 1.078660600e-06 2.731013800e-09 -1.436237900e-07 8.149987600e-08"/>
+              <joint name="finger_r_joint20" range="0 1.57" axis="0 1 0"/>
+              <geom class="hx5_d20_right_visual" mesh="hx5_d20_right_finger_tip"/>
+              <geom class="hx5_d20_right_collision" mesh="hx5_d20_right_finger_tip"
+                name="finger_r_link20_hx5_d20_finger_tip_collision"/>
+            </body>
+          </body>
+        </body>
+      </body>
+    </body>
+  </worldbody>
+  <actuator>
+    <position name="finger_r_joint1" class="hx5_d20_right/XM335-T323-T" joint="finger_r_joint1"/>
+    <position name="finger_r_joint2" class="hx5_d20_right/XM335-T323-T" joint="finger_r_joint2"/>
+    <position name="finger_r_joint3" class="hx5_d20_right/XM335-T323-T" joint="finger_r_joint3"/>
+    <position name="finger_r_joint4" class="hx5_d20_right/XM335-T323-T" joint="finger_r_joint4"/>
+    <position name="finger_r_joint5" class="hx5_d20_right/XM335-T323-T" joint="finger_r_joint5"/>
+    <position name="finger_r_joint6" class="hx5_d20_right/XM335-T323-T" joint="finger_r_joint6"/>
+    <position name="finger_r_joint7" class="hx5_d20_right/XM335-T323-T" joint="finger_r_joint7"/>
+    <position name="finger_r_joint8" class="hx5_d20_right/XM335-T323-T" joint="finger_r_joint8"/>
+    <position name="finger_r_joint9" class="hx5_d20_right/XM335-T323-T" joint="finger_r_joint9"/>
+    <position name="finger_r_joint10" class="hx5_d20_right/XM335-T323-T" joint="finger_r_joint10"/>
+    <position name="finger_r_joint11" class="hx5_d20_right/XM335-T323-T" joint="finger_r_joint11"/>
+    <position name="finger_r_joint12" class="hx5_d20_right/XM335-T323-T" joint="finger_r_joint12"/>
+    <position name="finger_r_joint13" class="hx5_d20_right/XM335-T323-T" joint="finger_r_joint13"/>
+    <position name="finger_r_joint14" class="hx5_d20_right/XM335-T323-T" joint="finger_r_joint14"/>
+    <position name="finger_r_joint15" class="hx5_d20_right/XM335-T323-T" joint="finger_r_joint15"/>
+    <position name="finger_r_joint16" class="hx5_d20_right/XM335-T323-T" joint="finger_r_joint16"/>
+    <position name="finger_r_joint17" class="hx5_d20_right/XM335-T323-T" joint="finger_r_joint17"/>
+    <position name="finger_r_joint18" class="hx5_d20_right/XM335-T323-T" joint="finger_r_joint18"/>
+    <position name="finger_r_joint19" class="hx5_d20_right/XM335-T323-T" joint="finger_r_joint19"/>
+    <position name="finger_r_joint20" class="hx5_d20_right/XM335-T323-T" joint="finger_r_joint20"/>
+  </actuator>
+  <contact>
+    <exclude body1="hx5_d20_right_base" body2="finger_r_link5"/>
+    <exclude body1="hx5_d20_right_base" body2="finger_r_link9"/>
+    <exclude body1="hx5_d20_right_base" body2="finger_r_link13"/>
+    <exclude body1="hx5_d20_right_base" body2="finger_r_link17"/>
+    <exclude body1="hx5_d20_right_base" body2="finger_r_link1"/>
+    <exclude body1="hx5_d20_right_base" body2="finger_r_link2"/>
+  </contact>
+  <keyframe>
+    <key name="hx5_d20_right_home" qpos="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0"
+      ctrl="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0"/>
+  </keyframe>
+</mujoco>

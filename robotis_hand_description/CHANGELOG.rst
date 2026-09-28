@@ -2,6 +2,12 @@
 Changelog for package robotis_hand_description
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+1.0.2 (2026-09-18)
+------------------
+* Added HX5-D20 rev2 left- and right-hand MuJoCo models and individual and dual-hand scenes.
+* Added split palm collision meshes to preserve finger clearance.
+* Contributors: Kiwoong Park
+
 1.0.1 (2026-07-21)
 ------------------
 * Added joints xacro files for HX5-D20
