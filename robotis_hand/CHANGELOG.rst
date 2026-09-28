@@ -2,6 +2,11 @@
 Changelog for package robotis_hand
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+1.0.2 (2026-09-18)
+------------------
+* Added HX5-D20 rev2 MuJoCo models to robotis_hand_description.
+* Contributors: Kiwoong Park
+
 1.0.1 (2026-07-21)
 ------------------
 * Added joints xacro files for HX5-D20
