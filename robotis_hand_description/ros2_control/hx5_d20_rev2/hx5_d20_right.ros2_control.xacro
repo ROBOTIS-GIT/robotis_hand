@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro">
-  <xacro:macro name="hx5_right_system" params="name prefix port_name:=^|/dev/ttyUSB0 use_sim:=^|false use_mock_hardware:=^|false mock_sensor_commands:=^|false">
+  <xacro:macro name="robotis_hand_system" params="name prefix port_name:=^|/dev/ttyUSB0 use_sim:=^|false use_mock_hardware:=^|false mock_sensor_commands:=^|false">
     <ros2_control name="${name}" type="system" is_async="true">
       <xacro:if value="$(arg use_sim)">
         <hardware>
@@ -70,6 +70,7 @@
         <state_interface name="Present Pressure 7"/>
         <state_interface name="Present Pressure 8"/>
         <state_interface name="Present Pressure 9"/>
+        <state_interface name="Present Pressure 10"/>
       </sensor>
       <joint name="${prefix}finger_r_joint5">
         <command_interface name="position"/>
@@ -109,6 +110,7 @@
         <state_interface name="Present Pressure 7"/>
         <state_interface name="Present Pressure 8"/>
         <state_interface name="Present Pressure 9"/>
+        <state_interface name="Present Pressure 10"/>
       </sensor>
       <joint name="${prefix}finger_r_joint9">
         <command_interface name="position"/>
@@ -148,6 +150,7 @@
         <state_interface name="Present Pressure 7"/>
         <state_interface name="Present Pressure 8"/>
         <state_interface name="Present Pressure 9"/>
+        <state_interface name="Present Pressure 10"/>
       </sensor>
       <joint name="${prefix}finger_r_joint13">
         <command_interface name="position"/>
@@ -187,6 +190,7 @@
         <state_interface name="Present Pressure 7"/>
         <state_interface name="Present Pressure 8"/>
         <state_interface name="Present Pressure 9"/>
+        <state_interface name="Present Pressure 10"/>
       </sensor>
       <joint name="${prefix}finger_r_joint17">
         <command_interface name="position"/>
@@ -226,6 +230,7 @@
         <state_interface name="Present Pressure 7"/>
         <state_interface name="Present Pressure 8"/>
         <state_interface name="Present Pressure 9"/>
+        <state_interface name="Present Pressure 10"/>
       </sensor>
 
       <gpio name="hand_r_controller">
@@ -268,7 +273,7 @@
         <param name="SyncTable 1 Read Size 2">6</param>
         <param name="SyncTable 1 Read Size 3">6</param>
         <param name="SyncTable 1 Read Size 4">6</param>
-        <param name="SyncTable 1 Read Size 5">9</param>
+        <param name="SyncTable 1 Read Size 5">10</param>
         <param name="SyncTable 1 Write Address 1">230</param>
         <param name="SyncTable 1 Write Address 2">230</param>
         <param name="SyncTable 1 Write Address 3">230</param>
@@ -288,7 +293,7 @@
         <param name="SyncTable 2 Read Size 2">6</param>
         <param name="SyncTable 2 Read Size 3">6</param>
         <param name="SyncTable 2 Read Size 4">6</param>
-        <param name="SyncTable 2 Read Size 5">9</param>
+        <param name="SyncTable 2 Read Size 5">10</param>
         <param name="SyncTable 2 Write Address 1">230</param>
         <param name="SyncTable 2 Write Address 2">230</param>
         <param name="SyncTable 2 Write Address 3">230</param>
@@ -308,7 +313,7 @@
         <param name="SyncTable 3 Read Size 2">6</param>
         <param name="SyncTable 3 Read Size 3">6</param>
         <param name="SyncTable 3 Read Size 4">6</param>
-        <param name="SyncTable 3 Read Size 5">9</param>
+        <param name="SyncTable 3 Read Size 5">10</param>
         <param name="SyncTable 3 Write Address 1">230</param>
         <param name="SyncTable 3 Write Address 2">230</param>
         <param name="SyncTable 3 Write Address 3">230</param>
@@ -328,7 +333,7 @@
         <param name="SyncTable 4 Read Size 2">6</param>
         <param name="SyncTable 4 Read Size 3">6</param>
         <param name="SyncTable 4 Read Size 4">6</param>
-        <param name="SyncTable 4 Read Size 5">9</param>
+        <param name="SyncTable 4 Read Size 5">10</param>
         <param name="SyncTable 4 Write Address 1">230</param>
         <param name="SyncTable 4 Write Address 2">230</param>
         <param name="SyncTable 4 Write Address 3">230</param>
@@ -348,7 +353,7 @@
         <param name="SyncTable 5 Read Size 2">6</param>
         <param name="SyncTable 5 Read Size 3">6</param>
         <param name="SyncTable 5 Read Size 4">6</param>
-        <param name="SyncTable 5 Read Size 5">9</param>
+        <param name="SyncTable 5 Read Size 5">10</param>
         <param name="SyncTable 5 Write Address 1">230</param>
         <param name="SyncTable 5 Write Address 2">230</param>
         <param name="SyncTable 5 Write Address 3">230</param>
@@ -891,6 +896,7 @@
         <state_interface name="Present Pressure 7"/>
         <state_interface name="Present Pressure 8"/>
         <state_interface name="Present Pressure 9"/>
+        <state_interface name="Present Pressure 10"/>
         <param name="type">virtual_sensor</param>
         <param name="ID">115</param>
         <param name="comm_id">110</param>
@@ -950,6 +956,7 @@
         <state_interface name="Present Pressure 7"/>
         <state_interface name="Present Pressure 8"/>
         <state_interface name="Present Pressure 9"/>
+        <state_interface name="Present Pressure 10"/>
         <param name="type">virtual_sensor</param>
         <param name="ID">120</param>
         <param name="comm_id">110</param>
@@ -1009,6 +1016,7 @@
         <state_interface name="Present Pressure 7"/>
         <state_interface name="Present Pressure 8"/>
         <state_interface name="Present Pressure 9"/>
+        <state_interface name="Present Pressure 10"/>
         <param name="type">virtual_sensor</param>
         <param name="ID">125</param>
         <param name="comm_id">110</param>
@@ -1068,6 +1076,7 @@
         <state_interface name="Present Pressure 7"/>
         <state_interface name="Present Pressure 8"/>
         <state_interface name="Present Pressure 9"/>
+        <state_interface name="Present Pressure 10"/>
         <param name="type">virtual_sensor</param>
         <param name="ID">130</param>
         <param name="comm_id">110</param>
@@ -1127,6 +1136,7 @@
         <state_interface name="Present Pressure 7"/>
         <state_interface name="Present Pressure 8"/>
         <state_interface name="Present Pressure 9"/>
+        <state_interface name="Present Pressure 10"/>
         <param name="type">virtual_sensor</param>
         <param name="ID">135</param>
         <param name="comm_id">110</param>

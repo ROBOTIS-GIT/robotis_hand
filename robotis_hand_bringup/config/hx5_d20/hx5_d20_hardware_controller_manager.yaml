@@ -159,6 +159,7 @@
         - Present Pressure 7
         - Present Pressure 8
         - Present Pressure 9
+        - Present Pressure 10
 
 /**:
   pressure_r_broadcaster:
@@ -180,3 +181,4 @@
         - Present Pressure 7
         - Present Pressure 8
         - Present Pressure 9
+        - Present Pressure 10
