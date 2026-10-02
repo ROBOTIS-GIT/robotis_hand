@@ -24,6 +24,7 @@ setup(
     entry_points={
         'console_scripts': [
             'hx5_d20_teleop = robotis_hand_teleop.hx5_d20_teleop:main',
+            'hx5_grasp = robotis_hand_teleop.hx5_grasp:main',
         ],
     },
 )
