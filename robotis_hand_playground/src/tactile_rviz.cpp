@@ -16,6 +16,9 @@
 
 #include "robotis_hand_playground/tactile_rviz.hpp"
 
+#include <limits>
+#include <stdexcept>
+
 #include <algorithm>
 #include <array>
 #include <cctype>
@@ -78,6 +81,12 @@ TactileRviz::TactileRviz()
 
   finger_frames_ = declare_parameter<std::vector<std::string>>(
     "finger_frames", finger_frame_names(hand_side));
+
+  if ((num_taxels_ != 9 && num_taxels_ != 10) || num_fingers_ < 1 ||
+    num_fingers_ > 5 || finger_frames_.size() != static_cast<size_t>(num_fingers_))
+  {
+    throw std::invalid_argument("Expected 9 or 10 taxels and one frame per finger (1..5)");
+  }
 
   // Declare ROS timing and QoS parameters.
   update_hz_ = declare_parameter<double>("update_hz", 20.0);
@@ -147,6 +156,28 @@ double TactileRviz::compute_total_force(const std::vector<double> & p) const
 void TactileRviz::init_taxel_positions()
 {
   taxel_xy_.clear();
+  const auto xs_param = declare_parameter<std::vector<double>>("taxel_x", std::vector<double>{});
+  const auto ys_param = declare_parameter<std::vector<double>>("taxel_y", std::vector<double>{});
+  if (!xs_param.empty() || !ys_param.empty()) {
+    if (xs_param.size() != static_cast<size_t>(num_taxels_) ||
+      ys_param.size() != static_cast<size_t>(num_taxels_))
+    {
+      throw std::invalid_argument("taxel_x and taxel_y must contain one coordinate per channel");
+    }
+    for (int i = 0; i < num_taxels_; ++i) {
+      if (!std::isfinite(xs_param[i]) || !std::isfinite(ys_param[i])) {
+        throw std::invalid_argument("Taxel coordinates must be finite");
+      }
+      taxel_xy_.push_back({xs_param[i], ys_param[i]});
+    }
+    return;
+  }
+  if (num_taxels_ == 10) {
+    RCLCPP_WARN(get_logger(),
+      "10-channel geometry is unspecified: publishing totals, disabling CoP and direction markers");
+    return;
+  }
+
 
   const std::array<double, 3> xs = {-taxel_pitch_x_, 0.0, taxel_pitch_x_};
   const std::array<double, 3> ys = {-taxel_pitch_y_, 0.0, taxel_pitch_y_};
@@ -186,14 +217,7 @@ int TactileRviz::finger_index_from_sensor(const std::string & sensor_name) const
 
 std::vector<double> TactileRviz::extract_pressures(const TactileSensor & sensor_msg) const
 {
-  std::vector<double> vals(num_taxels_, 0.0);
-
-  const size_t count =
-    std::min(static_cast<size_t>(num_taxels_), sensor_msg.pressure_values.size());
-
-  for (size_t i = 0; i < count; ++i) {
-    vals[i] = static_cast<double>(sensor_msg.pressure_values[i]);
-  }
+  std::vector<double> vals(sensor_msg.pressure_values.begin(), sensor_msg.pressure_values.end());
 
   return vals;
 }
@@ -201,6 +225,27 @@ std::vector<double> TactileRviz::extract_pressures(const TactileSensor & sensor_
 void TactileRviz::callback(const HandPressures::SharedPtr msg)
 {
   std::lock_guard<std::mutex> lock(mutex_);
+
+  if (msg->sensors.size() != static_cast<size_t>(num_fingers_)) {
+    RCLCPP_WARN_THROTTLE(get_logger(), *get_clock(), 2000, "Unexpected sensor count");
+    return;
+  }
+  for (int f = 0; f < num_fingers_; ++f) {
+    const auto & sensor = msg->sensors[f];
+    if (sensor.sensor_name != sensor_prefix_ + std::to_string(f + 1) ||
+      sensor.pressure_names.size() != static_cast<size_t>(num_taxels_) ||
+      sensor.pressure_values.size() != static_cast<size_t>(num_taxels_))
+    {
+      RCLCPP_WARN_THROTTLE(get_logger(), *get_clock(), 2000, "Tactile layout mismatch");
+      return;
+    }
+    for (int t = 0; t < num_taxels_; ++t) {
+      if (sensor.pressure_names[t] != "Present Pressure " + std::to_string(t + 1)) {
+        RCLCPP_WARN_THROTTLE(get_logger(), *get_clock(), 2000, "Pressure channel order mismatch");
+        return;
+      }
+    }
+  }
 
   // Update each finger pressure from tactile message.
   for (const auto & sensor : msg->sensors) {
@@ -293,6 +338,9 @@ std::array<double, 3> TactileRviz::map_sensor_vector_to_link(
 std::array<double, 3> TactileRviz::compute_force_vector(
   int finger_idx, const std::vector<double> & p) const
 {
+  if (taxel_xy_.empty()) {
+    return {0.0, 0.0, 0.0};
+  }
   const double total = compute_total_force(p);
   if (total <= 1e-6) {
     return {0.0, 0.0, 0.0};
@@ -343,6 +391,11 @@ TactileRviz::DirectionInfo TactileRviz::compute_direction_info(
 {
   DirectionInfo info;
   info.total_force = compute_total_force(p);
+  if (taxel_xy_.empty()) {
+    info.region = -1;
+    info.angle_rad = std::numeric_limits<double>::quiet_NaN();
+    return info;
+  }
 
   if (info.total_force <= 1e-6) {
     info.region = CENTER;
@@ -413,6 +466,10 @@ visualization_msgs::msg::Marker TactileRviz::make_arrow_marker(
   m.id = finger_idx;
   m.type = visualization_msgs::msg::Marker::ARROW;
   m.action = visualization_msgs::msg::Marker::ADD;
+  if (taxel_xy_.empty()) {
+    m.action = visualization_msgs::msg::Marker::DELETE;
+    return m;
+  }
   m.frame_locked = true;
 
   geometry_msgs::msg::Point end = cop_point_in_frame(finger_idx, info);
@@ -453,6 +510,10 @@ visualization_msgs::msg::Marker TactileRviz::make_cop_marker(
   m.id = finger_idx;
   m.type = visualization_msgs::msg::Marker::SPHERE;
   m.action = visualization_msgs::msg::Marker::ADD;
+  if (taxel_xy_.empty()) {
+    m.action = visualization_msgs::msg::Marker::DELETE;
+    return m;
+  }
   m.frame_locked = true;
 
   // Hide marker for weak contact.

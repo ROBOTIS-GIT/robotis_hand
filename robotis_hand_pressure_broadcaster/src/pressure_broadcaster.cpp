@@ -17,6 +17,8 @@
 #include "robotis_hand_pressure_broadcaster/pressure_broadcaster.hpp"
 
 #include <algorithm>
+#include <cmath>
+#include <set>
 #include <string_view>
 
 #include "pluginlib/class_list_macros.hpp"
@@ -54,8 +56,6 @@ PressureBroadcaster::command_interface_configuration() const
 controller_interface::InterfaceConfiguration
 PressureBroadcaster::state_interface_configuration() const
 {
-  const_cast<PressureBroadcaster *>(this)->refresh_parameters();
-
   std::vector<std::string> requested_interfaces;
   requested_interfaces.reserve(sensor_names_.size() * interface_names_.size());
 
@@ -97,9 +97,27 @@ PressureBroadcaster::CallbackReturn PressureBroadcaster::on_configure(
     return CallbackReturn::ERROR;
   }
 
-  auto publisher = get_node()->create_publisher<robotis_interfaces::msg::HandPressures>(topic_name_, 10);
+  if (interface_names_.size() != 9 && interface_names_.size() != 10) {
+    RCLCPP_ERROR(get_node()->get_logger(), "HX5 requires 9 or 10 pressure interfaces");
+    return CallbackReturn::ERROR;
+  }
+  const std::set<std::string> unique_sensors(sensor_names_.begin(), sensor_names_.end());
+  if (unique_sensors.size() != sensor_names_.size() || unique_sensors.count("")) {
+    RCLCPP_ERROR(get_node()->get_logger(), "Sensor names must be nonempty and unique");
+    return CallbackReturn::ERROR;
+  }
+  for (size_t j = 0; j < interface_names_.size(); ++j) {
+    if (interface_names_[j] != "Present Pressure " + std::to_string(j + 1)) {
+      RCLCPP_ERROR(get_node()->get_logger(), "Pressure interfaces must be in channel order");
+      return CallbackReturn::ERROR;
+    }
+  }
+
+  auto publisher = get_node()->create_publisher<robotis_interfaces::msg::HandPressures>(topic_name_,
+      10);
   publisher_ =
-    std::make_shared<realtime_tools::RealtimePublisher<robotis_interfaces::msg::HandPressures>>(publisher);
+    std::make_shared<realtime_tools::RealtimePublisher<robotis_interfaces::msg::HandPressures>>(
+      publisher);
 
   configure_message();
 
@@ -112,6 +130,20 @@ PressureBroadcaster::CallbackReturn PressureBroadcaster::on_activate(
   if (!publisher_) {
     RCLCPP_ERROR(get_node()->get_logger(), "Publisher is not configured");
     return CallbackReturn::ERROR;
+  }
+
+  state_indices_.clear();
+  for (const auto & sensor_name : sensor_names_) {
+    for (const auto & interface_name : interface_names_) {
+      const auto name = sensor_name + "/" + interface_name;
+      const auto found = std::find_if(state_interfaces_.begin(), state_interfaces_.end(),
+          [&name](const auto & state) {return state.get_name() == name;});
+      if (found == state_interfaces_.end()) {
+        RCLCPP_ERROR(get_node()->get_logger(), "Missing state interface: %s", name.c_str());
+        return CallbackReturn::ERROR;
+      }
+      state_indices_.push_back(std::distance(state_interfaces_.begin(), found));
+    }
   }
 
   return CallbackReturn::SUCCESS;
@@ -127,7 +159,9 @@ controller_interface::return_type PressureBroadcaster::update(
   const rclcpp::Time & time,
   const rclcpp::Duration & /*period*/)
 {
-  if (!publisher_ || !publisher_->trylock()) {
+  if (!publisher_ || state_indices_.size() != sensor_names_.size() * interface_names_.size() ||
+    !publisher_->trylock())
+  {
     return controller_interface::return_type::OK;
   }
 
@@ -136,13 +170,11 @@ controller_interface::return_type PressureBroadcaster::update(
   for (size_t i = 0; i < sensor_names_.size(); ++i) {
     const size_t base = i * interface_names_.size();
 
-    auto get_val = [&](size_t offset) -> float {
-      if (base + offset >= state_interfaces_.size()) {
-        return 0.0f;
-      }
-      return static_cast<float>(
-        state_interfaces_[base + offset].get_optional().value_or(0.0));
-    };
+    auto get_val = [&](size_t offset) -> uint8_t {
+        const double value = state_interfaces_[state_indices_[base +
+            offset]].get_optional().value_or(0.0);
+        return std::isfinite(value) ? static_cast<uint8_t>(std::clamp(value, 0.0, 255.0)) : 0;
+      };
 
     auto & sensor = message.sensors[i];
     for (size_t j = 0; j < sensor.pressure_values.size(); ++j) {
@@ -168,6 +200,8 @@ void PressureBroadcaster::configure_message()
   for (size_t i = 0; i < sensor_names_.size(); ++i) {
     auto & sensor = message.sensors[i];
     sensor.sensor_name = sensor_names_[i];
+    sensor.pressure_names.resize(interface_names_.size());
+    sensor.pressure_values.resize(interface_names_.size());
 
     for (size_t j = 0; j < interface_names_.size(); ++j) {
       sensor.pressure_names[j] = interface_names_[j];

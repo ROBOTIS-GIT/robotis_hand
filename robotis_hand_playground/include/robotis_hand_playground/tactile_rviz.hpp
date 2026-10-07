@@ -86,7 +86,7 @@ private:
   void publish_markers();
 
   /**
-   * @brief Initialize 3x3 tactile cell coordinates.
+   * @brief Initialize model-specific tactile coordinates; 9-channel legacy defaults to 3x3.
    */
   void init_taxel_positions();
 

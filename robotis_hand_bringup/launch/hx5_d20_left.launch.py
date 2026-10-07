@@ -20,6 +20,7 @@ from launch import LaunchDescription
 from launch.actions import DeclareLaunchArgument
 from launch.actions import ExecuteProcess
 from launch.actions import RegisterEventHandler
+from launch.actions import OpaqueFunction
 from launch.conditions import IfCondition
 from launch.conditions import UnlessCondition
 from launch.event_handlers import OnProcessExit
@@ -29,11 +30,24 @@ from launch.substitutions import LaunchConfiguration
 from launch.substitutions import PathJoinSubstitution
 from launch_ros.actions import Node
 from launch_ros.substitutions import FindPackageShare
+from robotis_hand_bringup.tactile_model import configure_tactile_layout
 
 
 def generate_launch_description():
     # Declare launch arguments
     declared_arguments = [
+        DeclareLaunchArgument(
+            'num_taxels', default_value='9', choices=['auto', '9', '10'],
+            description='Pressure channels per finger (9: legacy, 10: new HX5)',
+        ),
+        DeclareLaunchArgument(
+            'tactile_model_profiles',
+            default_value=PathJoinSubstitution([
+                FindPackageShare('robotis_hand_bringup'), 'config', 'hx5_d20',
+                'tactile_models.yaml',
+            ]),
+            description='Official physical model numbers and tactile channel counts',
+        ),
         DeclareLaunchArgument(
             'start_rviz', default_value='false', description='Whether to execute rviz2'
         ),
@@ -89,6 +103,7 @@ def generate_launch_description():
     init_position = LaunchConfiguration('init_position')
     init_position_file = LaunchConfiguration('init_position_file')
     model = LaunchConfiguration('model')
+    num_taxels = LaunchConfiguration('num_taxels')
 
     # Generate URDF file using xacro
     urdf_file = Command([
@@ -112,6 +127,9 @@ def generate_launch_description():
         ' ',
         'mock_sensor_commands:=',
         mock_sensor_commands,
+        ' ',
+        'num_taxels:=',
+        num_taxels,
         ' ',
         'port_name:=',
         port_name,
@@ -138,6 +156,11 @@ def generate_launch_description():
         init_position_file,
     ])
 
+    pressure_config = PathJoinSubstitution([
+        FindPackageShare('robotis_hand_bringup'), 'config', 'hx5_d20',
+        ['pressure_', num_taxels, '.yaml'],
+    ])
+
     # Define nodes
     control_node = Node(
         package='controller_manager',
@@ -151,6 +174,7 @@ def generate_launch_description():
         package='controller_manager',
         executable='spawner',
         arguments=[
+            '--param-file', pressure_config,
             '--controller-ros-args',
             '-r /hand_l_controller/joint_trajectory:='
             '/leader/joint_trajectory_command_broadcaster_left_hand/joint_trajectory',
@@ -227,6 +251,7 @@ def generate_launch_description():
     return LaunchDescription(
         declared_arguments
         + [
+            OpaqueFunction(function=configure_tactile_layout, kwargs={'side': 'left'}),
             control_node,
             robot_controller_spawner,
             robot_state_publisher_node,

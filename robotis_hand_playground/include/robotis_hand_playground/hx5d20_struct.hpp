@@ -27,9 +27,8 @@ namespace robotis_hand_playground
 
 // HX5-D20 hand constants
 constexpr int fingers_num = 5;
-constexpr int tactiles_num = 9;
 constexpr int joints_per_finger = 4;
-typedef std::array<double, tactiles_num> PressureArray;
+typedef std::vector<double> PressureArray;
 
 /**
  * @brief Per-finger joint and tactile state.
@@ -45,9 +44,9 @@ struct FingerData
 
   bool contact_detected{false};
 
-  std::array<double, tactiles_num> baseline_sum_tactiles{};
-  std::array<double, tactiles_num> baseline_tactiles{};
-  std::array<double, tactiles_num> ema_tactiles{};
+  std::vector<double> baseline_sum_tactiles{};
+  std::vector<double> baseline_tactiles{};
+  std::vector<double> ema_tactiles{};
   int baseline_samples = 0;
 
   double filtered_force = 0.0;
@@ -60,8 +59,8 @@ typedef std::array<FingerData, fingers_num> FingerArray;
 struct Hx5d20SensorData
 {
   std::string name;
-  std::array<std::string, tactiles_num> labels{};
-  std::array<double, tactiles_num> values{};
+  std::vector<std::string> labels{};
+  std::vector<double> values{};
 };
 typedef std::array<Hx5d20SensorData, fingers_num> SensorArray;
 

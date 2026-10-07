@@ -19,6 +19,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
+import os
 import threading
 
 import matplotlib
@@ -36,7 +37,7 @@ from rclpy.qos import (
 )
 from robotis_interfaces.msg import HandPressures
 
-matplotlib.use('TkAgg')
+matplotlib.use(os.environ.get('MPLBACKEND', 'TkAgg'))
 matplotlib.rcParams['toolbar'] = 'None'
 
 
@@ -84,10 +85,8 @@ class PressureViz(Node):
 
         self.cfg = self._declare_and_read_params()
 
-        if self.cfg.num_taxels != 9:
-            self.get_logger().warn(
-                f'num_taxels={self.cfg.num_taxels}. This visualizer assumes 9 taxels (3x3).'
-            )
+        if self.cfg.num_taxels not in (9, 10) or not 1 <= self.cfg.num_fingers <= 5:
+            raise ValueError('Expected 9 or 10 taxels and 1..5 fingers')
 
         self._lock = threading.Lock()
 
@@ -166,24 +165,27 @@ class PressureViz(Node):
         return idx if 0 <= idx < self.cfg.num_fingers else None
 
     def _sensor_to_array(self, sensor_msg) -> np.ndarray:
-        values = np.array(sensor_msg.pressure_values, dtype=float)
-
-        if values.size < self.cfg.num_taxels:
-            out = np.zeros(self.cfg.num_taxels, dtype=float)
-            out[:values.size] = values
-            return out
-
-        return values[:self.cfg.num_taxels]
+        expected_names = [f'Present Pressure {i + 1}' for i in range(self.cfg.num_taxels)]
+        if (len(sensor_msg.pressure_values) != self.cfg.num_taxels
+                or list(sensor_msg.pressure_names) != expected_names):
+            raise ValueError('Pressure channel count or order does not match num_taxels')
+        return np.array(sensor_msg.pressure_values, dtype=float)
 
     def _cb(self, msg: HandPressures) -> None:
         with self._lock:
-            for sensor in msg.sensors:
-                finger_idx = self._finger_index_from_sensor_name(sensor.sensor_name)
-                if finger_idx is None:
-                    continue
-
-                values = self._sensor_to_array(sensor)
-
+            expected_sensors = [
+                f'{self.cfg.sensor_prefix}{i + 1}' for i in range(self.cfg.num_fingers)
+            ]
+            if [sensor.sensor_name for sensor in msg.sensors] != expected_sensors:
+                self.get_logger().warn(
+                    'Tactile sensor count or order mismatch', throttle_duration_sec=2.0)
+                return
+            try:
+                readings = [self._sensor_to_array(sensor) for sensor in msg.sensors]
+            except ValueError as exc:
+                self.get_logger().warn(str(exc), throttle_duration_sec=2.0)
+                return
+            for finger_idx, values in enumerate(readings):
                 if not self._baseline_ready:
                     self._accumulate_baseline(finger_idx, values)
                 else:
@@ -219,7 +221,8 @@ class PressureViz(Node):
         self.get_logger().info('Baseline calibrated. Visualizing baseline-subtracted pressure.')
 
     def _setup_figure(self) -> None:
-        self.fig, self.axes = plt.subplots(self.cfg.num_fingers, 1, figsize=(2, 7.5))
+        self.fig, self.axes = plt.subplots(
+            self.cfg.num_fingers, 1, figsize=(2 if self.cfg.num_taxels == 9 else 7, 7.5))
         if self.cfg.num_fingers == 1:
             self.axes = [self.axes]
 
@@ -259,7 +262,7 @@ class PressureViz(Node):
         for i, ax in enumerate(self.axes):
             ax.set_facecolor('white')
             img = ax.imshow(
-                np.zeros((3, 3)),
+                np.zeros((3, 3) if self.cfg.num_taxels == 9 else (1, 10)),
                 cmap=self.finger_cmaps[i],
                 vmin=0.0,
                 vmax=self.cfg.color_max,
@@ -277,12 +280,17 @@ class PressureViz(Node):
                 fontsize=12,
             )
 
-            ax.set_xticks([])
             ax.set_yticks([])
-
-            for k in range(4):
-                ax.axhline(k - 0.5, color='#1f1f1f', linewidth=1.2)
-                ax.axvline(k - 0.5, color='#1f1f1f', linewidth=1.2)
+            if self.cfg.num_taxels == 9:
+                ax.set_xticks([])
+                for k in range(4):
+                    ax.axhline(k - 0.5, color='#1f1f1f', linewidth=1.2)
+                    ax.axvline(k - 0.5, color='#1f1f1f', linewidth=1.2)
+            else:
+                # Channel strip, not a claim about the physical sensor geometry.
+                ax.set_xticks(range(10), [str(i + 1) for i in range(10)])
+                ax.xaxis.tick_top()
+                ax.set_title('Channel number (geometry unspecified)', fontsize=8)
 
             for spine in ax.spines.values():
                 spine.set_edgecolor('#555555')
@@ -290,13 +298,12 @@ class PressureViz(Node):
         self.fig.subplots_adjust(left=0.18, right=0.82, top=0.96, bottom=0.03, hspace=0.18)
 
     @staticmethod
-    def _taxels_to_3x3(taxels: np.ndarray) -> np.ndarray:
-        if taxels.size != 9:
-            out = np.zeros((3, 3), dtype=float)
-            n = min(taxels.size, 9)
-            out.ravel()[:n] = taxels[:n]
-            return out
-        return taxels.reshape(3, 3)
+    def _taxels_to_grid(taxels: np.ndarray) -> np.ndarray:
+        if taxels.size == 9:
+            return taxels.reshape(3, 3)
+        if taxels.size == 10:
+            return taxels.reshape(1, 10)
+        raise ValueError('Expected 9 or 10 pressure channels')
 
     def _update_plot(self, _frame) -> None:
         with self._lock:
@@ -306,7 +313,7 @@ class PressureViz(Node):
         data_viz = np.sqrt(np.clip(data_viz, 0.0, None)) * 8.0
 
         for i, img in enumerate(self.images):
-            grid = self._taxels_to_3x3(data_viz[i, :])
+            grid = self._taxels_to_grid(data_viz[i, :])
             grid = np.clip(grid, 0.0, self.cfg.color_max)
             img.set_data(grid)
 

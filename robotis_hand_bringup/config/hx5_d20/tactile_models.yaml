@@ -1,0 +1,7 @@
+# Populate only after official model numbers and their layouts are confirmed.
+# Existing 260/261 controllers and 253 sensors do not identify the channel count.
+# Controller entry format: MODEL_NUMBER: {side: right, num_taxels: 10}
+# Sensor entry format: MODEL_NUMBER: {num_taxels: 10}
+# These are physical Ping model numbers, never logical SyncTable IDs (6005 etc.).
+controllers: {}
+sensors: {}

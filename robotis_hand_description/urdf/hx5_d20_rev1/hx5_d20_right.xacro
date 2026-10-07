@@ -1,5 +1,6 @@
 <?xml version="1.0"?>
 <robot name="hx5_d20_right" xmlns:xacro="http://www.ros.org/wiki/xacro">
+  <xacro:arg name="num_taxels" default="9" />
   <xacro:arg name="prefix" default="" />
   <xacro:arg name="use_sim" default="false" />
   <xacro:arg name="use_mock_hardware" default="false" />
@@ -25,7 +26,8 @@
   <xacro:hx5_right_system
     name="HX5RightSystem" prefix="$(arg prefix)" use_sim="$(arg use_sim)"
     use_mock_hardware="$(arg use_mock_hardware)"
-    mock_sensor_commands="$(arg mock_sensor_commands)"/>
+    mock_sensor_commands="$(arg mock_sensor_commands)"
+    num_taxels="$(arg num_taxels)"/>
 
   <gazebo>
     <plugin filename="gz_ros2_control-system" name="gz_ros2_control::GazeboSimROS2ControlPlugin">

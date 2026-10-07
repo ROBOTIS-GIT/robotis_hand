@@ -33,7 +33,9 @@ namespace robotis_hand_tactile_force
 {
 
 TactileForceController::TactileForceController()
-: Node("tactile_force_controller"), tactile_sensor_(this->get_logger(), this->get_clock())
+: Node("tactile_force_controller"), tactile_sensor_(this->get_logger(), this->get_clock(),
+    declare_parameter<int>("num_taxels", 9),
+    check_hand_side(declare_parameter<std::string>("hand_side", "right")))
 {
   // Load parameters.
   declare_params(this);
@@ -42,6 +44,7 @@ TactileForceController::TactileForceController()
 
   // Initialize hand model.
   fingers_ = init_fingers(hand_side);
+  tactile_sensor_.initialize(fingers_);
   hand_joint_names_ = init_joint_names(hand_side);
   init_positions_ = hand_side == "left" ? init_l_positions() : init_r_positions();
 
@@ -92,7 +95,6 @@ void declare_params(rclcpp::Node * node)
   node->declare_parameter<double>("close_step", 0.01);
   node->declare_parameter<double>("contact_threshold", 30.0);
   node->declare_parameter<double>("thumb_contact_ratio", 2.0);
-  node->declare_parameter<std::string>("hand_side", "right");
   node->declare_parameter<std::vector<int64_t>>("un_use_finger", std::vector<int64_t>{});
 
   // Force maintenance controller parameters
@@ -258,11 +260,14 @@ void TactileForceController::pressure_callback(
   std::lock_guard<std::mutex> lock(mutex_);
 
   if (!tactile_sensor_.check_msg(msg)) {
+    tactile_valid_ = false;
     return;
   }
   // Parse tactile data and update filtered pressure states.
   const auto sensors = tactile_sensor_.parse_sensors(msg);
   tactile_sensor_.update_pressure(fingers_, baseline_, sensors);
+  tactile_valid_ = true;
+  last_tactile_received_ = std::chrono::steady_clock::now();
 }
 
 void TactileForceController::joint_state_callback(const sensor_msgs::msg::JointState::SharedPtr msg)
@@ -299,6 +304,14 @@ void TactileForceController::grasp_start_callback(const std_msgs::msg::Bool::Sha
 void TactileForceController::control_loop()
 {
   std::lock_guard<std::mutex> lock(mutex_);
+
+  if (state_ != State::IDLE && (!baseline_ || !tactile_valid_ ||
+    std::chrono::steady_clock::now() - last_tactile_received_ > std::chrono::milliseconds(500)))
+  {
+    RCLCPP_WARN_THROTTLE(get_logger(), *get_clock(), 2000,
+      "Force control paused: tactile data is uncalibrated, invalid or stale");
+    return;
+  }
 
   // Run state-specific controller logic.
   switch (state_) {

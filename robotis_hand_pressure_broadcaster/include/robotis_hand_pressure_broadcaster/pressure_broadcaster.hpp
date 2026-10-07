@@ -53,6 +53,7 @@ private:
   bool refresh_parameters();
   void configure_message();
 
+  std::vector<size_t> state_indices_;
   std::vector<std::string> sensor_names_;
   std::vector<std::string> interface_names_;
   std::string hand_name_;

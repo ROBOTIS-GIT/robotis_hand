@@ -60,4 +60,18 @@ install(DIRECTORY include/
   DESTINATION include
 )
 
+if(BUILD_TESTING)
+  find_package(ament_cmake_gtest REQUIRED)
+  find_package(ament_cmake_pytest REQUIRED)
+  ament_add_pytest_test(test_visualization test/test_visualization.py
+    TIMEOUT 60
+    ENV "TEST_RVIZ_EXECUTABLE=$<TARGET_FILE:tactile_rviz>" "MPLBACKEND=Agg"
+      "TEST_FORCE_EXECUTABLE=$<TARGET_FILE:tactile_force_controller>"
+      "RMW_IMPLEMENTATION=rmw_fastrtps_cpp" "ROS_DOMAIN_ID=191"
+      "ROS_AUTOMATIC_DISCOVERY_RANGE=LOCALHOST")
+  ament_add_gtest(test_tactile_sensor test/test_tactile_sensor.cpp src/tactile_sensor.cpp)
+  target_include_directories(test_tactile_sensor PRIVATE include)
+  ament_target_dependencies(test_tactile_sensor rclcpp robotis_interfaces)
+endif()
+
 ament_package()

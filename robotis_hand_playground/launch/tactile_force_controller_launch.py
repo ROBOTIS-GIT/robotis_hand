@@ -21,7 +21,10 @@ import os
 
 from ament_index_python.packages import get_package_share_directory
 from launch import LaunchDescription
+from launch.actions import DeclareLaunchArgument
+from launch.substitutions import LaunchConfiguration
 from launch_ros.actions import Node
+from launch_ros.parameter_descriptions import ParameterValue
 
 
 def generate_launch_description():
@@ -34,12 +37,24 @@ def generate_launch_description():
         hand_side = next(line for line in yaml_file if 'hand_side:' in line)
         hand_side = hand_side.split(':', 1)[1].split('#', 1)[0].strip().strip('"\'')
 
+    hand_side_arg = DeclareLaunchArgument(
+        'hand_side', default_value=hand_side, choices=['left', 'right'],
+        description='Hand side; defaults to config/param.yaml',
+    )
+    hand_side = LaunchConfiguration('hand_side')
+
+    num_taxels_arg = DeclareLaunchArgument(
+        'num_taxels', default_value='9', choices=['9', '10'],
+        description='Pressure channels per finger; match the bringup setting',
+    )
+    num_taxels = ParameterValue(LaunchConfiguration('num_taxels'), value_type=int)
+
     tactile_force_controller = Node(
         package='robotis_hand_playground',
         executable='tactile_force_controller',
         name='tactile_force_controller',
         output='screen',
-        parameters=[param_file],
+        parameters=[param_file, {'num_taxels': num_taxels, 'hand_side': hand_side}],
     )
 
     tactile_rviz_node = Node(
@@ -49,10 +64,13 @@ def generate_launch_description():
         output='screen',
         parameters=[{
             'hand_side': hand_side,
+            'num_taxels': num_taxels,
         }],
     )
 
     return LaunchDescription([
+        hand_side_arg,
+        num_taxels_arg,
         tactile_force_controller,
         tactile_rviz_node,
     ])

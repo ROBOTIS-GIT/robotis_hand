@@ -19,24 +19,46 @@
 #include <algorithm>
 #include <cstddef>
 #include <numeric>
+#include <stdexcept>
 
 
 namespace robotis_hand_playground
 {
 
-TactileSensor::TactileSensor(const rclcpp::Logger & logger, const rclcpp::Clock::SharedPtr & clock)
-: logger_(logger), clock_(clock)
+TactileSensor::TactileSensor(
+  const rclcpp::Logger & logger, const rclcpp::Clock::SharedPtr & clock,
+  int num_taxels, const std::string & hand_side)
+: logger_(logger), clock_(clock), num_taxels_(num_taxels),
+  sensor_prefix_(hand_side == "left" ? "finger_l_sensor" : "finger_r_sensor")
 {
+  if (num_taxels != 9 && num_taxels != 10) {
+    throw std::invalid_argument("num_taxels must be 9 or 10");
+  }
+}
+
+void TactileSensor::initialize(FingerArray & fingers) const
+{
+  for (auto & finger : fingers) {
+    finger.baseline_sum_tactiles.assign(num_taxels_, 0.0);
+    finger.baseline_tactiles.assign(num_taxels_, 0.0);
+    finger.ema_tactiles.assign(num_taxels_, 0.0);
+    finger.baseline_samples = 0;
+    finger.filtered_force = 0.0;
+  }
 }
 
 bool TactileSensor::check_msg(const HandPressuresPtr msg) const
 {
-  if (msg->sensors.size() != fingers_num) {
-    RCLCPP_WARN_THROTTLE(logger_, *clock_, 2000, "sensors size mismatch: %zu", msg->sensors.size());
+  if (!msg || msg->sensors.size() != fingers_num) {
+    RCLCPP_WARN_THROTTLE(logger_, *clock_, 2000, "Expected five tactile sensors");
     return false;
   }
   for (size_t i = 0; i < msg->sensors.size(); ++i) {
-    if (msg->sensors[i].pressure_names.size() != tactiles_num) {
+    if (msg->sensors[i].sensor_name != sensor_prefix_ + std::to_string(i + 1)) {
+      RCLCPP_WARN_THROTTLE(logger_, *clock_, 2000, "Unexpected tactile sensor name or order");
+      return false;
+    }
+    if (msg->sensors[i].pressure_names.size() != num_taxels_) {
       RCLCPP_WARN_THROTTLE(logger_,
         *clock_,
         2000,
@@ -46,7 +68,7 @@ bool TactileSensor::check_msg(const HandPressuresPtr msg) const
       return false;
     }
 
-    if (msg->sensors[i].pressure_values.size() != tactiles_num) {
+    if (msg->sensors[i].pressure_values.size() != num_taxels_) {
       RCLCPP_WARN_THROTTLE(logger_,
         *clock_,
         2000,
@@ -54,6 +76,12 @@ bool TactileSensor::check_msg(const HandPressuresPtr msg) const
         i,
         msg->sensors[i].pressure_values.size());
       return false;
+    }
+    for (size_t j = 0; j < num_taxels_; ++j) {
+      if (msg->sensors[i].pressure_names[j] != "Present Pressure " + std::to_string(j + 1)) {
+        RCLCPP_WARN_THROTTLE(logger_, *clock_, 2000, "Unexpected pressure channel name or order");
+        return false;
+      }
     }
   }
   return true;
@@ -63,11 +91,13 @@ SensorArray TactileSensor::parse_sensors(const HandPressuresPtr msg) const
 {
   SensorArray out{};
 
-  // Copy tactile sensor names and 3x3 pressure values.
+  // Copy the configured pressure channels in validated channel order.
   for (size_t i = 0; i < fingers_num; ++i) {
     out[i].name = msg->sensors[i].sensor_name;
+    out[i].labels.resize(num_taxels_);
+    out[i].values.resize(num_taxels_);
 
-    for (size_t j = 0; j < tactiles_num; ++j) {
+    for (size_t j = 0; j < num_taxels_; ++j) {
       out[i].labels[j] = msg->sensors[i].pressure_names[j];
       out[i].values[j] = static_cast<double>(msg->sensors[i].pressure_values[j]);
     }
@@ -83,7 +113,7 @@ bool TactileSensor::update_baseline(
   }
   // Accumulate baseline samples.
   for (int f = 0; f < fingers_num; ++f) {
-    for (int t = 0; t < tactiles_num; ++t) {
+    for (size_t t = 0; t < num_taxels_; ++t) {
       fingers[f].baseline_sum_tactiles[t] += sensors[f].values[t];
     }
     fingers[f].baseline_samples++;
@@ -104,7 +134,7 @@ bool TactileSensor::update_baseline(
   for (int f = 0; f < fingers_num; ++f) {
     const int count = std::max(1, fingers[f].baseline_samples);
 
-    for (int t = 0; t < tactiles_num; ++t) {
+    for (size_t t = 0; t < num_taxels_; ++t) {
       fingers[f].baseline_tactiles[t] =
         fingers[f].baseline_sum_tactiles[t] / static_cast<double>(count);
       fingers[f].ema_tactiles[t] = 0.0;
@@ -119,9 +149,9 @@ bool TactileSensor::update_baseline(
 PressureArray TactileSensor::filter_pressure(
   FingerData & finger, const Hx5d20SensorData & sensor) const
 {
-  PressureArray filtered{};
+  PressureArray filtered(num_taxels_, 0.0);
 
-  for (int t = 0; t < tactiles_num; ++t) {
+  for (size_t t = 0; t < num_taxels_; ++t) {
     double value = sensor.values[t] - finger.baseline_tactiles[t];
 
     // Ignore pressure values lower than baseline.

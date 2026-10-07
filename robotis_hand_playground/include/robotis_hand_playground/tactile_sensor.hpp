@@ -34,7 +34,10 @@ public:
   using HandPressuresMsg = robotis_interfaces::msg::HandPressures;
   using HandPressuresPtr = HandPressuresMsg::SharedPtr;
 
-  TactileSensor(const rclcpp::Logger & logger, const rclcpp::Clock::SharedPtr & clock);
+  TactileSensor(const rclcpp::Logger & logger, const rclcpp::Clock::SharedPtr & clock,
+    int num_taxels = 9, const std::string & hand_side = "right");
+
+  void initialize(FingerArray & fingers) const;
 
   /**
    * @brief Check tactile pressure message size.
@@ -76,6 +79,9 @@ private:
   // ROS interfaces
   rclcpp::Logger logger_;
   rclcpp::Clock::SharedPtr clock_;
+
+  size_t num_taxels_;
+  std::string sensor_prefix_;
 
   // Filtering and baseline
   double ema_alpha_{0.2};

@@ -67,4 +67,12 @@ ament_export_dependencies(
   robotis_interfaces
 )
 
+if(BUILD_TESTING)
+  find_package(ament_cmake_gtest REQUIRED)
+  ament_add_gtest(test_pressure_broadcaster test/test_pressure_broadcaster.cpp
+    ENV "RMW_IMPLEMENTATION=rmw_fastrtps_cpp" "ROS_DOMAIN_ID=192"
+      "ROS_AUTOMATIC_DISCOVERY_RANGE=LOCALHOST")
+  target_link_libraries(test_pressure_broadcaster ${PROJECT_NAME})
+endif()
+
 ament_package()

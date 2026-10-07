@@ -17,6 +17,7 @@
 #ifndef ROBOTIS_HAND_PLAYGROUND__TACTILE_FORCE_CONTROLLER_HPP_
 #define ROBOTIS_HAND_PLAYGROUND__TACTILE_FORCE_CONTROLLER_HPP_
 
+#include <chrono>
 #include <array>
 #include <map>
 #include <memory>
@@ -241,6 +242,8 @@ private:
   // Tactile processing
   robotis_hand_playground::TactileSensor tactile_sensor_;
   bool baseline_ = false;
+  bool tactile_valid_ = false;
+  std::chrono::steady_clock::time_point last_tactile_received_;
 
   // Thread lock
   std::mutex mutex_;
