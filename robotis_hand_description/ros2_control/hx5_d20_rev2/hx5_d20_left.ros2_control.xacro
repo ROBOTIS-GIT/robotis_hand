@@ -274,10 +274,10 @@
         <param name="SyncTable 1 Write Address 3">230</param>
         <param name="SyncTable 1 Write Address 4">230</param>
         <param name="SyncTable 1 Write Address 5">0</param>
-        <param name="SyncTable 1 Write Size 1">4</param>
-        <param name="SyncTable 1 Write Size 2">4</param>
-        <param name="SyncTable 1 Write Size 3">4</param>
-        <param name="SyncTable 1 Write Size 4">4</param>
+        <param name="SyncTable 1 Write Size 1">0</param>
+        <param name="SyncTable 1 Write Size 2">0</param>
+        <param name="SyncTable 1 Write Size 3">0</param>
+        <param name="SyncTable 1 Write Size 4">0</param>
         <param name="SyncTable 1 Write Size 5">0</param>
         <param name="SyncTable 2 Read Address 1">224</param>
         <param name="SyncTable 2 Read Address 2">224</param>
@@ -294,10 +294,10 @@
         <param name="SyncTable 2 Write Address 3">230</param>
         <param name="SyncTable 2 Write Address 4">230</param>
         <param name="SyncTable 2 Write Address 5">0</param>
-        <param name="SyncTable 2 Write Size 1">4</param>
-        <param name="SyncTable 2 Write Size 2">4</param>
-        <param name="SyncTable 2 Write Size 3">4</param>
-        <param name="SyncTable 2 Write Size 4">4</param>
+        <param name="SyncTable 2 Write Size 1">0</param>
+        <param name="SyncTable 2 Write Size 2">0</param>
+        <param name="SyncTable 2 Write Size 3">0</param>
+        <param name="SyncTable 2 Write Size 4">0</param>
         <param name="SyncTable 2 Write Size 5">0</param>
         <param name="SyncTable 3 Read Address 1">224</param>
         <param name="SyncTable 3 Read Address 2">224</param>
@@ -314,10 +314,10 @@
         <param name="SyncTable 3 Write Address 3">230</param>
         <param name="SyncTable 3 Write Address 4">230</param>
         <param name="SyncTable 3 Write Address 5">0</param>
-        <param name="SyncTable 3 Write Size 1">4</param>
-        <param name="SyncTable 3 Write Size 2">4</param>
-        <param name="SyncTable 3 Write Size 3">4</param>
-        <param name="SyncTable 3 Write Size 4">4</param>
+        <param name="SyncTable 3 Write Size 1">0</param>
+        <param name="SyncTable 3 Write Size 2">0</param>
+        <param name="SyncTable 3 Write Size 3">0</param>
+        <param name="SyncTable 3 Write Size 4">0</param>
         <param name="SyncTable 3 Write Size 5">0</param>
         <param name="SyncTable 4 Read Address 1">224</param>
         <param name="SyncTable 4 Read Address 2">224</param>
@@ -334,10 +334,10 @@
         <param name="SyncTable 4 Write Address 3">230</param>
         <param name="SyncTable 4 Write Address 4">230</param>
         <param name="SyncTable 4 Write Address 5">0</param>
-        <param name="SyncTable 4 Write Size 1">4</param>
-        <param name="SyncTable 4 Write Size 2">4</param>
-        <param name="SyncTable 4 Write Size 3">4</param>
-        <param name="SyncTable 4 Write Size 4">4</param>
+        <param name="SyncTable 4 Write Size 1">0</param>
+        <param name="SyncTable 4 Write Size 2">0</param>
+        <param name="SyncTable 4 Write Size 3">0</param>
+        <param name="SyncTable 4 Write Size 4">0</param>
         <param name="SyncTable 4 Write Size 5">0</param>
         <param name="SyncTable 5 Read Address 1">224</param>
         <param name="SyncTable 5 Read Address 2">224</param>
@@ -354,10 +354,10 @@
         <param name="SyncTable 5 Write Address 3">230</param>
         <param name="SyncTable 5 Write Address 4">230</param>
         <param name="SyncTable 5 Write Address 5">0</param>
-        <param name="SyncTable 5 Write Size 1">4</param>
-        <param name="SyncTable 5 Write Size 2">4</param>
-        <param name="SyncTable 5 Write Size 3">4</param>
-        <param name="SyncTable 5 Write Size 4">4</param>
+        <param name="SyncTable 5 Write Size 1">0</param>
+        <param name="SyncTable 5 Write Size 2">0</param>
+        <param name="SyncTable 5 Write Size 3">0</param>
+        <param name="SyncTable 5 Write Size 4">0</param>
         <param name="SyncTable 5 Write Size 5">0</param>
       </gpio>
 
